@@ -1,20 +1,44 @@
 package com.example.app
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
+import android.util.Log
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.NavigationUI
+
 
 class MainActivity : AppCompatActivity() {
+    private var navController: NavController? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_main)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.navHostMain)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
+
+        val navHostFragment: NavHostFragment? =
+            supportFragmentManager.findFragmentById(R.id.navHostFragment) as? NavHostFragment
+        navController = navHostFragment?.navController
+        navController?.let { NavigationUI.setupActionBarWithNavController(this, it) }
+
+//        val bottomNavigationView: BottomNavigationView =
+//            findViewById(R.id.mainActivityBottomNavigationView)
+//        navController?.let { NavigationUI.setupWithNavController(bottomNavigationView, it) }
+    }
+
+//    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+//        super.onCreateOptionsMenu(menu)
+//        menuInflater.inflate(R.menu.menu, menu)
+//        return true
+//    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                navController?.navigateUp()
+                true
+            }
+            else -> navController?.let { NavigationUI.onNavDestinationSelected(item, it) } ?: super.onOptionsItemSelected(item)
         }
     }
 }

@@ -13,10 +13,22 @@
     <fragment
         android:id="@+id/allPosts"
         android:name="com.example.app.Modules.Posts.AllPosts"
-        android:label="fragment_all_posts"
-        tools:layout="@layout/fragment_all_posts" >
+        android:label="main"
+        tools:layout="@layout/fragment_all_posts">
         <action
             android:id="@+id/action_allPosts_to_addPost"
             app:destination="@id/addPost" />
+        <action
+            android:id="@+id/action_allPosts_to_post"
+            app:destination="@id/post" />
+    </fragment>
+    <fragment
+        android:id="@+id/post"
+        android:name="com.example.app.Modules.Posts.Post"
+        android:label="fragment_post"
+        tools:layout="@layout/fragment_post" >
+        <argument
+            android:name="postWriter"
+            app:argType="string" />
     </fragment>
 </navigation>
