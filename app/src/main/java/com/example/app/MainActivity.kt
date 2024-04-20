@@ -9,6 +9,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.example.app.Modules.Posts.AllPostsDirections
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
 class MainActivity : AppCompatActivity() {
@@ -23,9 +24,9 @@ class MainActivity : AppCompatActivity() {
         navController = navHostFragment?.navController
         navController?.let { NavigationUI.setupActionBarWithNavController(this, it) }
 
-//        val bottomNavigationView: BottomNavigationView =
-//            findViewById(R.id.mainActivityBottomNavigationView)
-//        navController?.let { NavigationUI.setupWithNavController(bottomNavigationView, it) }
+        val bottomNavigationView: BottomNavigationView =
+            findViewById(R.id.mainActivityBottomNavigationView)
+        navController?.let { NavigationUI.setupWithNavController(bottomNavigationView, it) }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
