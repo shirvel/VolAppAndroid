@@ -1,15 +1,16 @@
 package com.example.app
-
-import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.example.app.Modules.Posts.AllPostsDirections
+import com.example.app.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
+
+
 
 
 class MainActivity : AppCompatActivity() {

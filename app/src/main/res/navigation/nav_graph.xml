@@ -5,6 +5,16 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/allPost">
 
+    <!-- Define LoginFragment -->
+    <fragment
+        android:id="@+id/LogginFragment"
+        android:name="com.example.app.LoginFragment"
+        android:label="LoginFragment">
+        <action
+            android:id="@+id/action_loginFragment_to_allPostFragment"
+            app:destination="@id/allPost" />
+    </fragment>
+
     <fragment
         android:id="@+id/addPost"
         android:name="com.example.app.Modules.Posts.AddPost"
