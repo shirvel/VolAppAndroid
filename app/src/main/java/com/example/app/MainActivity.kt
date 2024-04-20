@@ -2,11 +2,13 @@ package com.example.app
 
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
+import com.example.app.Modules.Posts.AllPostsDirections
 
 
 class MainActivity : AppCompatActivity() {
@@ -26,11 +28,11 @@ class MainActivity : AppCompatActivity() {
 //        navController?.let { NavigationUI.setupWithNavController(bottomNavigationView, it) }
     }
 
-//    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-//        super.onCreateOptionsMenu(menu)
-//        menuInflater.inflate(R.menu.menu, menu)
-//        return true
-//    }
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        super.onCreateOptionsMenu(menu)
+        menuInflater.inflate(R.menu.menu, menu)
+        return true
+    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
@@ -38,6 +40,12 @@ class MainActivity : AppCompatActivity() {
                 navController?.navigateUp()
                 true
             }
+//            R.id.miNavbarAddPost -> {
+//                val action = AllPostsDirections.actionAllPostsToAddPost() // TODO: Make it a global action.
+//                navController?.navigate(action)
+//                true
+//            }
+            // When the id of the item menu is the same as the fragment, it works automatically.
             else -> navController?.let { NavigationUI.onNavDestinationSelected(item, it) } ?: super.onOptionsItemSelected(item)
         }
     }

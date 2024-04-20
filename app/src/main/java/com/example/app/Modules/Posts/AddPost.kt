@@ -3,6 +3,8 @@ package com.example.app.Modules.Posts
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
@@ -23,6 +25,7 @@ class AddPost : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
     }
 
     override fun onCreateView(
@@ -44,7 +47,7 @@ class AddPost : Fragment() {
         messageTextView?.text = ""
 
         cancelButton?.setOnClickListener {
-            Navigation.findNavController(view).popBackStack()
+            Navigation.findNavController(view).popBackStack(R.id.rvAllPostsFragment, false)
         }
 
         saveButton?.setOnClickListener {
@@ -56,6 +59,11 @@ class AddPost : Fragment() {
 
             messageTextView?.text = name
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        menu.clear()
+        super.onCreateOptionsMenu(menu, inflater)
     }
 
 
