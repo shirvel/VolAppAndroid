@@ -4,25 +4,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Modules.Posts.Post">
+    tools:context=".Modules.Comments.Comments">
 
-    <TextView
-        android:id="@+id/tvPostId"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:text="The post Id"
+    <!-- TODO: Update blank fragment layout -->
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvAllCommentsFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/btnToComments"
+    <ImageButton
+        android:id="@+id/btnAddComment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="59dp"
-        android:text="To Comments"
+        android:layout_marginEnd="16dp"
+        android:src="@android:drawable/ic_input_add"
+        app:layout_constraintBottom_toBottomOf="@+id/rvAllCommentsFragment"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tvPostId" />
+        app:layout_constraintTop_toTopOf="@+id/rvAllCommentsFragment"
+        app:layout_constraintVertical_bias="0.613" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

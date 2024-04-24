@@ -8,7 +8,7 @@ class PostListModel private constructor(){
 
     init {
         for (i in 0..20){
-            val post = Post("writer: $i", "content: $i", "https://me.com/avatar.jpg",false)
+            val post = Post("writer: $i", "content: $i", "",123)
             posts.add(post)
         }
     }

@@ -54,7 +54,7 @@ class AddPost : Fragment() {
             val name = nameTextField?.text.toString()
             val id = idTextField?.text.toString()
 
-            val post = Post(name, id, "", false)
+            val post = Post(name, id, "", 123)
             PostListModel.instance.posts.add(post)
 
             messageTextView?.text = name

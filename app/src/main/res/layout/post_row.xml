@@ -10,48 +10,39 @@
         android:id="@+id/ivPostListRowAvatar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="4dp"
-        android:layout_marginBottom="4dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/tvPostListRowWriter"
+        android:layout_marginTop="40dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        tools:srcCompat="@tools:sample/avatars[7]" />
+        tools:srcCompat="@drawable/viewpic"
+        android:background="@drawable/viewpic"
+        />
 
     <TextView
         android:id="@+id/tvPostListRowWriter"
-        android:layout_width="0dp"
+        android:layout_width="83dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
         android:text="TextView"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/tvPostListRowContent"
-        app:layout_constraintEnd_toStartOf="@+id/btnPostListRowLike"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/ivPostListRowAvatar"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivPostListRowAvatar"
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/tvPostListRowContent"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="21dp"
         android:text="TextView"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btnPostListRowLike"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/ivPostListRowAvatar"
-        app:layout_constraintTop_toBottomOf="@+id/tvPostListRowWriter" />
-
-    <CheckBox
-        android:id="@+id/btnPostListRowLike"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Like"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvPostListRowWriter" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

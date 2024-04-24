@@ -12,17 +12,12 @@ import com.example.app.R
 class PostViewHolder(val itemView: View, val listener: AllPosts.OnItemClickListener?): RecyclerView.ViewHolder(itemView){
     var writerTextView: TextView? = null
     var contentTextView: TextView? = null
-    var likeCheckBox: CheckBox? = null
     var post: Post? = null
 
     init {
         writerTextView = itemView.findViewById(R.id.tvPostListRowWriter)
         contentTextView = itemView.findViewById(R.id.tvPostListRowContent)
-        likeCheckBox = itemView.findViewById(R.id.btnPostListRowLike)
 
-        likeCheckBox?.setOnClickListener{
-            this.post?.isLiked = likeCheckBox?.isChecked ?: false
-        }
         itemView.setOnClickListener {
             Log.i("TAG", "View Holder: Posisiotn clicked $adapterPosition")
             listener?.onItemClick(adapterPosition)
@@ -33,8 +28,5 @@ class PostViewHolder(val itemView: View, val listener: AllPosts.OnItemClickListe
         this.post = post
         writerTextView?.text = post?.writer
         contentTextView?.text = post?.content
-        likeCheckBox?.apply {
-            isChecked = post?.isLiked ?: false
-        }
     }
 }
