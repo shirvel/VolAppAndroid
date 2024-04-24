@@ -67,7 +67,7 @@ class UpdateUserProfile : AppCompatActivity() {
             val email = emailTextField?.text.toString();
             val password = passwordTextField?.text.toString();
 
-            val intent = Intent(this@UpdateUserProfile, PostsList::class.java)
+            // val intent = Intent(this@UpdateUserProfile, PostsList::class.java)
 
             startActivity(intent)
 

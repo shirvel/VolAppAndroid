@@ -11,6 +11,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
+import com.example.app.Modules.Posts.AllPosts
 
 class SignUp : AppCompatActivity() {
 
@@ -67,7 +68,7 @@ class SignUp : AppCompatActivity() {
             val email = emailTextField?.text.toString();
             val password = passwordTextField?.text.toString();
 
-            val intent = Intent(this@SignUp, PostsList::class.java)
+            val intent = Intent(this@SignUp, AllPosts::class.java)
 
             startActivity(intent)
 

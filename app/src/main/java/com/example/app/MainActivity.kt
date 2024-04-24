@@ -3,7 +3,6 @@ package com.example.app
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
