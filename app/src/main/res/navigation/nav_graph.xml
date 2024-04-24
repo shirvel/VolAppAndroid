@@ -30,5 +30,13 @@
         <argument
             android:name="postWriter"
             app:argType="string" />
+        <action
+            android:id="@+id/action_post_to_comments"
+            app:destination="@id/comments" />
     </fragment>
+    <fragment
+        android:id="@+id/comments"
+        android:name="com.example.app.Modules.Comments.Comments"
+        android:label="fragment_comments"
+        tools:layout="@layout/fragment_comments" />
 </navigation>
