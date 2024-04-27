@@ -7,43 +7,47 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
-import androidx.appcompat.app.AppCompatActivity
 import com.example.app.Modules.Posts.AllPosts
 
-class SignUp : AppCompatActivity() {
+class SignUpFragment : Fragment() {
 
-    var nameTextField: EditText? = null
-    var emailTextField: EditText? = null
-    var passwordTextField: EditText? = null
+    private var nameTextField: EditText? = null
+    private var emailTextField: EditText? = null
+    private var passwordTextField: EditText? = null
 
-    var saveButton: Button? = null
-    var cancelButton: Button? = null
+    private var saveButton: Button? = null
+    private var cancelButton: Button? = null
 
     private lateinit var imageView: ImageView
     private val PICK_IMAGE_REQUEST = 1
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-//        enableEdgeToEdge()
-        setContentView(R.layout.activity_signup)
-
-
-        setUpUI()
-
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        // Inflate the layout for this fragment
+        val view =  inflater.inflate(R.layout.fragment_sign_up, container, false)
+        setUpUI(view)
+        return view
     }
 
-    private fun setUpUI() {
-        nameTextField = findViewById(R.id.editTextUserName)
-        emailTextField = findViewById(R.id.editTextEmailAddress)
-        passwordTextField = findViewById(R.id.editTextPassword)
 
-        saveButton = findViewById(R.id.btnSave)
-        cancelButton = findViewById(R.id.btnCancel)
+    private fun setUpUI(view: View) {
+        nameTextField = view.findViewById(R.id.editTextUserName)
+        emailTextField = view.findViewById(R.id.editTextEmailAddress)
+        passwordTextField = view.findViewById(R.id.editTextPassword)
 
-        imageView = findViewById(R.id.imageViewAvatar)
+        saveButton = view.findViewById(R.id.btnSave)
+        cancelButton = view.findViewById(R.id.btnCancel)
+
+        imageView = view.findViewById(R.id.imageViewAvatar)
 
 
 
@@ -61,24 +65,25 @@ class SignUp : AppCompatActivity() {
 
     }
 
+
     private fun clickSaveButton() {
-
         saveButton?.setOnClickListener {
-            val name = nameTextField?.text.toString();
-            val email = emailTextField?.text.toString();
-            val password = passwordTextField?.text.toString();
+            val name = nameTextField?.text.toString()
+            val email = emailTextField?.text.toString()
+            val password = passwordTextField?.text.toString()
 
-            val intent = Intent(this@SignUp, AllPosts::class.java)
+            val intent = Intent(activity, MainActivity::class.java)
 
             startActivity(intent)
 
+//            activity?.finish()
         }
-
     }
+
 
     private fun clickCancelButton() {
         cancelButton?.setOnClickListener {
-            finish()
+         //   activity?.finish() //TODO?
         }
     }
 
@@ -88,16 +93,32 @@ class SignUp : AppCompatActivity() {
     }
 
     // Override onActivityResult to handle the result of the image selection
+//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//        super.onActivityResult(requestCode, resultCode, data)
+//
+//        if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null && data.data != null) {
+//            val uri: Uri = data.data!!
+//            val bitmap = BitmapFactory.decodeStream(contentResolver.openInputStream(uri))
+//            val circularBitmap = getCircularBitmap(bitmap)
+//            imageView.setImageBitmap(circularBitmap)
+//        }
+//    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null && data.data != null) {
             val uri: Uri = data.data!!
+
+            // Obtain the contentResolver from the Fragment's Context
+            val contentResolver = requireContext().contentResolver
+
             val bitmap = BitmapFactory.decodeStream(contentResolver.openInputStream(uri))
             val circularBitmap = getCircularBitmap(bitmap)
             imageView.setImageBitmap(circularBitmap)
         }
     }
+
 
     private fun getCircularBitmap(bitmap: Bitmap): Bitmap {
         val outputBitmap = Bitmap.createBitmap(bitmap.width, bitmap.height, Bitmap.Config.ARGB_8888)
@@ -116,7 +137,6 @@ class SignUp : AppCompatActivity() {
 
         return outputBitmap
     }
-
 
 
 }
