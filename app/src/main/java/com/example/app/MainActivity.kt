@@ -7,8 +7,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
-import com.example.app.Modules.Posts.AllPostsDirections
-import com.example.app.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
@@ -43,11 +41,6 @@ class MainActivity : AppCompatActivity() {
                 navController?.navigateUp()
                 true
             }
-//            R.id.miNavbarAddPost -> {
-//                val action = AllPostsDirections.actionAllPostsToAddPost() // TODO: Make it a global action.
-//                navController?.navigate(action)
-//                true
-//            }
             // When the id of the item menu is the same as the fragment, it works automatically.
             else -> navController?.let { NavigationUI.onNavDestinationSelected(item, it) } ?: super.onOptionsItemSelected(item)
         }
