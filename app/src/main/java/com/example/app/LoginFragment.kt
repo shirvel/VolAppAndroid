@@ -34,7 +34,7 @@ class LoginFragment : Fragment() {
         registerButton.setOnClickListener {
             // Handle registration navigation here
             // For example, navigate to the registration screen
-            // findNavController().navigate(R.id.action_loginFragment_to_registrationFragment) to do!!!
+            findNavController().navigate(R.id.action_loginFragment_to_signUpFragment)
         }
 
         return view
