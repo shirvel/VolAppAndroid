@@ -92,18 +92,6 @@ class SignUpFragment : Fragment() {
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST)
     }
 
-    // Override onActivityResult to handle the result of the image selection
-//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-//        super.onActivityResult(requestCode, resultCode, data)
-//
-//        if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null && data.data != null) {
-//            val uri: Uri = data.data!!
-//            val bitmap = BitmapFactory.decodeStream(contentResolver.openInputStream(uri))
-//            val circularBitmap = getCircularBitmap(bitmap)
-//            imageView.setImageBitmap(circularBitmap)
-//        }
-//    }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
