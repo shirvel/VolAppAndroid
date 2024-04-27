@@ -10,13 +10,9 @@ import android.widget.ImageButton
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.app.Model.Comment
-import com.example.app.Model.CommentListModel
-import com.example.app.Model.Post
-import com.example.app.Model.PostListModel
+import com.example.app.model.Comment
+import com.example.app.model.CommentListModel
 import com.example.app.Modules.Comments.Adapter.CommentAdapter
-import com.example.app.Modules.Posts.Adapter.AllPostsAdapter
-import com.example.app.Modules.Posts.AllPosts
 import com.example.app.Modules.Posts.AllPostsDirections
 import com.example.app.R
 

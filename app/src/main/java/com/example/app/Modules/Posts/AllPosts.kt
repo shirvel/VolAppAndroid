@@ -6,15 +6,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
-import androidx.activity.enableEdgeToEdge
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.app.Model.Post
-import com.example.app.Model.PostListModel
+import com.example.app.model.Post
+import com.example.app.model.PostListModel
 import com.example.app.Modules.Posts.Adapter.AllPostsAdapter
 import com.example.app.R
 

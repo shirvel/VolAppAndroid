@@ -1,4 +1,4 @@
-package com.example.app.Model
+package com.example.app.model
 
 class PostListModel private constructor(){
     val posts: MutableList<Post> = ArrayList()
@@ -11,6 +11,7 @@ class PostListModel private constructor(){
         for (i in 0..20) {
             val post = Post(
                 writer = "writer: $i",
+                title = "$i",
                 content = "content: $i",
                 image = "https://me.com/avatar.jpg",
                 isLiked = false

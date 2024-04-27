@@ -19,6 +19,9 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
+    buildFeatures {
+        dataBinding = true
+    }
 
     buildTypes {
         release {
@@ -40,6 +43,7 @@ android {
 
 dependencies {
     implementation("androidx.navigation:navigation-compose:2.7.7")
+    implementation("androidx.databinding:databinding-runtime:4.0.0")
     implementation ("androidx.core:core-ktx:1.6.0")
     implementation ("com.google.android.material:material:1.4.0")
     implementation ("com.google.android.material:material:1.4.0")

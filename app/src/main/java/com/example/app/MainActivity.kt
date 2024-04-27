@@ -8,7 +8,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.example.app.database.AppDatabase
-import com.example.app.Model.Post
+import com.example.app.model.Post
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.*
 
@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         // Insert a sample post into the database (this will happen only once when the MainActivity is created)
         CoroutineScope(Dispatchers.IO).launch {
             val postDao = db.postDao()
-            val samplePost = Post(writer = "John Doe", content = "Hello, world!", image = "", isLiked = false)
+            val samplePost = Post(writer = "John Doe", title = "test", content = "Hello, world!", image = "", isLiked = false)
             postDao.insert(samplePost)
         }
 
@@ -77,7 +77,7 @@ class MainActivity : AppCompatActivity() {
 
         // Print the content of each post
         for (post in posts) {
-            println("Post ID: ${post.id}, Writer: ${post.writer}, Content: ${post.content}, Image: ${post.image}, Is Liked: ${post.isLiked}")
+            println("Post ID: ${post.postId}, Writer: ${post.writer}, title: ${post.title}, Content: ${post.content}, Image: ${post.image}, Is Liked: ${post.isLiked}")
         }
     }
 }

@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 
-import com.example.app.Model.Post
+import com.example.app.model.Post
 import com.example.app.R
 
 class EditPost : Fragment() {

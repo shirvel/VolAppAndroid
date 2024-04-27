@@ -11,6 +11,7 @@ import androidx.navigation.Navigation
 import com.example.app.R
 
 
+
 class Post : Fragment() {
     var writerTextView: TextView? = null
     var toCommentsButton: Button? = null

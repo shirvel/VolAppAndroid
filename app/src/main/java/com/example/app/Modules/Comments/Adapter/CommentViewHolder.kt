@@ -1,31 +1,16 @@
 package com.example.app.Modules.Comments.Adapter
 
-import android.util.Log
 import android.view.View
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.app.Model.Comment
-import com.example.app.Modules.Comments.Comments
-import com.example.app.R
+import com.example.app.databinding.CommentRowBinding
+import com.example.app.model.Comment
+import  com.example.app.Modules.Comments.Comments
 
-class CommentViewHolder(val itemView: View, val listener: Comments.OnItemClickListener?): RecyclerView.ViewHolder(itemView) {
-    var writerTextView: TextView? = null
-    var contentTextView: TextView? = null
-    var comment: Comment? = null
+class CommentViewHolder(private val view: View, private val listener: Comments.OnItemClickListener?) : RecyclerView.ViewHolder(view) {
 
-    init {
-        writerTextView = itemView.findViewById(R.id.tvWriterName)
-        contentTextView = itemView.findViewById(R.id.tvCommentContent)
-
-        itemView.setOnClickListener {
-            listener?.onItemClick(adapterPosition)
-        }
+    fun bind(comment: Comment?) {
+        val binding = CommentRowBinding.bind(view)
+        binding.comment = comment
+        binding.executePendingBindings()
     }
-
-    fun bind(comment: Comment?){
-        this.comment = comment
-        writerTextView?.text = comment?.writer
-        contentTextView?.text = comment?.content
-    }
-
 }

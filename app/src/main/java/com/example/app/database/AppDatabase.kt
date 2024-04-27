@@ -5,8 +5,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.app.Model.Post
-import com.example.app.database.PostDao
+import com.example.app.model.Post
 
 @Database(entities = [Post::class], version = 1)
 abstract class AppDatabase : RoomDatabase() {
