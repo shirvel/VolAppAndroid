@@ -10,4 +10,9 @@
         android:id="@+id/allPost"
         android:icon="@android:drawable/ic_dialog_dialer"
         android:title="all posts" />
+
+    <item
+        android:id="@+id/updateUserProfile"
+        android:icon="@android:drawable/ic_dialog_dialer"
+        android:title="Update details" />
 </menu>
