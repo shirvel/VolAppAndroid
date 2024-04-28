@@ -1,6 +1,7 @@
 package com.example.app
 
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
@@ -10,11 +11,16 @@ import androidx.navigation.ui.NavigationUI
 import com.example.app.database.AppDatabase
 import com.example.app.model.Post
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.*
 
 class MainActivity : AppCompatActivity() {
     private var navController: NavController? = null
     private lateinit var db: AppDatabase // Declare AppDatabase variable
+
+    companion object {
+        private const val TAG = "MainActivity"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,6 +35,30 @@ class MainActivity : AppCompatActivity() {
             val samplePost = Post(writer = "John Doe", title = "test", content = "Hello, world!", image = "", isLiked = false)
             postDao.insert(samplePost)
         }
+
+        // Access Firestore database
+        val firestoreDB = FirebaseFirestore.getInstance()
+
+        // Define a data model class (e.g., Post)
+        data class FirestorePost(
+            val title: String = "",
+            val content: String = ""
+        )
+
+        // Add a new document to the "posts" collection
+        val firestorePost = FirestorePost("Example Post Title", "This is the content of the post.")
+
+        // Add the post to the "posts" collection
+        firestoreDB.collection("posts")
+            .add(firestorePost)
+            .addOnSuccessListener { documentReference ->
+                // Document added successfully
+                Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
+            }
+            .addOnFailureListener { e ->
+                // Error adding document
+                Log.w(TAG, "Error adding document", e)
+            }
 
         val navHostFragment: NavHostFragment? =
             supportFragmentManager.findFragmentById(R.id.navHostFragment) as? NavHostFragment
@@ -57,12 +87,6 @@ class MainActivity : AppCompatActivity() {
                 navController?.navigateUp()
                 true
             }
-//            R.id.miNavbarAddPost -> {
-//                val action = AllPostsDirections.actionAllPostsToAddPost() // TODO: Make it a global action.
-//                navController?.navigate(action)
-//                true
-//            }
-            // When the id of the item menu is the same as the fragment, it works automatically.
             else -> navController?.let { NavigationUI.onNavDestinationSelected(item, it) }
                 ?: super.onOptionsItemSelected(item)
         }
