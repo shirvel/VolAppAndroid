@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@+id/LogginFragment">
+    app:startDestination="@id/vol_map">
 
     <!-- Define LoginFragment -->
     <fragment
@@ -69,4 +69,9 @@
         android:name="com.example.app.Modules.Comments.Comments"
         android:label="fragment_comments"
         tools:layout="@layout/fragment_comments" />
+    <fragment
+        android:id="@+id/vol_map"
+        android:name="com.example.app.Modules.vol_map"
+        android:label="fragment_vol_map"
+        tools:layout="@layout/fragment_vol_map2" />
 </navigation>
