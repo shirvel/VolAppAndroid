@@ -60,6 +60,7 @@ class MainActivity : AppCompatActivity() {
                 Log.w(TAG, "Error adding document", e)
             }
 
+        // Initialize navigation
         val navHostFragment: NavHostFragment? =
             supportFragmentManager.findFragmentById(R.id.navHostFragment) as? NavHostFragment
         navController = navHostFragment?.navController
