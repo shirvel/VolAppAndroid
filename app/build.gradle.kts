@@ -44,6 +44,11 @@ android {
         jvmTarget = "1.8"
     }
 }
+secrets {
+    // Optionally specify a different file name containing your secrets.
+    // The plugin defaults to "local.properties"
+    propertiesFileName = "secrets.properties"
+}
 
 dependencies {
     implementation("androidx.navigation:navigation-compose:2.7.7")
