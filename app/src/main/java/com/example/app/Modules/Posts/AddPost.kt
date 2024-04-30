@@ -57,7 +57,7 @@ class AddPost : Fragment() {
             val name = nameTextField?.text.toString()
             val content = contentTextField?.text.toString()
 
-            val post = Post(0, "", name , content, "", false)
+            val post = Post("0", "", name , content, "", false)
             PostListModel.instance.addPost(post) {
                 val navController = Navigation.findNavController(view)
                 // Pop back to LoginFragment to clear the back stack

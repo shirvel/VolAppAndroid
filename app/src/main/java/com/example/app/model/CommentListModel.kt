@@ -12,6 +12,7 @@ class CommentListModel  private constructor(){
     private val database = AppLocalDatabase.db
     private var executor = Executors.newSingleThreadExecutor()
     private var mainHandler = HandlerCompat.createAsync(Looper.getMainLooper())
+    private val firebaseModel = CommentFirebaseModel()
     companion object {
         val instance: CommentListModel = CommentListModel()
     }
@@ -19,21 +20,23 @@ class CommentListModel  private constructor(){
         fun onComplete(comments: List<Comments>)
     }
     fun getAllComments(callback: (List<Comment>) -> Unit) {
-        executor.execute {
-            val comments = database.commentDao().getAllComments()
-            mainHandler.post{
-                callback(comments)
-            }
-        }
+        firebaseModel.getAllComments(callback)
+        //executor.execute {
+          //  val comments = database.commentDao().getAllComments()
+            //mainHandler.post{
+              //  callback(comments)
+            //}
+        //}
     }
 
     fun addComment(comment: Comment, callback: () -> Unit)
     {
-        executor.execute{
-            database.commentDao().insert(comment)
-            mainHandler.post{
-                callback()
-            }
-        }
+        firebaseModel.addComment(comment, callback)
+        //executor.execute{
+        //    database.commentDao().insert(comment)
+        //    mainHandler.post{
+        //        callback()
+        //    }
+        //}
     }
 }
