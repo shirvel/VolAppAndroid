@@ -53,13 +53,9 @@ class SignUpFragment : Fragment() {
 
         imageView = view.findViewById(R.id.imageViewAvatar)
 
-
-
         clickToAddPhoto();
         clickSaveButton();
         clickCancelButton();
-
-
     }
 
     private fun clickToAddPhoto() {
