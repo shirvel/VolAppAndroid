@@ -12,6 +12,8 @@ import com.example.app.database.AppDatabase
 import com.example.app.model.Post
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.*
 
 class MainActivity : AppCompatActivity() {
@@ -19,7 +21,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var db: AppDatabase // Declare AppDatabase variable
 
     companion object {
-        private const val TAG = "MainActivity"
+        const val TAG = "MainActivity"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,7 +38,7 @@ class MainActivity : AppCompatActivity() {
             postDao.insert(samplePost)
         }
 
-        // Access Firestore database
+// Access Firestore database
         val firestoreDB = FirebaseFirestore.getInstance()
 
         // Define a data model class (e.g., Post)
