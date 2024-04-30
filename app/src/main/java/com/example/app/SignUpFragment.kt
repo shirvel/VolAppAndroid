@@ -80,7 +80,7 @@ class SignUpFragment : Fragment() {
 
             val user = User(id, email, password, name)
             UserListModel.instance.addUser(user) {
-//                Navigation.findNavController(it).popBackStack(R.id.LogginFragment, false)
+                Navigation.findNavController(it).popBackStack(R.id.LogginFragment, false)
             }
         }
     }
