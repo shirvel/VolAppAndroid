@@ -12,24 +12,34 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.app.model.Comment
 import com.example.app.model.CommentListModel
-import com.example.app.Modules.Comments.Adapter.CommentAdapter
+import com.example.app.Modules.Comments.Adapter.CommentsRecyclerAdapter
 import com.example.app.Modules.Posts.AllPostsDirections
 import com.example.app.R
+import com.example.app.databinding.FragmentCommentsBinding
+
 
 class Comments : Fragment() {
     var allCommentsView: RecyclerView? = null
-    var commentsList: MutableList<Comment>? = null
+    var commentsList: List<Comment>? = null
     var addCommentButton: ImageButton? = null
-
-    override fun onCreateView(
+    var adapter: CommentsRecyclerAdapter? = null
+    private var _binding: FragmentCommentsBinding? = null
+    private val binding get() = _binding!!
+        override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_comments, container, false)
+       // val view = inflater.inflate(R.layout.fragment_comments, container, false)
 
-        commentsList = CommentListModel.instance.comments
+            _binding = FragmentCommentsBinding.inflate(inflater, container, false)
+            val view = binding.root
+        CommentListModel.instance.getAllComments { commentsList ->
+            this.commentsList = commentsList
+            adapter?.comments = commentsList
+            adapter?.notifyDataSetChanged()
+        }
 
-        allCommentsView = view.findViewById(R.id.rvAllCommentsFragment)
+        allCommentsView = binding.rvAllCommentsFragment
         // To be more efficient - because it is the same size.
         allCommentsView?.setHasFixedSize(true)
 
@@ -37,15 +47,20 @@ class Comments : Fragment() {
         allCommentsView?.layoutManager = LinearLayoutManager(context)
 
         // Set the adapter
-        val adapter = CommentAdapter(commentsList)
-        adapter.listener = object : OnItemClickListener {
+        val adapter = CommentsRecyclerAdapter(commentsList)
+        adapter?.listener = object : CommentsRcyclerViewActivity.OnItemClickListener {
+
             override fun onItemClick(position: Int) {
-                val post = commentsList!!.get(position)
-                post.let {
-                    Log.i("TAG", "Posts Adapter: Position clicked  $position")
+                Log.i("TAG", "PostsRecyclerAdapter: Position clicked $position")
+                val comment = commentsList?.get(position)
+                comment?.let {
                     val action = AllPostsDirections.actionAllPostsToPost(it.writer)
                     Navigation.findNavController(view).navigate(action)
+
                 }
+            }
+                override fun onCommentClicked(comment: Comment?) {
+                    Log.i("TAG", "Post $comment")
             }
         }
         allCommentsView?.adapter = adapter
@@ -61,6 +76,9 @@ class Comments : Fragment() {
     interface OnItemClickListener{
         fun onItemClick(position: Int)
     }
+    override fun onDestroy() {
+        super.onDestroy()
 
-
+        _binding = null
+    }
 }
