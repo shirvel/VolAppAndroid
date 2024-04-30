@@ -2,12 +2,15 @@ package com.example.app.model
 
 import android.os.Looper
 import androidx.core.os.HandlerCompat
+import java.util.concurrent.Executor
+import java.util.concurrent.Executors
 
 public class UserListModel private constructor() {
     val users: MutableList<User> = ArrayList()
 
     private val userFirebaseModel = UserFirebaseModel()
     //TODO: need to create the executer? (Treads)
+    private var executor = Executors.newSingleThreadExecutor()
     private var mainHandler = HandlerCompat.createAsync(Looper.getMainLooper())
 
     companion object {
