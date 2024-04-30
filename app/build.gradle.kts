@@ -44,6 +44,11 @@ android {
         jvmTarget = "1.8"
     }
 }
+secrets {
+    // Optionally specify a different file name containing your secrets.
+    // The plugin defaults to "local.properties"
+    propertiesFileName = "secrets.properties"
+}
 
 dependencies {
     implementation("androidx.navigation:navigation-compose:2.7.7")
@@ -56,8 +61,9 @@ dependencies {
     implementation("androidx.navigation:navigation-ui-ktx:2.7.6")
     implementation ("androidx.room:room-runtime:2.4.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    implementation(platform("com.google.firebase:firebase-bom:28.4.1"))
+    implementation(platform("com.google.firebase:firebase-bom:32.8.1"))
     implementation("com.google.firebase:firebase-firestore-ktx")
+    implementation("com.google.firebase:firebase-auth")
     implementation("com.google.android.gms:play-services-maps:18.0.1")
     implementation("com.google.android.gms:play-services-location:18.0.0")
     implementation(libs.androidx.core.ktx)
