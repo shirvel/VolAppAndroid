@@ -14,7 +14,11 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import androidx.navigation.Navigation
 import com.example.app.Modules.Posts.AllPosts
+import com.example.app.model.User
+import com.example.app.model.UserFirebaseModel
+import com.example.app.model.UserListModel
 
 class SignUpFragment : Fragment() {
 
@@ -72,11 +76,12 @@ class SignUpFragment : Fragment() {
             val email = emailTextField?.text.toString()
             val password = passwordTextField?.text.toString()
 
-            val intent = Intent(activity, MainActivity::class.java)
+            val id = 5; // TODO: change userID
 
-            startActivity(intent)
-
-//            activity?.finish()
+            val user = User(id, email, password, name)
+            UserListModel.instance.addUser(user) {
+                Navigation.findNavController(it).popBackStack(R.id.LogginFragment, false)
+            }
         }
     }
 
