@@ -78,21 +78,10 @@ class SignUpFragment : Fragment() {
 
             val id = 5; // TODO: change userID
 
-         //   val user = User(0,"123sss", "123sss", "123sss")
-
             val user = User(id, email, password, name)
             UserListModel.instance.addUser(user) {
-//                Navigation.findNavController(it).popBackStack(R.id.LogginFragment, false)
-//            val intent = Intent(activity, MainActivity::class.java)
-//
-//            startActivity(intent)
+                Navigation.findNavController(it).popBackStack(R.id.LogginFragment, false)
             }
-
-//            val intent = Intent(activity, MainActivity::class.java)
-//
-//            startActivity(intent)
-
-//            activity?.finish()
         }
     }
 
