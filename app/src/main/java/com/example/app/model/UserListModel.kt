@@ -24,4 +24,9 @@ public class UserListModel private constructor() {
         userFirebaseModel.addUser(view, user, callback)
 
     }
+
+    fun signIn(view: View, email: String, password: String, callback: () -> Unit) {
+        userFirebaseModel.signIn(view, email, password, callback)
+    }
+
 }

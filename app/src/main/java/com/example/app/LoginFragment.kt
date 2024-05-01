@@ -8,10 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import androidx.navigation.fragment.findNavController
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
-import android.util.Log
-import android.widget.Toast
+import com.example.app.model.UserListModel
 
 class LoginFragment : Fragment() {
 
@@ -19,9 +16,6 @@ class LoginFragment : Fragment() {
     private var passwordTextField: EditText? = null
     private var loginButton: Button? = null
     private var registerButton: Button? = null
-
-//    private val auth = FirebaseAuth.getInstance()
-//    private val firestore = FirebaseFirestore.getInstance()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,47 +34,18 @@ class LoginFragment : Fragment() {
         loginButton = view.findViewById(R.id.btnLogin)
         registerButton = view.findViewById(R.id.btnRegister)
 
-        clickLoginButton()
+        clickLoginButton(view)
         clickRegisterButton()
     }
 
-    private fun clickLoginButton() {
+    private fun clickLoginButton(view: View) {
         loginButton?.setOnClickListener {
             val email = emailTextField?.text.toString()
             val password = passwordTextField?.text.toString()
 
-            findNavController().navigate(R.id.action_loginFragment_to_allPostFragment)
-
-//            // Firebase authentication
-//            auth.signInWithEmailAndPassword(email, password)
-//                .addOnCompleteListener { task ->
-//                    if (task.isSuccessful) {
-//                        // Check if the user exists in Firestore
-//                        val currentUser = auth.currentUser
-//                        currentUser?.let { user ->
-//                            firestore.collection("users").document(user.uid)
-//                                .get()
-//                                .addOnSuccessListener { document ->
-//                                    if (document.exists()) {
-//                                        // User exists, navigate to allPosts fragment
-//                                        findNavController().navigate(R.id.action_loginFragment_to_allPostFragment)
-//                                    } else {
-//                                        // User does not exist
-//                                        showPopupMessage("You don't have an account")
-//                                    }
-//                                }
-//                                .addOnFailureListener { e ->
-//                                    // Handle Firestore query failure
-//                                    Log.e(TAG, "Error getting user document", e)
-//                                    showPopupMessage("Error: ${e.message}")
-//                                }
-//                        }
-//                    } else {
-//                        // Handle authentication failure
-//                        showPopupMessage("Authentication failed: ${task.exception?.message}")
-//                    }
-//                }
-
+            UserListModel.instance.signIn(view, email, password) {
+                findNavController().navigate(R.id.action_loginFragment_to_allPostFragment)
+            }
         }
     }
 
@@ -90,11 +55,4 @@ class LoginFragment : Fragment() {
         }
     }
 
-//    private fun showPopupMessage(message: String) {
-//        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
-//    }
-//
-//    companion object {
-//        private const val TAG = "LoginFragment"
-//    }
 }
