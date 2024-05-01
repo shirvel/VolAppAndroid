@@ -9,6 +9,9 @@ import android.widget.Button
 import android.widget.EditText
 import androidx.navigation.fragment.findNavController
 import com.example.app.model.UserListModel
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 class LoginFragment : Fragment() {
 
@@ -17,12 +20,16 @@ class LoginFragment : Fragment() {
     private var loginButton: Button? = null
     private var registerButton: Button? = null
 
+    private lateinit var auth: FirebaseAuth
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_login, container, false)
+
+        auth = FirebaseAuth.getInstance()
 
         setUpUI(view)
         return view
@@ -43,10 +50,45 @@ class LoginFragment : Fragment() {
             val email = emailTextField?.text.toString()
             val password = passwordTextField?.text.toString()
 
-            UserListModel.instance.signIn(view, email, password) {
-                findNavController().navigate(R.id.action_loginFragment_to_allPostFragment)
-            }
+            loginUser(email, password)
+
+//            if (email.isNotEmpty() && password.isNotEmpty()) {
+////                loginUser(email, password)
+//
+////                UserListModel.instance.signIn(view, email, password) {
+////                    findNavController().navigate(R.id.action_loginFragment_to_allPostFragment)
+////                }
+//            }
+//
+//            else {
+//                // TODO: POPUP: the fields are empty...
+//            }
+
+
         }
+    }
+
+    private fun loginUser(email: String, password: String) {
+
+        Firebase.auth.signInWithEmailAndPassword(email, password)
+            .addOnSuccessListener {
+                findNavController().navigate(R.id.action_loginFragment_to_allPostFragment)
+            }.addOnFailureListener {
+                findNavController().navigate(R.id.action_loginFragment_to_signUpFragment)
+            }
+//        auth.signInWithEmailAndPassword(email, password)
+//            .addOnCompleteListener(requireActivity()) { task ->
+//                if (task.isSuccessful) {
+//                    findNavController().navigate(R.id.action_loginFragment_to_allPostFragment)
+//                    // Login successful
+//                    // Navigate to the main activity or perform other actions
+//                } else {
+//
+//                    findNavController().navigate(R.id.action_loginFragment_to_signUpFragment)
+//                    // Login failed
+//                    // Handle failure, e.g., display error message
+//                }
+//            }
     }
 
     private fun clickRegisterButton() {
