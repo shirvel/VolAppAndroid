@@ -25,9 +25,9 @@ class PostsListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_posts_list)
 
-        PostListModel.instance.getAllPosts { posts ->
-            this.posts = posts
-        }
+       // PostListModel.instance.getAllPosts { posts ->
+        //    this.posts = posts
+       // }
 
         postsListView = findViewById(R.id.lvPosttList)
         postsListView?.adapter = PostsListAdapter(posts)

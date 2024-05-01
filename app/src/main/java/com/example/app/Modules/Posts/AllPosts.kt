@@ -6,26 +6,25 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.app.model.Post
 import com.example.app.model.PostListModel
 import com.example.app.Modules.Posts.Adapter.PostsRecyclerAdapter
-import com.example.app.R
+import android.widget.ProgressBar
 import com.example.app.databinding.FragmentAllPostsBinding
-
-
 
 
 class AllPosts : Fragment() {
 
     var postsRcyclerView: RecyclerView? = null
-    var posts: List<Post>? = null
     var adapter: PostsRecyclerAdapter? = null
     private var _binding: FragmentAllPostsBinding? = null
+    var progressBar: ProgressBar? = null
     private val binding get() = _binding!!
-
+    private lateinit var postviewmodel : PostsViewModel
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -34,21 +33,20 @@ class AllPosts : Fragment() {
         //val view = inflater.inflate(R.layout.fragment_all_posts, container, false)
         _binding = FragmentAllPostsBinding.inflate(inflater, container, false)
         val view = binding.root
-        PostListModel.instance.getAllPosts { posts ->
-            this.posts = posts
-            adapter?.posts = posts
-            adapter?.notifyDataSetChanged()
-        }
+        postviewmodel = ViewModelProvider(this)[PostsViewModel::class.java]
+        progressBar = binding.progressBar
+        progressBar?.visibility = View.VISIBLE
+        postviewmodel.posts = PostListModel.instance.getAllPosts()
 
         postsRcyclerView = binding.rvAllPostsFragment
         postsRcyclerView?.setHasFixedSize(true)
         postsRcyclerView?.layoutManager = LinearLayoutManager(context)
-        adapter = PostsRecyclerAdapter(posts)
+        adapter = PostsRecyclerAdapter(postviewmodel.posts?.value)
         adapter?.listener = object : PostsRcyclerViewActivity.OnItemClickListener {
 
             override fun onItemClick(position: Int) {
                 Log.i("TAG", "PostsRecyclerAdapter: Position clicked $position")
-                val post = posts?.get(position)
+                val post = postviewmodel.posts?.value?.get(position)
                 post?.let {
                     val action = AllPostsDirections.actionAllPostsToPost(it.writer)
                     Navigation.findNavController(view).navigate(action)
@@ -61,22 +59,37 @@ class AllPosts : Fragment() {
         }
 
         postsRcyclerView?.adapter = adapter
+
+        postviewmodel.posts?.observe(viewLifecycleOwner) {
+            adapter?.posts = it
+            adapter?.notifyDataSetChanged()
+            progressBar?.visibility = View.GONE
+
+        }
+        binding.pullToRefresh.setOnRefreshListener {
+            reloadData()
+        }
+
+        PostListModel.instance.postsListLoadingState.observe(viewLifecycleOwner) { state ->
+            binding.pullToRefresh.isRefreshing = state == PostListModel.LoadingState.LOADING
+        }
         return view
     }
 
     override fun onResume() {
         super.onResume()
 
-        PostListModel.instance.getAllPosts { posts ->
-            this.posts = posts
-            adapter?.posts = posts
-            adapter?.notifyDataSetChanged()
+        reloadData()
         }
+
+    private fun reloadData() {
+        progressBar?.visibility = View.VISIBLE
+        PostListModel.instance.refreshgetAllPosts()
+        progressBar?.visibility = View.GONE
     }
     override fun onDestroy() {
         super.onDestroy()
 
         _binding = null
     }
-
 }

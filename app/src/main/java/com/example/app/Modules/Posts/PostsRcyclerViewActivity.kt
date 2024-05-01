@@ -28,11 +28,11 @@ class PostsRcyclerViewActivity : AppCompatActivity() {
         binding = ActivityPostsRcyclerViewBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        PostListModel.instance.getAllPosts { posts ->
-            this.posts = posts
-            adapter?.posts = posts
-            adapter?.notifyDataSetChanged()
-        }
+       // PostListModel.instance.getAllPosts { posts ->
+       //     this.posts = posts
+        //    adapter?.posts = posts
+        //    adapter?.notifyDataSetChanged()
+       // }
 
         postsRcyclerView = binding.rvPostsREcyclerList
         postsRcyclerView?.setHasFixedSize(true)
@@ -61,10 +61,10 @@ class PostsRcyclerViewActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        PostListModel.instance.getAllPosts { posts ->
-            this.posts = posts
-            adapter?.posts = posts
-            adapter?.notifyDataSetChanged()
-        }
+       // PostListModel.instance.getAllPosts { posts ->
+        //    this.posts = posts
+       //     adapter?.posts = posts
+        //    adapter?.notifyDataSetChanged()
+       // }
     }
 }

@@ -1,6 +1,7 @@
 package com.example.app.database
 
 // PostDao.kt
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -14,7 +15,7 @@ interface PostDao {
     fun insert(vararg post: Post)
 
     @Query("SELECT * FROM posts")
-    fun getAllPosts(): List<Post>
+    fun getAllPosts(): LiveData<MutableList<Post>>
 
     @Delete
     fun delete(post: Post)

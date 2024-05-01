@@ -10,7 +10,6 @@ import com.example.app.R
 class PostsRecyclerAdapter(var posts: List<Post>?): RecyclerView.Adapter<PostViewHolder>() {
 
     var listener: PostsRcyclerViewActivity.OnItemClickListener? = null
-
     override fun getItemCount(): Int = posts?.size ?: 0
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
