@@ -1,6 +1,7 @@
 package com.example.app.model
 
 import android.os.Looper
+import android.view.View
 import androidx.core.os.HandlerCompat
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
@@ -19,8 +20,8 @@ public class UserListModel private constructor() {
 
 
 
-    fun addUser(user: User, callback: () -> Unit) {
-        userFirebaseModel.addUser(user, callback)
+    fun addUser(view: View, user: User, callback: () -> Unit) {
+        userFirebaseModel.addUser(view, user, callback)
 
     }
 }
