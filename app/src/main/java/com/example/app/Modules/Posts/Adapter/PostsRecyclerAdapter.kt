@@ -20,5 +20,6 @@ class PostsRecyclerAdapter(var posts: List<Post>?): RecyclerView.Adapter<PostVie
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
         val post = posts?.get(position)
         holder.bind(post)
+
     }
 }

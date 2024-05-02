@@ -32,6 +32,13 @@
     <action android:id="@+id/action_global_addPostFragment" app:destination="@id/addPost" />
 
     <fragment
+        android:id="@+id/editPost"
+        android:name="com.example.app.Modules.Posts.EditPost"
+        android:label="Edit Post"
+        tools:layout="@layout/fragment_edit_post" />
+    <action android:id="@+id/action_global_editPostFragment" app:destination="@id/editPost" />
+
+    <fragment
         android:id="@+id/allPost"
         android:name="com.example.app.Modules.Posts.AllPosts"
         android:label="fragment_all_posts"
@@ -42,6 +49,7 @@
         <action
             android:id="@+id/action_allPosts_to_post"
             app:destination="@id/post" />
+
     </fragment>
 
 

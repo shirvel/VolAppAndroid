@@ -15,6 +15,7 @@ import com.example.app.model.PostListModel
 import com.example.app.Modules.Posts.Adapter.PostsRecyclerAdapter
 import android.widget.ProgressBar
 import com.example.app.databinding.FragmentAllPostsBinding
+import android.widget.ImageButton
 
 
 class AllPosts : Fragment() {
@@ -23,6 +24,7 @@ class AllPosts : Fragment() {
     var adapter: PostsRecyclerAdapter? = null
     private var _binding: FragmentAllPostsBinding? = null
     var progressBar: ProgressBar? = null
+
     private val binding get() = _binding!!
     private lateinit var postviewmodel : PostsViewModel
     override fun onCreateView(
@@ -73,6 +75,8 @@ class AllPosts : Fragment() {
         PostListModel.instance.postsListLoadingState.observe(viewLifecycleOwner) { state ->
             binding.pullToRefresh.isRefreshing = state == PostListModel.LoadingState.LOADING
         }
+        // Set OnClickListener for the edit button
+
         return view
     }
 
