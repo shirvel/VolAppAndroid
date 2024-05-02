@@ -56,7 +56,7 @@ class SignUpFragment : Fragment() {
 
 
         clickToAddPhoto();
-        clickSaveButton();
+        clickSaveButton(view);
         clickCancelButton();
 
 
@@ -70,29 +70,18 @@ class SignUpFragment : Fragment() {
     }
 
 
-    private fun clickSaveButton() {
+    private fun clickSaveButton(view: View) {
         saveButton?.setOnClickListener {
             val name = nameTextField?.text.toString()
             val email = emailTextField?.text.toString()
             val password = passwordTextField?.text.toString()
 
-            val id = 5; // TODO: change userID
-
-         //   val user = User(0,"123sss", "123sss", "123sss")
+            val id = 18; // TODO: change userID
 
             val user = User(id, email, password, name)
-            UserListModel.instance.addUser(user) {
-//                Navigation.findNavController(it).popBackStack(R.id.LogginFragment, false)
-//            val intent = Intent(activity, MainActivity::class.java)
-//
-//            startActivity(intent)
+            UserListModel.instance.addUser(view, user) {
+                Navigation.findNavController(it).popBackStack(R.id.LoginFragment, false)
             }
-
-//            val intent = Intent(activity, MainActivity::class.java)
-//
-//            startActivity(intent)
-
-//            activity?.finish()
         }
     }
 

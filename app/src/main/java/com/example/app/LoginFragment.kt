@@ -1,43 +1,58 @@
-// LoginFragment.kt
-
 package com.example.app
 
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
-import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.example.app.model.UserListModel
 
 class LoginFragment : Fragment() {
 
+    private var emailTextField: EditText? = null
+    private var passwordTextField: EditText? = null
+    private var loginButton: Button? = null
+    private var registerButton: Button? = null
+
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
+        inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.activity_login, container, false)
+        // Inflate the layout for this fragment
+        val view = inflater.inflate(R.layout.fragment_login, container, false)
 
-        val usernameEditText: EditText = view.findViewById(R.id.username)
-        val passwordEditText: EditText = view.findViewById(R.id.password)
-        val loginButton: Button = view.findViewById(R.id.login_button)
-        val registerButton: Button = view.findViewById(R.id.register_button)
-
-        loginButton.setOnClickListener {
-            // Handle login logic here
-            // For example, navigate to the main screen if login is successful
-            findNavController().navigate(R.id.action_loginFragment_to_allPostFragment)
-        }
-
-        registerButton.setOnClickListener {
-            // Handle registration navigation here
-            // For example, navigate to the registration screen
-            findNavController().navigate(R.id.action_loginFragment_to_signUpFragment)
-        }
-
+        setUpUI(view)
         return view
     }
-}
 
+    private fun setUpUI(view: View) {
+        emailTextField = view.findViewById(R.id.editTextEmail)
+        passwordTextField = view.findViewById(R.id.editTextPassword)
+        loginButton = view.findViewById(R.id.btnLogin)
+        registerButton = view.findViewById(R.id.btnRegister)
+
+        clickLoginButton(view)
+        clickRegisterButton()
+    }
+
+    private fun clickLoginButton(view: View) {
+        loginButton?.setOnClickListener {
+            val email = emailTextField?.text.toString()
+            val password = passwordTextField?.text.toString()
+
+            UserListModel.instance.signIn(view, email, password) {
+                findNavController().navigate(R.id.action_loginFragment_to_allPostFragment)
+            }
+        }
+    }
+
+    private fun clickRegisterButton() {
+        registerButton?.setOnClickListener {
+            findNavController().navigate(R.id.action_loginFragment_to_signUpFragment)
+        }
+    }
+
+}
