@@ -13,6 +13,4 @@
 .externalNativeBuild
 .cxx
 local.properties
-app/secrets.properties
-secrets.properties
 secrets.properties
