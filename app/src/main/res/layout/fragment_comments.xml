@@ -4,32 +4,42 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/AllCommantsFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".Modules.Comments.Comments">
 
-        <!-- Your existing layout content goes here -->
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvAllCommentsFragment"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/pullToRefresh"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:indeterminate="true"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent" >
 
-        <ImageButton
-            android:id="@+id/btnAddComment"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvAllCommentsFragment"
+                android:layout_width="363dp"
+                android:layout_height="600dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="1.0" />
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+        <ProgressBar
+            android:id="@+id/progressBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:src="@android:drawable/ic_input_add"
-            app:layout_constraintBottom_toBottomOf="@+id/rvAllCommentsFragment"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/rvAllCommentsFragment"
-            app:layout_constraintVertical_bias="0.613" />
+            android:indeterminate="true"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </layout>

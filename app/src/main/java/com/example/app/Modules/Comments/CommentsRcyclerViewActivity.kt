@@ -28,12 +28,6 @@ class CommentsRcyclerViewActivity : AppCompatActivity() {
         binding = ActivityCommentsRcyclerViewBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        CommentListModel.instance.getAllComments { comments ->
-            this.comments = comments
-            adapter?.comments = comments
-            adapter?.notifyDataSetChanged()
-        }
-
         commentsRcyclerView = binding.rvCommentsREcyclerList
         commentsRcyclerView?.setHasFixedSize(true)
         commentsRcyclerView?.layoutManager = LinearLayoutManager(this)
@@ -60,11 +54,5 @@ class CommentsRcyclerViewActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-
-        CommentListModel.instance.getAllComments { comments ->
-            this.comments = comments
-            adapter?.comments = comments
-            adapter?.notifyDataSetChanged()
-        }
     }
 }

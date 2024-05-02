@@ -48,7 +48,7 @@ class AddPost : Fragment() {
         cancelButton?.setOnClickListener {
             val navController = Navigation.findNavController(view)
             // Pop back to LoginFragment to clear the back stack
-            navController.popBackStack(R.id.LogginFragment, false)
+            navController.popBackStack(R.id.LoginFragment, false)
             // Navigate to AllPosts fragment
             navController.navigate(R.id.allPost)
         }
@@ -61,7 +61,7 @@ class AddPost : Fragment() {
             PostListModel.instance.addPost(post) {
                 val navController = Navigation.findNavController(view)
                 // Pop back to LoginFragment to clear the back stack
-                navController.popBackStack(R.id.LogginFragment, false)
+                navController.popBackStack(R.id.LoginFragment, false)
                 // Navigate to AllPosts fragment
                 navController.navigate(R.id.allPost)
             }

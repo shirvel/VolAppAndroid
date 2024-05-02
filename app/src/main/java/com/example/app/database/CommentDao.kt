@@ -1,5 +1,7 @@
 package com.example.app.database
 
+// PostDao.kt
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -13,8 +15,9 @@ interface CommentDao {
     fun insert(vararg comment: Comment)
 
     @Query("SELECT * FROM comments")
-    fun getAllComments(): List<Comment>
+    fun getAllComments(): LiveData<MutableList<Comment>>
 
     @Delete
     fun delete(comment: Comment)
+
 }
