@@ -15,4 +15,8 @@
         android:id="@+id/updateUserProfile"
         android:icon="@android:drawable/ic_dialog_dialer"
         android:title="Update details" />
+    <item
+        android:id="@+id/allConnectedUserPosts"
+        android:icon="@android:drawable/ic_dialog_dialer"
+        android:title="My Posts" />
 </menu>

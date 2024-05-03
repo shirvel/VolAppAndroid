@@ -83,4 +83,9 @@
         android:name="com.example.app.Modules.maps.vol_map"
         android:label="fragment_vol_map"
         tools:layout="@layout/fragment_vol_map2" />
+    <fragment
+        android:id="@+id/allConnectedUserPosts"
+        android:name="com.example.app.Modules.Posts.AllConnectedUserPosts"
+        android:label="fragment_all_connected_user_posts"
+        tools:layout="@layout/fragment_all_connected_user_posts" />
 </navigation>

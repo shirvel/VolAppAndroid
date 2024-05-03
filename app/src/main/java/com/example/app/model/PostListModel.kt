@@ -26,6 +26,13 @@ class PostListModel private constructor() {
         fun onComplete(post: List<Post>)
 
     }
+
+    fun getAllConnectedUserPosts() :LiveData<MutableList<Post>> {
+        // TODO: Implement this the right way from the DB by new Query
+        refreshgetAllPosts()
+        return posts ?: database.postDao().getAllPosts()
+    }
+
     fun getAllPosts() :LiveData<MutableList<Post>> {
         refreshgetAllPosts()
         return posts ?: database.postDao().getAllPosts()

@@ -6,20 +6,19 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.app.Modules.Posts.Adapter.PostsRecyclerAdapter
+import com.example.app.R
+import com.example.app.databinding.FragmentAllPostsBinding
 import com.example.app.model.Post
 import com.example.app.model.PostListModel
-import android.widget.ProgressBar
-import com.example.app.Modules.Posts.Adapter.PostsRecyclerAdapter
-import com.example.app.databinding.FragmentAllPostsBinding
 
 
-
-
-class AllPosts : Fragment() {
+class AllConnectedUserPosts : Fragment() {
 
     var postsRcyclerView: RecyclerView? = null
     var adapter: PostsRecyclerAdapter? = null
@@ -39,13 +38,13 @@ class AllPosts : Fragment() {
         postviewmodel = ViewModelProvider(this)[PostsViewModel::class.java]
         progressBar = binding.progressBar
         progressBar?.visibility = View.VISIBLE
-        postviewmodel.posts = PostListModel.instance.getAllPosts()
+        postviewmodel.posts = PostListModel.instance.getAllConnectedUserPosts()
 
         postsRcyclerView = binding.rvAllPostsFragment
         postsRcyclerView?.setHasFixedSize(true)
         postsRcyclerView?.layoutManager = LinearLayoutManager(context)
-        adapter = PostsRecyclerAdapter(postviewmodel.posts?.value, false)
-        adapter?.listener = object : OnItemClickListener {
+        adapter = PostsRecyclerAdapter(postviewmodel.posts?.value, true)
+        adapter?.listener = object : AllPosts.OnItemClickListener {
 
             override fun onItemClick(position: Int) {
                 Log.i("TAG", "PostsRecyclerAdapter: Position clicked $position")
@@ -85,7 +84,7 @@ class AllPosts : Fragment() {
         super.onResume()
 
         reloadData()
-        }
+    }
 
     private fun reloadData() {
         progressBar?.visibility = View.VISIBLE
@@ -96,10 +95,5 @@ class AllPosts : Fragment() {
         super.onDestroy()
 
         _binding = null
-    }
-
-    interface OnItemClickListener {
-        fun onItemClick(position: Int)
-        fun onPostClicked(post: Post?)
     }
 }
