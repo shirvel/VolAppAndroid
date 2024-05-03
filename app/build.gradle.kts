@@ -5,6 +5,7 @@ plugins {
     id("kotlin-android")
     id("kotlin-kapt")
     id("com.google.gms.google-services")
+    //alias(libs.plugins.googleAndroidLibrariesMapsplatformSecretsGradlePlugin)
     id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 }
 

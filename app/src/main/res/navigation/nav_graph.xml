@@ -80,7 +80,7 @@
         tools:layout="@layout/fragment_comments" />
     <fragment
         android:id="@+id/vol_map"
-        android:name="com.example.app.Modules.vol_map"
+        android:name="com.example.app.Modules.maps.vol_map"
         android:label="fragment_vol_map"
         tools:layout="@layout/fragment_vol_map2" />
 </navigation>
