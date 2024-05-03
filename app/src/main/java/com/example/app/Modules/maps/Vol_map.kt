@@ -1,27 +1,21 @@
-package com.example.app.Modules
+package com.example.app.Modules.maps
 
 import android.Manifest
-import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Geocoder
-import android.location.LocationManager
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import com.example.app.R
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
@@ -111,9 +105,14 @@ class vol_map : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener 
             if (addresses != null) {
                 if (addresses.isNotEmpty()) {
                     val address = addresses[0].getAddressLine(0)
+                    val location = addressToLatLng(requireContext(), address)
+                    Log.i("TAG", "The location address: $location")
                     return address
+
                 }
+
             }
+
         } catch (e: IOException) {
             e.printStackTrace()
             return "Error"
@@ -127,6 +126,7 @@ class vol_map : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener 
         val markerName = marker.title
         Toast.makeText(requireContext(), "Clicked location is $markerName", Toast.LENGTH_SHORT)
             .show()
+
         return true
     }
 
