@@ -12,10 +12,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.app.model.Post
 import com.example.app.model.PostListModel
-import com.example.app.Modules.Posts.Adapter.PostsRecyclerAdapter
 import android.widget.ProgressBar
+import com.example.app.Modules.Posts.Adapter.PostsRecyclerAdapter
 import com.example.app.databinding.FragmentAllPostsBinding
-import android.widget.ImageButton
+
+
 
 
 class AllPosts : Fragment() {
@@ -44,7 +45,7 @@ class AllPosts : Fragment() {
         postsRcyclerView?.setHasFixedSize(true)
         postsRcyclerView?.layoutManager = LinearLayoutManager(context)
         adapter = PostsRecyclerAdapter(postviewmodel.posts?.value)
-        adapter?.listener = object : PostsRcyclerViewActivity.OnItemClickListener {
+        adapter?.listener = object : OnItemClickListener {
 
             override fun onItemClick(position: Int) {
                 Log.i("TAG", "PostsRecyclerAdapter: Position clicked $position")
@@ -95,5 +96,10 @@ class AllPosts : Fragment() {
         super.onDestroy()
 
         _binding = null
+    }
+
+    interface OnItemClickListener {
+        fun onItemClick(position: Int)
+        fun onPostClicked(post: Post?)
     }
 }

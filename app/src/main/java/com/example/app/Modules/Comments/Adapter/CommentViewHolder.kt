@@ -4,14 +4,12 @@ import android.util.Log
 import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.app.Modules.Comments.Comments
 import com.example.app.model.Comment
-import  com.example.app.Modules.Comments.Comments
-import com.example.app.Modules.Comments.CommentsRcyclerViewActivity
 import com.example.app.R
-import com.example.app.model.Post
 
 class CommentViewHolder(val itemView: View,
-                        val listener: CommentsRcyclerViewActivity.OnItemClickListener?,
+                        val listener: Comments.OnItemClickListener?,
                         var comments: List<Comment>?): RecyclerView.ViewHolder(itemView) {
 
     var writerTextView: TextView? = null

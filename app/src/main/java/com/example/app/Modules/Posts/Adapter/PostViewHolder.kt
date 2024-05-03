@@ -5,12 +5,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.app.model.Post
 import android.widget.TextView
 import com.example.app.Modules.Posts.AllPosts
-import com.example.app.Modules.Posts.PostsRcyclerViewActivity
 import com.example.app.R
 
 class PostViewHolder(val itemView: View,
-                        val listener: PostsRcyclerViewActivity.OnItemClickListener?,
-                        var posts: List<Post>?): RecyclerView.ViewHolder(itemView) {
+                     val listener: AllPosts.OnItemClickListener?,
+                     var posts: List<Post>?): RecyclerView.ViewHolder(itemView) {
 
     var titleTextView: TextView? = null
     var contentTextView: TextView? = null

@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
 import android.widget.ProgressBar
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
@@ -16,7 +15,6 @@ import com.example.app.model.Comment
 import com.example.app.model.CommentListModel
 import com.example.app.Modules.Comments.Adapter.CommentsRecyclerAdapter
 import com.example.app.Modules.Posts.AllPostsDirections
-import com.example.app.R
 import com.example.app.databinding.FragmentCommentsBinding
 
 
@@ -43,7 +41,7 @@ class Comments : Fragment() {
             commentsRcyclerView?.setHasFixedSize(true)
             commentsRcyclerView?.layoutManager = LinearLayoutManager(context)
             adapter = CommentsRecyclerAdapter(commentviewmodel.comments?.value)
-            adapter?.listener = object : CommentsRcyclerViewActivity.OnItemClickListener {
+            adapter?.listener = object : OnItemClickListener {
 
                 override fun onItemClick(position: Int) {
                     Log.i("TAG", "PostsRecyclerAdapter: Position clicked $position")
@@ -94,5 +92,10 @@ class Comments : Fragment() {
         super.onDestroy()
 
         _binding = null
+    }
+
+    interface OnItemClickListener {
+        fun onItemClick(position: Int)
+        fun onCommentClicked(comment: Comment?)
     }
 }

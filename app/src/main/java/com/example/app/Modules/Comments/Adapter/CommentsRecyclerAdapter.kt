@@ -4,12 +4,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.app.model.Comment
 import com.example.app.R
-import com.example.app.Modules.Comments.CommentsRcyclerViewActivity
-import com.example.app.Modules.Comments.Adapter.CommentViewHolder
+import com.example.app.Modules.Comments.Comments
 
 class CommentsRecyclerAdapter(var comments: List<Comment>?): RecyclerView.Adapter<CommentViewHolder>() {
 
-    var listener: CommentsRcyclerViewActivity.OnItemClickListener? = null
+    var listener: Comments.OnItemClickListener? = null
 
     override fun getItemCount(): Int = comments?.size ?: 0
 
