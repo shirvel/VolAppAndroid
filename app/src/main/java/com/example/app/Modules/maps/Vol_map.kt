@@ -3,7 +3,6 @@ package com.example.app.Modules.maps
 import android.Manifest
 import android.content.pm.PackageManager
 import android.location.Geocoder
-import android.location.Location
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
