@@ -15,6 +15,9 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import com.example.app.Modules.Posts.AllPosts
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 class UpdateUserProfileFragment : Fragment() {
 
@@ -28,6 +31,8 @@ class UpdateUserProfileFragment : Fragment() {
     private lateinit var imageView: ImageView
     private val PICK_IMAGE_REQUEST = 1
 
+    private lateinit var auth: FirebaseAuth
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -36,6 +41,13 @@ class UpdateUserProfileFragment : Fragment() {
         val view =  inflater.inflate(R.layout.fragment_update_user_profile, container, false)
         setUpUI(view)
         return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // Initialize Firebase Auth
+        auth = Firebase.auth
     }
 
 
@@ -49,7 +61,15 @@ class UpdateUserProfileFragment : Fragment() {
 
         imageView = view.findViewById(R.id.imageViewAvatar)
 
+        val user = Firebase.auth.currentUser
+        if (user != null) {
+            emailTextField?.setText(user.email)
+            passwordTextField?.setText("******")
 
+        } else {
+            emailTextField?.setText("<not logged in>")
+            passwordTextField?.setText("<not logged in>")
+        }
 
         clickToAddPhoto();
         clickSaveButton();
