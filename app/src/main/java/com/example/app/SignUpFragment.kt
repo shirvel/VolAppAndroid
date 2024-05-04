@@ -39,13 +39,12 @@ class SignUpFragment : Fragment() {
     private lateinit var imageView: ImageView
     private val PICK_IMAGE_REQUEST = 1
 
-    //private lateinit var authFragment: AuthFragment
+    //private late init var authFragment: AuthFragment
     private lateinit var auth: FirebaseAuth
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        //authFragment = AuthFragment()
         // Inflate the layout for this fragment
         val view =  inflater.inflate(R.layout.fragment_sign_up, container, false)
         setUpUI(view)
@@ -70,22 +69,16 @@ class SignUpFragment : Fragment() {
 
         imageView = view.findViewById(R.id.imageViewAvatar)
 
-
-
         clickToAddPhoto();
         clickSaveButton(view);
         clickCancelButton();
-
-
     }
 
     private fun clickToAddPhoto() {
         imageView.setOnClickListener {
             chooseImage()
         }
-
     }
-
 
     private fun clickSaveButton(view: View) {
         saveButton?.setOnClickListener {
@@ -95,25 +88,28 @@ class SignUpFragment : Fragment() {
 
             val id = 18; // TODO: change userID
 
-         //   val user = User(id, email, password, name)
-
-
-            createAccount(email, password)
-//            val action = SignUpFragmentDirections.actionSignUpFragmentToAuthFragment(email, password)
-//            Navigation.findNavController(view).navigate(action)
-
-            //authFragment.createAccount(email, password)
-       //     createAccount
-//            UserListModel.instance.addUser(view, user) {
-//                Navigation.findNavController(it).popBackStack(R.id.LoginFragment, false)
-//            }
+            if (validateCreds(name, email, password))
+                createAccount(email, password)
         }
     }
 
+    private fun validateCreds(name:String, email:String, password:String): Boolean {
+        if (name.isEmpty() || email.isEmpty() || password.isEmpty()) {
+            Toast.makeText(
+                requireContext(),
+                "All fields must be filled",
+                Toast.LENGTH_LONG,
+            ).show()
+            return false
+        }
+        else {
+            return true
+        }
+    }
 
     private fun clickCancelButton() {
         cancelButton?.setOnClickListener {
-         //   activity?.finish() //TODO?
+            findNavController().navigate(R.id.LoginFragment)
         }
     }
 
@@ -156,8 +152,7 @@ class SignUpFragment : Fragment() {
         return outputBitmap
     }
 
-    public fun createAccount(email: String, password: String) {
-        // [START create_user_with_email]
+    fun createAccount(email: String, password: String) {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(requireActivity()) { task ->
                 if (task.isSuccessful) {
@@ -175,20 +170,16 @@ class SignUpFragment : Fragment() {
                         Toast.LENGTH_LONG,
                     ).show()
 
-                    //onFail(task.exception?.message)
                 }
             }
-        // [END create_user_with_email]
     }
 
-    public fun onSuccess(user: FirebaseUser?) {
+    fun onSuccess(user: FirebaseUser?) {
         // TODO maybe pass user as argument
-        findNavController().navigate(R.id.allPost)
+        findNavController().navigate(R.id.LoginFragment)
     }
 
     companion object {
         private const val TAG = "Signup"
     }
-
-
 }
