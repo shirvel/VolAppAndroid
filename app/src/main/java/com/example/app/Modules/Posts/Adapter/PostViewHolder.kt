@@ -13,11 +13,13 @@ class PostViewHolder(val itemView: View,
 
     var titleTextView: TextView? = null
     var contentTextView: TextView? = null
+    var addrerssTextView: TextView? = null
     var post: Post? = null
 
     init {
         titleTextView = itemView.findViewById(R.id.tvPostListRowTitle)
         contentTextView = itemView.findViewById(R.id.tvPostListRowContent)
+        addrerssTextView = itemView.findViewById(R.id.tvPostListRowAddress)
 
         itemView.setOnClickListener {
             Log.i("TAG", "Position clicked $adapterPosition")
@@ -31,5 +33,6 @@ class PostViewHolder(val itemView: View,
         this.post = post
         titleTextView?.text = post?.title
         contentTextView?.text = post?.content
+        addrerssTextView?.text = post?.address
     }
 }
