@@ -45,10 +45,9 @@
 
     <ImageView
         android:id="@+id/ivPostListRowImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="99dp"
+        android:layout_height="84dp"
         android:layout_marginTop="20dp"
-        android:background="@drawable/viewpic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toEndOf="@+id/tvPostListRowAvatar"

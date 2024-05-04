@@ -38,7 +38,8 @@ data class Post(
             fun fromJSON(json: Map<String, Any>): Post{
                 val title = json["title"] as? String?: ""
                 val content = json["content"] as? String?: ""
-                val post = Post(title, "", content, "", false )
+                val image = json["image"] as? String?: ""
+                val post = Post(title, "", content, image, false )
                 val timeStamp: Timestamp? = json[LAST_UPDATED] as? Timestamp
                 timeStamp?.let {
                     post.lastUpdated = it.seconds
