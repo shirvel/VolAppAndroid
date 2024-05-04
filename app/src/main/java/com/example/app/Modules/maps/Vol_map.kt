@@ -10,7 +10,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import com.example.app.Modules.Posts.AllPostsDirections
 import com.example.app.R
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -127,6 +130,10 @@ class vol_map : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener 
         Toast.makeText(requireContext(), "Clicked location is $markerName", Toast.LENGTH_SHORT)
             .show()
 
+
+        val safarisValue = markerName // Example Writer
+        val bundle = bundleOf("postWriter" to safarisValue)
+        findNavController().navigate(R.id.action_vol_map_to_post, bundle)
         return true
     }
 
