@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -14,11 +15,17 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import com.example.app.Modules.Posts.AllPosts
 import com.example.app.model.User
 import com.example.app.model.UserFirebaseModel
 import com.example.app.model.UserListModel
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 class SignUpFragment : Fragment() {
 
@@ -32,16 +39,24 @@ class SignUpFragment : Fragment() {
     private lateinit var imageView: ImageView
     private val PICK_IMAGE_REQUEST = 1
 
-    private lateinit var authFragment: AuthFragment
+    //private lateinit var authFragment: AuthFragment
+    private lateinit var auth: FirebaseAuth
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        authFragment = AuthFragment()
+        //authFragment = AuthFragment()
         // Inflate the layout for this fragment
         val view =  inflater.inflate(R.layout.fragment_sign_up, container, false)
         setUpUI(view)
         return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // Initialize Firebase Auth
+        auth = Firebase.auth
     }
 
 
@@ -83,8 +98,9 @@ class SignUpFragment : Fragment() {
          //   val user = User(id, email, password, name)
 
 
-            val action = SignUpFragmentDirections.actionSignUpFragmentToAuthFragment(email, password)
-            Navigation.findNavController(view).navigate(action)
+            createAccount(email, password)
+//            val action = SignUpFragmentDirections.actionSignUpFragmentToAuthFragment(email, password)
+//            Navigation.findNavController(view).navigate(action)
 
             //authFragment.createAccount(email, password)
        //     createAccount
@@ -138,6 +154,40 @@ class SignUpFragment : Fragment() {
         canvas.drawBitmap(bitmap, rect, rect, paint)
 
         return outputBitmap
+    }
+
+    public fun createAccount(email: String, password: String) {
+        // [START create_user_with_email]
+        auth.createUserWithEmailAndPassword(email, password)
+            .addOnCompleteListener(requireActivity()) { task ->
+                if (task.isSuccessful) {
+                    // Sign in success, update UI with the signed-in user's information
+                    //   Log.i(TAG, "createUserWithEmail:success")
+                    Log.d(TAG, "createUserWithEmail:success")
+                    val user = auth.currentUser
+                    onSuccess(user)
+                } else {
+                    // If sign in fails, display a message to the user.
+                    Log.w(TAG, "createUserWithEmail:failure", task.exception)
+                    Toast.makeText(
+                        requireContext(),
+                        task.exception?.message ?: "Authentication failed.",
+                        Toast.LENGTH_LONG,
+                    ).show()
+
+                    //onFail(task.exception?.message)
+                }
+            }
+        // [END create_user_with_email]
+    }
+
+    public fun onSuccess(user: FirebaseUser?) {
+        // TODO maybe pass user as argument
+        findNavController().navigate(R.id.allPost)
+    }
+
+    companion object {
+        private const val TAG = "Signup"
     }
 
 

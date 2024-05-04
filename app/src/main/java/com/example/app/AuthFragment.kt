@@ -40,34 +40,8 @@ class AuthFragment : Fragment() {
         val email = arguments?.getString("email") ?: ""
         val password = arguments?.getString("password") ?: ""
 
-        // Call createAccount function with email and password
-        createAccount(email, password)
     }
 
-    public fun createAccount(email: String, password: String) {
-        // [START create_user_with_email]
-        auth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener(requireActivity()) { task ->
-                if (task.isSuccessful) {
-                    // Sign in success, update UI with the signed-in user's information
-                 //   Log.i(TAG, "createUserWithEmail:success")
-                    Log.d(TAG, "createUserWithEmail:success")
-                    val user = auth.currentUser
-                    onSuccess(user)
-                } else {
-                    // If sign in fails, display a message to the user.
-                    Log.w(TAG, "createUserWithEmail:failure", task.exception)
-                    Toast.makeText(
-                        requireContext(),
-                        task.exception?.message ?: "Authentication failed.",
-                        Toast.LENGTH_LONG,
-                    ).show()
-
-                    onFail(task.exception?.message)
-                }
-            }
-        // [END create_user_with_email]
-    }
 
     public fun signIn(email: String, password: String) {
         // [START sign_in_with_email]
@@ -77,7 +51,6 @@ class AuthFragment : Fragment() {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d(TAG, "signInWithEmail:success")
                     val user = auth.currentUser
-                    onSuccess(user)
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w(TAG, "signInWithEmail:failure", task.exception)
@@ -99,13 +72,6 @@ class AuthFragment : Fragment() {
                 // Email Verification sent
             }
         // [END send_email_verification]
-    }
-
-    fun onFail(message: String?) {
-        findNavController().navigate(R.id.action_auth_failed)
-    }
-    public fun onSuccess(user: FirebaseUser?) {
-        findNavController().navigate(R.id.action_auth_success)
     }
 
     companion object {
