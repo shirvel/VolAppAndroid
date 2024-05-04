@@ -82,7 +82,7 @@
         android:id="@+id/vol_map"
         android:name="com.example.app.Modules.maps.vol_map"
         android:label="fragment_vol_map"
-        tools:layout="@layout/fragment_vol_map2" >
+        tools:layout="@layout/fragment_vol_map" >
         <action
             android:id="@+id/action_vol_map_to_post"
             app:destination="@id/post" />

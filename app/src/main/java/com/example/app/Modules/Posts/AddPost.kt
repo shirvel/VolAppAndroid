@@ -1,5 +1,9 @@
 package com.example.app.Modules.Posts
+import android.app.Activity
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,72 +14,87 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.navigation.Navigation
 import com.example.app.model.PostListModel
 import com.example.app.model.Post
 import com.example.app.Modules.Posts.AllPosts
 import com.example.app.R
+import com.example.app.databinding.FragmentAddPostBinding
 import androidx.navigation.NavController
+
 
 
 
 
 class AddPost : Fragment() {
 
-    private var nameTextField: EditText? = null
-    private var contentTextField: EditText? = null
-    private var messageTextView: TextView? = null
-    private var saveButton: Button? = null
-    private var cancelButton: Button? = null
-    private var locationText: EditText? = null
+    private var _binding: FragmentAddPostBinding? = null
+    private val binding get() = _binding!!
+
+    private var selectedImageUri: Uri? = null
+    private lateinit var imagePickerLauncher: ActivityResultLauncher<Intent>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_add_post, container, false)
+    ): View {
+        _binding = FragmentAddPostBinding.inflate(inflater, container, false)
+        val view = binding.root
         setupUI(view)
         return view
     }
 
-    private fun setupUI(view: View) {
-        nameTextField = view.findViewById(R.id.etAddPostTitle)
-        contentTextField = view.findViewById(R.id.etAddPostContent)
-        locationText = view.findViewById(R.id.etAddPostLocation)
-        messageTextView = view.findViewById(R.id.textViewContent)
-        saveButton = view.findViewById(R.id.btnAddPostSave)
-        cancelButton = view.findViewById(R.id.btnAddPostCancel)
-        messageTextView?.text = ""
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 
-        cancelButton?.setOnClickListener {
-            val navController = Navigation.findNavController(view)
-            // Pop back to LoginFragment to clear the back stack
-            navController.popBackStack(R.id.LoginFragment, false)
-            // Navigate to AllPosts fragment
-            navController.navigate(R.id.allPost)
+    private fun setupUI(view: View) {
+        binding.apply {
+            btnAddPostCancel.setOnClickListener {
+                val navController = Navigation.findNavController(view)
+                navController.navigate(R.id.allPost)
+            }
+
+            btnAddPostSave.setOnClickListener {
+                val name = etAddPostTitle.text.toString()
+                val content = etAddPostContent.text.toString()
+                val image = selectedImageUri?.toString() ?: ""
+                println("image: $image")
+                Log.i("TAG", "image $image")
+
+                val post = Post(name, "", content, image, false)
+                post.image = image
+                PostListModel.instance.addPost(post) {
+                    val navController = Navigation.findNavController(view)
+                    navController.navigate(R.id.allPost)
+                }
+            }
+
+            btnSelectImage.setOnClickListener {
+                openImagePicker()
+            }
         }
 
-        saveButton?.setOnClickListener {
-            Log.i("TAG", "the post to add here")
-            val name = nameTextField?.text.toString()
-            val content = contentTextField?.text.toString()
-            val address = locationText?.text.toString()
-            Log.i("TAG", "the post to add ${address}")
-            val post = Post(name, "", content, "", false, address)
-
-            PostListModel.instance.addPost(post) {
-                val navController = Navigation.findNavController(view)
-                // Pop back to LoginFragment to clear the back stack
-                //navController.popBackStack(R.id.LoginFragment, false)
-                // Navigate to AllPosts fragment
-                navController.navigate(R.id.allPost)
+        // Initialize image picker launcher
+        imagePickerLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val selectedImageUri = result.data?.data
+                selectedImageUri?.let {
+                    // Update UI with selected image
+                    binding.ivSelectedImage.setImageURI(it)
+                    // Save selected image URI
+                    this.selectedImageUri = it
+                    Log.i("TAG", "Selected image URI: $it")
+                }
             }
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        menu.clear()
-        super.onCreateOptionsMenu(menu, inflater)
+    private fun openImagePicker() {
+        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        imagePickerLauncher.launch(intent)
     }
 }
