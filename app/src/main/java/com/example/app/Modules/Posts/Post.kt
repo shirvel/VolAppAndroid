@@ -1,6 +1,7 @@
 package com.example.app.Modules.Posts
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -26,6 +27,7 @@ class Post : Fragment() {
         val view = inflater.inflate(R.layout.fragment_post, container, false)
         writerTextView = view.findViewById(R.id.tvPostId)
         toCommentsButton = view.findViewById(R.id.btnToComments)
+
         arguments?.let{
             writerTextView?.text = PostArgs.fromBundle(it).postWriter
         }

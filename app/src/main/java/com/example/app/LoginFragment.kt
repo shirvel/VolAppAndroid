@@ -45,8 +45,6 @@ class LoginFragment : Fragment() {
             val password = passwordTextField?.text.toString()
 
             UserListModel.instance.signIn(view, email, password) {
-            //    findNavController().navigate(R.id.action_loginFragment_to_signUpFragment)
-             //   Navigation.findNavController(it).popBackStack(R.id.AllPostsFragment, false)
                 findNavController().navigate(R.id.action_loginFragment_to_allPostFragment)
             }
         }
@@ -57,5 +55,22 @@ class LoginFragment : Fragment() {
             findNavController().navigate(R.id.action_loginFragment_to_signUpFragment)
         }
     }
+
+    override fun onResume() {
+        super.onResume()
+        // Hide the bottom navigation menu
+        if (activity != null && activity is MainActivity) {
+            (activity as MainActivity?)!!.hideBottomNavigationView()
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        // Restore the bottom navigation menu visibility
+        if (activity != null && activity is MainActivity) {
+            (activity as MainActivity?)!!.showBottomNavigationView()
+        }
+    }
+
 
 }

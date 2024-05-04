@@ -51,6 +51,7 @@ class AllPosts : Fragment() {
                 Log.i("TAG", "PostsRecyclerAdapter: Position clicked $position")
                 val post = postviewmodel.posts?.value?.get(position)
                 post?.let {
+                    Log.i("TAG", "the post $post")
                     val action = AllPostsDirections.actionAllPostsToPost(it.writer)
                     Navigation.findNavController(view).navigate(action)
                 }

@@ -20,7 +20,7 @@ class PostViewHolder(val itemView: View,
         contentTextView = itemView.findViewById(R.id.tvPostListRowContent)
 
         itemView.setOnClickListener {
-            Log.i("TAG", "StudentViewHolder: Position clicked $adapterPosition")
+            Log.i("TAG", "Position clicked $adapterPosition")
 
             listener?.onItemClick(adapterPosition)
             listener?.onPostClicked(post)
