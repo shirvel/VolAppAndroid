@@ -58,6 +58,29 @@
         android:name="com.example.app.SignUpFragment"
         android:label="fragment_sign_up"
         tools:layout="@layout/fragment_sign_up">
+        <action
+            android:id="@+id/action_signUpFragment_to_authFragment"
+            app:destination="@id/auth">
+            <argument
+                android:name="email"
+                app:argType="string" />
+            <argument
+                android:name="password"
+                app:argType="string" />
+        </action>
+    </fragment>
+
+    <fragment
+        android:id="@+id/auth"
+        android:name="com.example.app.AuthFragment"
+        android:label="fragment_auth"
+        tools:layout="@layout/fragment_auth">
+        <action
+            android:id="@+id/action_auth_failed"
+            app:destination="@id/signup"/>
+        <action
+            android:id="@+id/action_auth_success"
+            app:destination="@id/allPost"/>
     </fragment>
 
 

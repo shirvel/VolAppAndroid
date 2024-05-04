@@ -32,10 +32,12 @@ class SignUpFragment : Fragment() {
     private lateinit var imageView: ImageView
     private val PICK_IMAGE_REQUEST = 1
 
+    private lateinit var authFragment: AuthFragment
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        authFragment = AuthFragment()
         // Inflate the layout for this fragment
         val view =  inflater.inflate(R.layout.fragment_sign_up, container, false)
         setUpUI(view)
@@ -78,10 +80,17 @@ class SignUpFragment : Fragment() {
 
             val id = 18; // TODO: change userID
 
-            val user = User(id, email, password, name)
-            UserListModel.instance.addUser(view, user) {
-                Navigation.findNavController(it).popBackStack(R.id.LoginFragment, false)
-            }
+         //   val user = User(id, email, password, name)
+
+
+            val action = SignUpFragmentDirections.actionSignUpFragmentToAuthFragment(email, password)
+            Navigation.findNavController(view).navigate(action)
+
+            //authFragment.createAccount(email, password)
+       //     createAccount
+//            UserListModel.instance.addUser(view, user) {
+//                Navigation.findNavController(it).popBackStack(R.id.LoginFragment, false)
+//            }
         }
     }
 
