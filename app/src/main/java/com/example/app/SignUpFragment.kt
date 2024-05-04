@@ -179,6 +179,22 @@ class SignUpFragment : Fragment() {
         findNavController().navigate(R.id.LoginFragment)
     }
 
+    override fun onResume() {
+        super.onResume()
+        // Hide the bottom navigation menu
+        if (activity != null && activity is MainActivity) {
+            (activity as MainActivity?)!!.hideBottomNavigationView()
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        // Restore the bottom navigation menu visibility
+        if (activity != null && activity is MainActivity) {
+            (activity as MainActivity?)!!.showBottomNavigationView()
+        }
+    }
+
     companion object {
         private const val TAG = "Signup"
     }
