@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -14,11 +15,17 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import com.example.app.Modules.Posts.AllPosts
 import com.example.app.model.User
 import com.example.app.model.UserFirebaseModel
 import com.example.app.model.UserListModel
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 class SignUpFragment : Fragment() {
 
@@ -32,6 +39,8 @@ class SignUpFragment : Fragment() {
     private lateinit var imageView: ImageView
     private val PICK_IMAGE_REQUEST = 1
 
+    //private late init var authFragment: AuthFragment
+    private lateinit var auth: FirebaseAuth
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -40,6 +49,13 @@ class SignUpFragment : Fragment() {
         val view =  inflater.inflate(R.layout.fragment_sign_up, container, false)
         setUpUI(view)
         return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // Initialize Firebase Auth
+        auth = Firebase.auth
     }
 
 
@@ -53,22 +69,16 @@ class SignUpFragment : Fragment() {
 
         imageView = view.findViewById(R.id.imageViewAvatar)
 
-
-
         clickToAddPhoto();
         clickSaveButton(view);
         clickCancelButton();
-
-
     }
 
     private fun clickToAddPhoto() {
         imageView.setOnClickListener {
             chooseImage()
         }
-
     }
-
 
     private fun clickSaveButton(view: View) {
         saveButton?.setOnClickListener {
@@ -78,17 +88,28 @@ class SignUpFragment : Fragment() {
 
             val id = 18; // TODO: change userID
 
-            val user = User(id, email, password, name)
-            UserListModel.instance.addUser(view, user) {
-                Navigation.findNavController(it).popBackStack(R.id.LoginFragment, false)
-            }
+            if (validateCreds(name, email, password))
+                createAccount(email, password)
         }
     }
 
+    private fun validateCreds(name:String, email:String, password:String): Boolean {
+        if (name.isEmpty() || email.isEmpty() || password.isEmpty()) {
+            Toast.makeText(
+                requireContext(),
+                "All fields must be filled",
+                Toast.LENGTH_LONG,
+            ).show()
+            return false
+        }
+        else {
+            return true
+        }
+    }
 
     private fun clickCancelButton() {
         cancelButton?.setOnClickListener {
-         //   activity?.finish() //TODO?
+            findNavController().navigate(R.id.LoginFragment)
         }
     }
 
@@ -131,5 +152,34 @@ class SignUpFragment : Fragment() {
         return outputBitmap
     }
 
+    fun createAccount(email: String, password: String) {
+        auth.createUserWithEmailAndPassword(email, password)
+            .addOnCompleteListener(requireActivity()) { task ->
+                if (task.isSuccessful) {
+                    // Sign in success, update UI with the signed-in user's information
+                    //   Log.i(TAG, "createUserWithEmail:success")
+                    Log.d(TAG, "createUserWithEmail:success")
+                    val user = auth.currentUser
+                    onSuccess(user)
+                } else {
+                    // If sign in fails, display a message to the user.
+                    Log.w(TAG, "createUserWithEmail:failure", task.exception)
+                    Toast.makeText(
+                        requireContext(),
+                        task.exception?.message ?: "Authentication failed.",
+                        Toast.LENGTH_LONG,
+                    ).show()
 
+                }
+            }
+    }
+
+    fun onSuccess(user: FirebaseUser?) {
+        // TODO maybe pass user as argument
+        findNavController().navigate(R.id.LoginFragment)
+    }
+
+    companion object {
+        private const val TAG = "Signup"
+    }
 }

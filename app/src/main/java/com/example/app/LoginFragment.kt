@@ -1,14 +1,21 @@
 package com.example.app
 
 import android.os.Bundle
+import android.util.Log
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
-import androidx.fragment.app.Fragment
+import android.widget.Toast
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.example.app.model.UserListModel
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 class LoginFragment : Fragment() {
 
@@ -16,6 +23,8 @@ class LoginFragment : Fragment() {
     private var passwordTextField: EditText? = null
     private var loginButton: Button? = null
     private var registerButton: Button? = null
+
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,6 +35,13 @@ class LoginFragment : Fragment() {
 
         setUpUI(view)
         return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // Initialize Firebase Auth
+        auth = Firebase.auth
     }
 
     private fun setUpUI(view: View) {
@@ -43,9 +59,22 @@ class LoginFragment : Fragment() {
             val email = emailTextField?.text.toString()
             val password = passwordTextField?.text.toString()
 
-            UserListModel.instance.signIn(view, email, password) {
-                findNavController().navigate(R.id.action_loginFragment_to_allPostFragment)
-            }
+            if (validateCreds(email, password))
+                signIn(email, password)
+        }
+    }
+
+    private fun validateCreds(email:String, password:String): Boolean {
+        if (email.isEmpty() || password.isEmpty()) {
+            Toast.makeText(
+                requireContext(),
+                "All fields must be filled",
+                Toast.LENGTH_LONG,
+            ).show()
+            return false
+        }
+        else {
+            return true
         }
     }
 
@@ -53,6 +82,31 @@ class LoginFragment : Fragment() {
         registerButton?.setOnClickListener {
             findNavController().navigate(R.id.action_loginFragment_to_signUpFragment)
         }
+    }
+
+    fun signIn(email: String, password: String) {
+        auth.signInWithEmailAndPassword(email, password)
+            .addOnCompleteListener(requireActivity()) { task ->
+                if (task.isSuccessful) {
+                    // Sign in success, update UI with the signed-in user's information
+                    Log.d(TAG, "signInWithEmail:success")
+                    val user = auth.currentUser
+                    onSuccess(user)
+                } else {
+                    // If sign in fails, display a message to the user.
+                    Log.w(TAG, "signInWithEmail:failure", task.exception)
+                    Toast.makeText(
+                        requireContext(),
+                        task.exception?.message ?: "Authentication failed.",
+                        Toast.LENGTH_LONG,
+                    ).show()
+                }
+            }
+    }
+
+    fun onSuccess(user: FirebaseUser?) {
+        // TODO maybe pass user as argument
+        findNavController().navigate(R.id.allPost)
     }
 
     override fun onResume() {
@@ -71,5 +125,7 @@ class LoginFragment : Fragment() {
         }
     }
 
-
+    companion object {
+        private const val TAG = "Login"
+    }
 }
