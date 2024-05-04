@@ -3,6 +3,7 @@ package com.example.app.Modules.maps
 import android.Manifest
 import android.content.pm.PackageManager
 import android.location.Geocoder
+import android.location.Location
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,7 +14,6 @@ import androidx.core.app.ActivityCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.example.app.Modules.Posts.AllPostsDirections
 import com.example.app.R
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -76,10 +76,9 @@ class vol_map : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener 
             .addOnSuccessListener { location ->
                 if (location != null) {
                     val currentLatLng = LatLng(location.latitude, location.longitude)
-                    currentLocationMarker = mMap.addMarker(MarkerOptions().position(currentLatLng))
-                    currentLocationMarker?.setTitle(getAddress(currentLocationMarker))
+                    addMarkerForLocation(currentLatLng)
 
-                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 15f))
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 12f))
                 } else {
                     Toast.makeText(
                         requireContext(),
@@ -93,6 +92,25 @@ class vol_map : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener 
         mMap.setOnMarkerClickListener { marker ->
             onMarkerClick(marker)
         }
+
+        addMarkerForAddress("dfg")
+    }
+
+    fun addMarkerForAddress(address: String){
+        val location = addressToLatLng(requireContext(), "Hagibor Halmoni 50 tel aviv")
+        Log.i("TAG", "The location address: $location")
+        if (location != null){
+            addMarkerForLocation(location)
+        }
+
+
+    }
+
+
+    fun addMarkerForLocation(location: LatLng){
+
+        currentLocationMarker = mMap.addMarker(MarkerOptions().position(location))
+        currentLocationMarker?.setTitle(getAddress(currentLocationMarker))
     }
 
     fun getAddress(marker: Marker?): String {
@@ -108,8 +126,7 @@ class vol_map : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener 
             if (addresses != null) {
                 if (addresses.isNotEmpty()) {
                     val address = addresses[0].getAddressLine(0)
-                    val location = addressToLatLng(requireContext(), address)
-                    Log.i("TAG", "The location address: $location")
+
                     return address
 
                 }
