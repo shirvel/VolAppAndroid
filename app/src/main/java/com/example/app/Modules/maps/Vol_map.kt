@@ -3,7 +3,6 @@ package com.example.app.Modules.maps
 import android.Manifest
 import android.content.pm.PackageManager
 import android.location.Geocoder
-import android.location.Location
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -15,6 +14,8 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.app.R
+import com.example.app.model.Post
+import com.example.app.model.PostListModel
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -76,7 +77,7 @@ class vol_map : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener 
             .addOnSuccessListener { location ->
                 if (location != null) {
                     val currentLatLng = LatLng(location.latitude, location.longitude)
-                    addMarkerForLocation(currentLatLng)
+                    addMarkerForLocation(currentLatLng, "Your Location")
 
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 12f))
                 } else {
@@ -88,29 +89,27 @@ class vol_map : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener 
                 }
             }
 
+        loadAllPostsLocationsToMap();
+
         // adding on click listener to marker of google maps.
         mMap.setOnMarkerClickListener { marker ->
             onMarkerClick(marker)
         }
-
-        addMarkerForAddress("dfg")
     }
 
-    fun addMarkerForAddress(address: String){
-        val location = addressToLatLng(requireContext(), "Hagibor Halmoni 50 tel aviv")
+    fun addMarkerForAddress(address: String, title: String){
+        val location = addressToLatLng(requireContext(), address)
         Log.i("TAG", "The location address: $location")
         if (location != null){
-            addMarkerForLocation(location)
+            addMarkerForLocation(location, title)
         }
-
-
     }
 
 
-    fun addMarkerForLocation(location: LatLng){
+    fun addMarkerForLocation(location: LatLng, title: String){
 
         currentLocationMarker = mMap.addMarker(MarkerOptions().position(location))
-        currentLocationMarker?.setTitle(getAddress(currentLocationMarker))
+        currentLocationMarker?.setTitle(title)
     }
 
     fun getAddress(marker: Marker?): String {
@@ -141,17 +140,37 @@ class vol_map : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener 
     }
 
     override fun onMarkerClick(marker: Marker): Boolean {
-        Log.i("TAG", "The marker was clicked")
         // which is clicked and displaying it in a toast message.
         val markerName = marker.title
         Toast.makeText(requireContext(), "Clicked location is $markerName", Toast.LENGTH_SHORT)
             .show()
 
-
-        val safarisValue = markerName // Example Writer
-        val bundle = bundleOf("postWriter" to safarisValue)
-        findNavController().navigate(R.id.action_vol_map_to_post, bundle)
+        if (markerName != "Your Location"){
+            val safarisValue = markerName // Example Writer
+            val bundle = bundleOf("postId" to safarisValue)
+            findNavController().navigate(R.id.action_vol_map_to_post, bundle)
+        }
         return true
+    }
+
+    fun loadAllPostsLocationsToMap(){
+        val allPostsLiveData = PostListModel.instance.getAllPosts()
+        Log.i("TAG", "the posts test")
+        allPostsLiveData.observe(viewLifecycleOwner){allPosts ->
+            Log.i("TAG", "the posts: ${allPosts}")
+            if (allPosts != null) {
+                for (post in allPosts){
+                    if (post.address.isNotEmpty()){
+                        addMarkerForAddress(post.address, post.title)
+                        Log.i("TAG", "add post with address: ${post.address}")
+                    }
+                }
+            }else{
+//                addMarkerForAddress("hagibor haalmoni 50", "id of post")
+            }
+        }
+
+
     }
 
 

@@ -27,6 +27,7 @@ class EditPost : Fragment() {
     private var saveButton: Button? = null
     private var cancelButton: Button? = null
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -38,7 +39,7 @@ class EditPost : Fragment() {
     }
 
     private fun setupUI(view: View) {
-        nameTextField = view.findViewById(R.id.etAddPostTitle)
+        nameTextField = view.findViewById(R.id.etEditPostTitle)
         contentTextField = view.findViewById(R.id.etAddPostContent)
         messageTextView = view.findViewById(R.id.textViewContent)
         saveButton = view.findViewById(R.id.btnAddPostSave)
@@ -57,7 +58,7 @@ class EditPost : Fragment() {
             val name = nameTextField?.text.toString()
             val content = contentTextField?.text.toString()
 
-            val post = Post(name, "", content, "", false )
+            val post = Post(name, "", content, "", false, "address - fake" )
             PostListModel.instance.addPost(post) {
                 val navController = Navigation.findNavController(view)
                 // Pop back to LoginFragment to clear the back stack

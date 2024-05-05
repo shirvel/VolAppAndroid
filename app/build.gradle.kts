@@ -5,7 +5,7 @@ plugins {
     id("kotlin-android")
     id("kotlin-kapt")
     id("com.google.gms.google-services")
-    //alias(libs.plugins.googleAndroidLibrariesMapsplatformSecretsGradlePlugin)
+//    alias(libs.plugins.googleAndroidLibrariesMapsplatformSecretsGradlePlugin)
     id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 }
 
@@ -73,6 +73,8 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0")
     implementation("com.google.android.gms:play-services-location:18.0.0")
+    implementation("com.github.bumptech.glide:glide:4.12.0")
+    annotationProcessor("com.github.bumptech.glide:compiler:4.12.0")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
@@ -81,6 +83,7 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    api("com.google.android.material:material:1.1.0-alpha06")
 
     kapt("androidx.room:room-compiler:2.4.0")
 
