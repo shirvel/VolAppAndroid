@@ -14,6 +14,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.navigation.Navigation
@@ -40,6 +41,7 @@ class AddPost : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        Log.i("TAG", "in the add post create view")
         _binding = FragmentAddPostBinding.inflate(inflater, container, false)
         val view = binding.root
         setupUI(view)
@@ -63,14 +65,18 @@ class AddPost : Fragment() {
                 val content = etAddPostContent.text.toString()
                 val image = selectedImageUri?.toString() ?: ""
                 val location = etAddPostLocation.text.toString()
-                println("image: $image")
+
                 Log.i("TAG", "image $image")
 
                 val post = Post(name, "", content, image, false,location)
                 post.image = image
                 PostListModel.instance.addPost(post) {
-                    val navController = Navigation.findNavController(view)
-                    navController.navigate(R.id.allPost)
+                // Navigation.findNavController(view).navigate(R.id.allPost)
+                    Toast.makeText(
+                        requireContext(),
+                        "The post added successfully",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
 

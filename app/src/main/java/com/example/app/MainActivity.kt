@@ -31,8 +31,6 @@ class MainActivity : AppCompatActivity() {
         navController?.let { NavigationUI.setupActionBarWithNavController(this, it) }
         navController?.let { NavigationUI.setupWithNavController(bottomNavigationView!!, it) }
 
-
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
