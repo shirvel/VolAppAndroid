@@ -50,4 +50,10 @@ class PostFirebaseModel {
                 callback()
             }
     }
+    fun deletePost(postId: String, callback: () -> Unit){
+        firestoreDB.collection(POSTS_COLLECTION_PATH)
+            .document(postId).delete().addOnSuccessListener {
+                callback()
+            }
+    }
 }

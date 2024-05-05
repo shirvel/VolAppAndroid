@@ -4,8 +4,10 @@ import android.util.Log
 import androidx.core.os.HandlerCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import com.example.app.database.AppLocalDatabase
 import java.util.concurrent.Executors
+import com.example.app.Modules.Posts.PostsViewModel
 
 class PostListModel private constructor() {
 
@@ -38,20 +40,20 @@ class PostListModel private constructor() {
         return posts ?: database.postDao().getAllPosts()
     }
     fun refreshgetAllPosts() {
-
         val lastUpdated: Long = Post.lastUpdated
 
-        firebaseModel.getAllPosts(lastUpdated){ list->
-            Log.i("TAG","firebase returned ${list.size}, lastupdated: $lastUpdated")
-            executor.execute{
+        firebaseModel.getAllPosts(lastUpdated) { list ->
+            Log.i("TAG", "firebase returned ${list.size}, lastupdated: $lastUpdated")
+            executor.execute {
                 var time = lastUpdated
                 for (post in list){
-                   database.postDao().insert(post)
-                   post.lastUpdated?.let {
-                       if (time < it)
-                           time = post.lastUpdated ?: System.currentTimeMillis()
-                   }
+                    database.postDao().insert(post)
+                    post.lastUpdated?.let {
+                        if (time < it)
+                            time = post.lastUpdated ?: System.currentTimeMillis()
+                    }
                 }
+
                 Post.lastUpdated = time
                 postsListLoadingState.postValue(LoadingState.LOADED)
             }
@@ -65,5 +67,32 @@ class PostListModel private constructor() {
             callback()
         }
 
+    }
+    fun deletePost(postId: String, callback: () -> Unit)
+    {
+        firebaseModel.deletePost(postId){
+            // Set up an observer for changes in the local posts
+            val localPostsObserver = Observer<List<Post>> { localPosts ->
+                localPosts?.let {
+                    // Get all post IDs from the local Room database
+                    val localPostIds = localPosts.map { it.postId }
+
+                    // Check if the deleted post ID exists in the local database
+                    if (localPostIds.contains(postId)) {
+                        // Delete the post from the local database
+                        executor.execute {
+                            val deletedPost = localPosts.find { it.postId == postId }
+                            deletedPost?.let {
+                                database.postDao().delete(deletedPost)
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Observe changes in the local posts
+            database.postDao().getAllPosts().observeForever(localPostsObserver)
+            callback()
+        }
     }
 }

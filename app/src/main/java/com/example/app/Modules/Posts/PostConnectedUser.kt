@@ -30,17 +30,15 @@ class PostConnectedUser: Fragment() {
         val view = inflater.inflate(R.layout.fregment_post_user_connected, container, false)
         writerTextView = view.findViewById(R.id.tvPostId)
         toCommentsButton = view.findViewById(R.id.btnToComments)
-        btnToDelete = view.findViewById(R.id.btnToComments)
+        btnToDelete = view.findViewById(R.id.btnToDelete)
 
-        arguments?.let{
-            writerTextView?.text = PostArgs.fromBundle(it).postWriter
-            val postId = PostConnectedUserArgs.fromBundle(it).postWriter
-            btnToDelete?.setOnClickListener {
-                val action = PostConnectedUserDirections.actionPostToDelete()
+        btnToDelete?.setOnClickListener {
+            arguments?.let { args ->
+                val postWriter = PostArgs.fromBundle(args).postWriter
+                val action = PostConnectedUserDirections.actionPostToDelete(postWriter)
                 findNavController().navigate(action)
             }
         }
-
         val action = Navigation.createNavigateOnClickListener(R.id.action_post_to_comments)
         toCommentsButton?.setOnClickListener(action)
 

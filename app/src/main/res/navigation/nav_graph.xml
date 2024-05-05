@@ -94,7 +94,11 @@
             app:destination="@id/comments" />
         <action
             android:id="@+id/action_post_to_delete"
-            app:destination="@id/delete" />
+            app:destination="@id/delete" >
+            <argument
+                android:name="postWriter"
+                app:argType="string" />
+        </action>
     </fragment>
     <fragment
         android:id="@+id/comments"
