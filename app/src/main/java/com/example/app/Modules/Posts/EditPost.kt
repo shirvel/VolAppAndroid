@@ -1,5 +1,6 @@
 package com.example.app.Modules.Posts
 
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -83,16 +84,21 @@ class EditPost : Fragment() {
     private fun updateUI(post: Post) {
         binding.etTitle.setText(post.title)
         binding.etContent.setText(post.content)
+        //binding.etLocation.setText(post.)
+        val imageUri = Uri.parse(post.image)
+        binding.ivSelectedImage.setImageURI(imageUri)
 
     }
 
     private fun getUpdatedPostFromUI(postId: String): Post {
         // Extract updated post details from EditTexts
         // and return as a Post object
+        val imageUri = binding.ivSelectedImage.tag as? Uri
+        val updatedImage = imageUri?.toString() ?: ""
         val updatedTitle = binding.etTitle.text.toString()
         val updatedContent = binding.etContent.text.toString()
         val updatedLocation = binding.etLocation.text.toString()
-
-        return Post(postId, updatedTitle, updatedContent, "", updatedLocation,false)
+        //return Post(postId, updatedTitle, updatedContent, "", updatedLocation,false)
+        return Post(postId,updatedTitle,"",updatedContent,updatedImage,false)
     }
 }
