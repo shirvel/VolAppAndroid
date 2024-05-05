@@ -62,7 +62,7 @@ class AddPost : Fragment() {
                 val name = etAddPostTitle.text.toString()
                 val content = etAddPostContent.text.toString()
                 val image = selectedImageUri?.toString() ?: ""
-                val location = etAddPostLocation.toString()
+                val location = etAddPostLocation.text.toString()
                 println("image: $image")
                 Log.i("TAG", "image $image")
 
