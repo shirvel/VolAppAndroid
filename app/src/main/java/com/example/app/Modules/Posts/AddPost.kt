@@ -62,10 +62,11 @@ class AddPost : Fragment() {
                 val name = etAddPostTitle.text.toString()
                 val content = etAddPostContent.text.toString()
                 val image = selectedImageUri?.toString() ?: ""
+                val location = etAddPostLocation.toString()
                 println("image: $image")
                 Log.i("TAG", "image $image")
 
-                val post = Post(name, "", content, image, false)
+                val post = Post(name, "", content, image, false,location)
                 post.image = image
                 PostListModel.instance.addPost(post) {
                     val navController = Navigation.findNavController(view)

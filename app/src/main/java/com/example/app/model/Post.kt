@@ -5,6 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.app.base.MyApplication
 import android.content.Context
+import android.location.Address
 import androidx.room.ColumnInfo
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.Timestamp
@@ -18,6 +19,7 @@ data class Post(
     var content: String,
     var image: String,
     var isLiked: Boolean,
+    var address: String,
     var lastUpdated: Long? = null ) {
         companion object {
             var lastUpdated: Long
@@ -38,8 +40,10 @@ data class Post(
             fun fromJSON(json: Map<String, Any>): Post{
                 val title = json["title"] as? String?: ""
                 val content = json["content"] as? String?: ""
+                val address = json["address"] as? String?: ""
+                //val post = Post(title, "", content, "", false, address)
                 val image = json["image"] as? String?: ""
-                val post = Post(title, "", content, image, false )
+                val post = Post(title, "", content, image, false,address)
                 val timeStamp: Timestamp? = json[LAST_UPDATED] as? Timestamp
                 timeStamp?.let {
                     post.lastUpdated = it.seconds
@@ -56,6 +60,7 @@ data class Post(
                 "content" to content,
                 "image" to image,
                 "isLiked" to isLiked,
+                "address" to address,
                 LAST_UPDATED to FieldValue.serverTimestamp()
             )
         }
