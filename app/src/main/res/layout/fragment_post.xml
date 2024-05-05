@@ -7,22 +7,56 @@
     tools:context=".Modules.Posts.Post">
 
     <TextView
-        android:id="@+id/tvPostId"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:text="The post Id"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/tvPostTitle"
+        android:layout_width="124dp"
+        android:layout_height="41dp"
+        android:layout_marginTop="56dp"
+        android:text="TextView"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.146"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvPostContent"
+        android:layout_width="121dp"
+        android:layout_height="49dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.144"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvPostTitle" />
+
+    <TextView
+        android:id="@+id/tvPostLocation"
+        android:layout_width="122dp"
+        android:layout_height="59dp"
+        android:layout_marginTop="4dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.141"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvPostContent" />
+
+    <TextView
+        android:id="@+id/tvPostId"
+        android:layout_width="126dp"
+        android:layout_height="67dp"
+        android:text="id"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.129"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvPostLocation"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/btnToComments"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="59dp"
         android:text="To Comments"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tvPostId" />
+        app:layout_constraintTop_toBottomOf="@+id/tvPostId" />
 </androidx.constraintlayout.widget.ConstraintLayout>

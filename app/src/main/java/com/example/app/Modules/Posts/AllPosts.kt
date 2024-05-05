@@ -52,7 +52,8 @@ class AllPosts : Fragment() {
                 val post = postviewmodel.posts?.value?.get(position)
                 post?.let {
                     Log.i("TAG", "the post $post")
-                    val action = AllPostsDirections.actionAllPostsToPost(it.writer)
+                    // TODO: change to the post Id
+                    val action = AllPostsDirections.actionAllPostsToPost(it.title)
                     Navigation.findNavController(view).navigate(action)
                 }
             }
