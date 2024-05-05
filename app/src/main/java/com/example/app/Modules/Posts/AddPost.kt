@@ -23,6 +23,7 @@ import com.example.app.Modules.Posts.AllPosts
 import com.example.app.R
 import com.example.app.databinding.FragmentAddPostBinding
 import androidx.navigation.NavController
+import java.util.UUID
 
 
 
@@ -62,10 +63,12 @@ class AddPost : Fragment() {
                 val name = etAddPostTitle.text.toString()
                 val content = etAddPostContent.text.toString()
                 val image = selectedImageUri?.toString() ?: ""
+                val postId = UUID.randomUUID().toString()
+
                 println("image: $image")
                 Log.i("TAG", "image $image")
 
-                val post = Post(name, "", content, image, false)
+                val post = Post(postId,name, "", content, image, false)
                 post.image = image
                 PostListModel.instance.addPost(post) {
                     val navController = Navigation.findNavController(view)

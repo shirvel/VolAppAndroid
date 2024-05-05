@@ -28,6 +28,7 @@ class PostViewHolder(val itemView: View,
 
             listener?.onItemClick(adapterPosition)
             listener?.onPostClicked(post)
+
         }
     }
 

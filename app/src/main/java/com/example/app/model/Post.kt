@@ -8,12 +8,13 @@ import android.content.Context
 import androidx.room.ColumnInfo
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.Timestamp
+import java.util.UUID
 
 @Entity(tableName = "posts")
 data class Post(
     @PrimaryKey
+    val postId: String, // Generating random UUID as postId
     var title: String,
-    //val postId: Long = 0,
     val writer: String,
     var content: String,
     var image: String,
@@ -39,7 +40,8 @@ data class Post(
                 val title = json["title"] as? String?: ""
                 val content = json["content"] as? String?: ""
                 val image = json["image"] as? String?: ""
-                val post = Post(title, "", content, image, false )
+                val postId = json["postId"] as? String?: ""
+                val post = Post(postId,title, "", content, image, false )
                 val timeStamp: Timestamp? = json[LAST_UPDATED] as? Timestamp
                 timeStamp?.let {
                     post.lastUpdated = it.seconds
@@ -50,7 +52,7 @@ data class Post(
     val json: Map<String, Any>
         get() {
             return  hashMapOf(
-               // "postId" to postId,
+                "postId" to postId,
                 "writer" to writer,
                 "title" to title,
                 "content" to content,

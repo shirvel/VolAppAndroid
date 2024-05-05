@@ -1,5 +1,6 @@
 package com.example.app.model
 
+import android.util.Log
 import com.google.firebase.firestore.firestoreSettings
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.memoryCacheSettings
@@ -42,8 +43,10 @@ class PostFirebaseModel {
 
     fun addPost(post: Post, callback: () -> Unit) {
         // Add the post to the "posts" collection
+        Log.i("TAG","postId: ${post.postId}")
         firestoreDB.collection(POSTS_COLLECTION_PATH)
-            .document(post.title).set(post.json).addOnSuccessListener {
+
+            .document(post.postId).set(post.json).addOnSuccessListener {
                 callback()
             }
     }

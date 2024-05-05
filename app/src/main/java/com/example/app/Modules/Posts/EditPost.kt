@@ -58,14 +58,14 @@ class EditPost : Fragment() {
             val name = nameTextField?.text.toString()
             val content = contentTextField?.text.toString()
 
-            val post = Post(name, "", content, "", false, "address - fake" )
-            PostListModel.instance.addPost(post) {
-                val navController = Navigation.findNavController(view)
+            //val post = Post(name, "", content, "", false, "address - fake" )
+           // PostListModel.instance.addPost(post) {
+              //  val navController = Navigation.findNavController(view)
                 // Pop back to LoginFragment to clear the back stack
-                navController.popBackStack(R.id.LoginFragment, false)
+             //   navController.popBackStack(R.id.LoginFragment, false)
                 // Navigate to AllPosts fragment
-                navController.navigate(R.id.allPost)
-            }
+             //   navController.navigate(R.id.allPost)
+           // }
         }
     }
 
