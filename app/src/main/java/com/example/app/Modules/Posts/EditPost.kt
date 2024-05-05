@@ -1,5 +1,6 @@
 package com.example.app.Modules.Posts
 
+import android.app.Activity
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -15,11 +16,22 @@ import com.example.app.model.PostListModel
 import com.example.app.Modules.Posts.PostsViewModel
 import com.example.app.R
 import com.example.app.databinding.FragmentEditPostBinding
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.provider.MediaStore
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import com.bumptech.glide.Glide
+import com.squareup.picasso.Picasso
 
 class EditPost : Fragment() {
 
     private lateinit var viewModel: PostsViewModel
     private lateinit var binding: FragmentEditPostBinding
+    private var selectedImageUri: Uri? = null
+    private lateinit var imagePickerLauncher: ActivityResultLauncher<Intent>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -57,25 +69,60 @@ class EditPost : Fragment() {
             }
         }
 
+        // Set up image picker launcher
+        imagePickerLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val selectedImageUri = result.data?.data
+                selectedImageUri?.let {
+                    // Update UI with selected image
+                    binding.ivSelectedImage.setImageURI(it)
+                    // Save selected image URI
+                    this.selectedImageUri = it
+                    Log.i("TAG", "Selected image URI: $it")
+                }
+            }
+        }
+
+        // Set click listener for select image button
+        binding.btnSelectImage.setOnClickListener {
+            openImagePicker()
+        }
+
         // Set click listener for save button
         binding.btnSave.setOnClickListener {
             // Extract updated post details from UI
-            val updatedPost = getUpdatedPostFromUI(postId ?:"")
-            Log.i("TAG", "the post after edit $updatedPost")
+            val postId = postId ?: ""
+            //val updatedPost = getUpdatedPostFromUI(postId ?: "")
+            val imageUri = binding.ivSelectedImage.tag as? Uri
+            Log.i("TAG", "th eimage: $imageUri")
+            val updatedImage = selectedImageUri?.toString() ?: ""
+            Log.i("TAG", "th eimage afetr sting: $updatedImage")
+            val updatedTitle = binding.etTitle.text.toString()
+            val updatedContent = binding.etContent.text.toString()
+            val updatedLocation = binding.etLocation.text.toString()
+            //return Post(postId, updatedTitle, updatedContent, "", updatedLocation,false)
+            val updatedPost = Post(postId,updatedTitle,"",updatedContent,updatedImage,false)
+            updatedPost.image = updatedImage
             PostListModel.instance.addPost(updatedPost) {
                 val navController = Navigation.findNavController(requireView())
                 navController.navigate(R.id.allPost)
             }
-            // Update post using ViewModel
-            //viewModel.updatePost(updatedPost)
-            // Navigate back or perform any other action
-            // (e.g., using Navigation Component)
         }
 
-        // Set click listener for cancel button
         binding.btnCancel.setOnClickListener {
-            // Navigate back or perform any other action
-            // (e.g., using Navigation Component)
+            val navController = Navigation.findNavController(requireView())
+            navController.navigate(R.id.allPost)
+        }
+        if (ContextCompat.checkSelfPermission(
+                requireContext(),
+                android.Manifest.permission.READ_EXTERNAL_STORAGE
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                requireActivity(),
+                arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE),
+                REQUEST_CODE_STORAGE_PERMISSION
+            )
         }
 
         return binding.root
@@ -85,20 +132,36 @@ class EditPost : Fragment() {
         binding.etTitle.setText(post.title)
         binding.etContent.setText(post.content)
         //binding.etLocation.setText(post.)
-        val imageUri = Uri.parse(post.image)
-        binding.ivSelectedImage.setImageURI(imageUri)
+        //binding.ivSelectedImage.setImageURI(imageUri)
+        Glide.with(this)
+            .load(post.image)
+            .into(binding.ivSelectedImage)
+        Log.i("TAG", "omage url ${post.image}")
+
+        //Picasso.get().load(post.image).into(binding.ivSelectedImage)
+        //val imageUri = Uri.parse(post.image)
+        //Glide.with(this).load(imageUri).into(binding.ivSelectedImage)
 
     }
 
-    private fun getUpdatedPostFromUI(postId: String): Post {
+    //private fun getUpdatedPostFromUI(postId: String): Post {
         // Extract updated post details from EditTexts
         // and return as a Post object
-        val imageUri = binding.ivSelectedImage.tag as? Uri
-        val updatedImage = imageUri?.toString() ?: ""
-        val updatedTitle = binding.etTitle.text.toString()
-        val updatedContent = binding.etContent.text.toString()
-        val updatedLocation = binding.etLocation.text.toString()
+      //  val imageUri = binding.ivSelectedImage.tag as? Uri
+        //val updatedImage = imageUri?.toString() ?: ""
+        //val updatedTitle = binding.etTitle.text.toString()
+        //val updatedContent = binding.etContent.text.toString()
+        //val updatedLocation = binding.etLocation.text.toString()
         //return Post(postId, updatedTitle, updatedContent, "", updatedLocation,false)
-        return Post(postId,updatedTitle,"",updatedContent,updatedImage,false)
+
+        //return Post(postId,updatedTitle,"",updatedContent,updatedImage,false)
+    //}
+
+    private fun openImagePicker() {
+        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        imagePickerLauncher.launch(intent)
+    }
+    companion object {
+        private const val REQUEST_CODE_STORAGE_PERMISSION = 200
     }
 }

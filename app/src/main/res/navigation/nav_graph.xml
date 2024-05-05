@@ -70,7 +70,7 @@
     <fragment
         android:id="@+id/editPostFragment"
         android:name="com.example.app.Modules.Posts.EditPost"
-        android:label="fragment_delete_post"
+        android:label="fragment_edit_post"
         tools:layout="@layout/fragment_edit_post">
     </fragment>
 
