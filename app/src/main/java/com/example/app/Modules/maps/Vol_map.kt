@@ -154,18 +154,22 @@ class vol_map : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener 
     }
 
     fun loadAllPostsLocationsToMap(){
-        val allPosts = PostListModel.instance.getAllPosts().value
-        Log.i("TAG", "the posts: ${allPosts}");
-        if (allPosts != null) {
-            for (post in allPosts){
-                if (post.address.isNotEmpty()){
-                    addMarkerForAddress(post.address, post.title)
-                    Log.i("TAG", "add post with address: ${post.address}")
+        val allPostsLiveData = PostListModel.instance.getAllPosts()
+        Log.i("TAG", "the posts test")
+        allPostsLiveData.observe(viewLifecycleOwner){allPosts ->
+            Log.i("TAG", "the posts: ${allPosts}")
+            if (allPosts != null) {
+                for (post in allPosts){
+                    if (post.address.isNotEmpty()){
+                        addMarkerForAddress(post.address, post.title)
+                        Log.i("TAG", "add post with address: ${post.address}")
+                    }
                 }
+            }else{
+//                addMarkerForAddress("hagibor haalmoni 50", "id of post")
             }
-        }else{
-            addMarkerForAddress("hagibor haalmoni 50", "id of post")
         }
+
 
     }
 
