@@ -37,6 +37,10 @@ class DeletePost : Fragment() {
             }
 
         }
+        binding.btnDeletePostCancel.setOnClickListener{
+            val navController = Navigation.findNavController(view)
+            navController.navigate(R.id.allPost)
+        }
 
         return view
     }

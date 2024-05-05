@@ -34,6 +34,9 @@ class PostListModel private constructor() {
         refreshgetAllPosts()
         return posts ?: database.postDao().getAllPosts()
     }
+    fun getPostById(postId: String): LiveData<Post> {
+        return database.postDao().getPostById(postId)
+    }
 
     fun getAllPosts() :LiveData<MutableList<Post>> {
         refreshgetAllPosts()

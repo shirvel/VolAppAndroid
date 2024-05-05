@@ -13,12 +13,16 @@ import com.example.app.model.Post
 import com.example.app.model.PostListModel
 import java.util.UUID
 import androidx.navigation.fragment.findNavController
+import androidx.lifecycle.observe
+
 
 
 class PostConnectedUser: Fragment() {
+    private lateinit var viewModel: PostsViewModel
     var writerTextView: TextView? = null
     var toCommentsButton: Button? = null
     var btnToDelete: Button? = null
+    var btnToEdit: Button? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -31,11 +35,20 @@ class PostConnectedUser: Fragment() {
         writerTextView = view.findViewById(R.id.tvPostId)
         toCommentsButton = view.findViewById(R.id.btnToComments)
         btnToDelete = view.findViewById(R.id.btnToDelete)
+        btnToEdit = view.findViewById(R.id.btnToEdit)
 
         btnToDelete?.setOnClickListener {
             arguments?.let { args ->
                 val postWriter = PostArgs.fromBundle(args).postWriter
                 val action = PostConnectedUserDirections.actionPostToDelete(postWriter)
+                findNavController().navigate(action)
+            }
+        }
+        btnToEdit?.setOnClickListener {
+            arguments?.let { args ->
+
+                val postWriter = PostArgs.fromBundle(args).postWriter
+                val action = PostConnectedUserDirections.actionPostToEdit(postWriter)
                 findNavController().navigate(action)
             }
         }

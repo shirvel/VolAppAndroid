@@ -1,76 +1,98 @@
 package com.example.app.Modules.Posts
+
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
-import com.example.app.model.PostListModel
 import com.example.app.model.Post
-import com.example.app.Modules.Posts.AllPosts
+import com.example.app.model.PostListModel
+import com.example.app.Modules.Posts.PostsViewModel
 import com.example.app.R
-import androidx.navigation.NavController
-
-
-
+import com.example.app.databinding.FragmentEditPostBinding
 
 class EditPost : Fragment() {
 
-    private var nameTextField: EditText? = null
-    private var contentTextField: EditText? = null
-    private var messageTextView: TextView? = null
-    private var saveButton: Button? = null
-    private var cancelButton: Button? = null
-
+    private lateinit var viewModel: PostsViewModel
+    private lateinit var binding: FragmentEditPostBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_edit_post, container, false)
-        setupUI(view)
-        return view
-    }
+        binding = DataBindingUtil.inflate(
+            inflater, R.layout.fragment_edit_post, container, false
+        )
 
-    private fun setupUI(view: View) {
-        nameTextField = view.findViewById(R.id.etAddPostTitle)
-        contentTextField = view.findViewById(R.id.etAddPostContent)
-        messageTextView = view.findViewById(R.id.textViewContent)
-        saveButton = view.findViewById(R.id.btnAddPostSave)
-        cancelButton = view.findViewById(R.id.btnAddPostCancel)
-        messageTextView?.text = ""
+        // Initialize ViewModel
+        viewModel = ViewModelProvider(this).get(PostsViewModel::class.java)
 
-        cancelButton?.setOnClickListener {
-            val navController = Navigation.findNavController(view)
-            // Pop back to LoginFragment to clear the back stack
-            navController.popBackStack(R.id.LoginFragment, false)
-            // Navigate to AllPosts fragment
-            navController.navigate(R.id.allPost)
+        // Observe current post details
+
+        val postId = arguments?.let { args ->
+            PostArgs.fromBundle(args).postWriter
         }
 
-        saveButton?.setOnClickListener {
-            val name = nameTextField?.text.toString()
-            val content = contentTextField?.text.toString()
-
-            //val post = Post(name, "", content, "", false, "address - fake" )
-           // PostListModel.instance.addPost(post) {
-              //  val navController = Navigation.findNavController(view)
-                // Pop back to LoginFragment to clear the back stack
-             //   navController.popBackStack(R.id.LoginFragment, false)
-                // Navigate to AllPosts fragment
-             //   navController.navigate(R.id.allPost)
-           // }
+        // Fetch post details using post ID
+        postId?.let { postId ->
+            Log.i("TAG", "postid from edit $postId")
+            val postLiveData = PostListModel.instance.getPostById(postId)
+            postLiveData.observe(viewLifecycleOwner) { post ->
+                // This block will be executed when the LiveData has a non-null value
+                if (post != null) {
+                    // Post is not null, handle it here
+                    Log.i("TAG", "editpost $post")
+                    viewModel.setCurrentPost(post) // Set current post in ViewModel
+                    updateUI(post)
+                } else {
+                    // Post is null, handle this case
+                    Log.e("TAG", "Post with ID $postId not found.")
+                    // You might want to display an error message or handle this case differently
+                }
+            }
         }
+
+        // Set click listener for save button
+        binding.btnSave.setOnClickListener {
+            // Extract updated post details from UI
+            val updatedPost = getUpdatedPostFromUI(postId ?:"")
+            Log.i("TAG", "the post after edit $updatedPost")
+            PostListModel.instance.addPost(updatedPost) {
+                val navController = Navigation.findNavController(requireView())
+                navController.navigate(R.id.allPost)
+            }
+            // Update post using ViewModel
+            //viewModel.updatePost(updatedPost)
+            // Navigate back or perform any other action
+            // (e.g., using Navigation Component)
+        }
+
+        // Set click listener for cancel button
+        binding.btnCancel.setOnClickListener {
+            // Navigate back or perform any other action
+            // (e.g., using Navigation Component)
+        }
+
+        return binding.root
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        menu.clear()
-        super.onCreateOptionsMenu(menu, inflater)
+    private fun updateUI(post: Post) {
+        binding.etTitle.setText(post.title)
+        binding.etContent.setText(post.content)
+
+    }
+
+    private fun getUpdatedPostFromUI(postId: String): Post {
+        // Extract updated post details from EditTexts
+        // and return as a Post object
+        val updatedTitle = binding.etTitle.text.toString()
+        val updatedContent = binding.etContent.text.toString()
+        val updatedLocation = binding.etLocation.text.toString()
+
+        return Post(postId, updatedTitle, updatedContent, "", updatedLocation,false)
     }
 }
