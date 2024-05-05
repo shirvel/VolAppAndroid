@@ -80,6 +80,7 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    api("com.google.android.material:material:1.1.0-alpha06")
 
     kapt("androidx.room:room-compiler:2.4.0")
 

@@ -39,7 +39,7 @@ class EditPost : Fragment() {
     }
 
     private fun setupUI(view: View) {
-        nameTextField = view.findViewById(R.id.etAddPostTitle)
+        nameTextField = view.findViewById(R.id.etEditPostTitle)
         contentTextField = view.findViewById(R.id.etAddPostContent)
         messageTextView = view.findViewById(R.id.textViewContent)
         saveButton = view.findViewById(R.id.btnAddPostSave)
