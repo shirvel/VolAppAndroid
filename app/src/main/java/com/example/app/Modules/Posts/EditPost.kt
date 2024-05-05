@@ -101,7 +101,7 @@ class EditPost : Fragment() {
             val updatedContent = binding.etContent.text.toString()
             val updatedLocation = binding.etLocation.text.toString()
             //return Post(postId, updatedTitle, updatedContent, "", updatedLocation,false)
-            val updatedPost = Post(postId,updatedTitle,"",updatedContent,updatedImage,false)
+            val updatedPost = Post(postId,updatedTitle,"",updatedContent,updatedImage,false,updatedLocation)
             updatedPost.image = updatedImage
             PostListModel.instance.addPost(updatedPost) {
                 val navController = Navigation.findNavController(requireView())
@@ -131,7 +131,7 @@ class EditPost : Fragment() {
     private fun updateUI(post: Post) {
         binding.etTitle.setText(post.title)
         binding.etContent.setText(post.content)
-        //binding.etLocation.setText(post.)
+        binding.etLocation.setText(post.address)
         //binding.ivSelectedImage.setImageURI(imageUri)
         Glide.with(this)
             .load(post.image)
@@ -145,16 +145,16 @@ class EditPost : Fragment() {
     }
 
     //private fun getUpdatedPostFromUI(postId: String): Post {
-        // Extract updated post details from EditTexts
-        // and return as a Post object
-      //  val imageUri = binding.ivSelectedImage.tag as? Uri
-        //val updatedImage = imageUri?.toString() ?: ""
-        //val updatedTitle = binding.etTitle.text.toString()
-        //val updatedContent = binding.etContent.text.toString()
-        //val updatedLocation = binding.etLocation.text.toString()
-        //return Post(postId, updatedTitle, updatedContent, "", updatedLocation,false)
+    // Extract updated post details from EditTexts
+    // and return as a Post object
+    //  val imageUri = binding.ivSelectedImage.tag as? Uri
+    //val updatedImage = imageUri?.toString() ?: ""
+    //val updatedTitle = binding.etTitle.text.toString()
+    //val updatedContent = binding.etContent.text.toString()
+    //val updatedLocation = binding.etLocation.text.toString()
+    //return Post(postId, updatedTitle, updatedContent, "", updatedLocation,false)
 
-        //return Post(postId,updatedTitle,"",updatedContent,updatedImage,false)
+    //return Post(postId,updatedTitle,"",updatedContent,updatedImage,false)
     //}
 
     private fun openImagePicker() {

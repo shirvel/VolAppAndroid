@@ -19,4 +19,9 @@
         android:id="@+id/allConnectedUserPosts"
         android:icon="@android:drawable/ic_dialog_dialer"
         android:title="My Posts" />
+
+    <item
+        android:id="@+id/logout"
+        android:icon="@android:drawable/ic_dialog_dialer"
+        android:title="Logout" />
 </menu>
