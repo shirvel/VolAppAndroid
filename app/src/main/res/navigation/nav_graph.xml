@@ -31,6 +31,7 @@
         tools:layout="@layout/fragment_add_post" />
     <action android:id="@+id/action_global_addPostFragment" app:destination="@id/addPost" />
 
+
     <fragment
         android:id="@+id/editPost"
         android:name="com.example.app.Modules.Posts.EditPost"
@@ -46,7 +47,7 @@
         <action
             android:id="@+id/action_allPosts_to_addPost" app:destination="@id/addPost" />
         <argument
-            android:name="posId"
+            android:name="postId"
             app:argType="string" />
         <action
             android:id="@+id/action_allPosts_to_post"
@@ -74,19 +75,6 @@
         tools:layout="@layout/fragment_edit_post">
     </fragment>
 
-
-    <fragment
-        android:id="@+id/post"
-        android:name="com.example.app.Modules.Posts.Post"
-        android:label="fragment_post"
-        tools:layout="@layout/fragment_post" >
-        <argument
-            android:name="postWriter"
-            app:argType="string" />
-        <action
-            android:id="@+id/action_post_to_comments"
-            app:destination="@id/comments" />
-    </fragment>
     <fragment
         android:id="@+id/connectedUserpost"
         android:name="com.example.app.Modules.Posts.PostConnectedUser"
@@ -108,6 +96,25 @@
         <action
             android:id="@+id/action_post_to_edit"
             app:destination="@id/editPostFragment" >
+            <argument
+                android:name="postWriter"
+                app:argType="string" />
+        </action>
+    </fragment>
+    <fragment
+        android:id="@+id/post"
+        android:name="com.example.app.Modules.Posts.Post"
+        android:label="fragment_pos"
+        tools:layout="@layout/fragment_post" >
+        <argument
+            android:name="postWriter"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_post_to_comments"
+            app:destination="@id/comments" />
+        <action
+            android:id="@+id/action_post_to_add_comment"
+            app:destination="@id/addComment" >
             <argument
                 android:name="postWriter"
                 app:argType="string" />
@@ -139,4 +146,11 @@
             android:id="@+id/action_allPostsConnectedUsers_to_post"
             app:destination="@id/connectedUserpost" />
     </fragment>
+
+    <fragment
+        android:id="@+id/addComment"
+        android:name="com.example.app.Modules.Posts.AddComment"
+        android:label="Add Comment"
+        tools:layout="@layout/fragment_add_comment" />
+
 </navigation>
