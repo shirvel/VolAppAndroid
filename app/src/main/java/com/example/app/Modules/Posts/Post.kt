@@ -5,56 +5,44 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.TextView
+import androidx.databinding.DataBindingUtil
 import androidx.navigation.Navigation
 import com.example.app.R
-
+import com.example.app.databinding.FragmentPostBinding
+import com.example.app.model.PostListModel
 
 
 class Post : Fragment() {
-    var idTextView: TextView? = null
-    var titleTextView: TextView? = null
-    var contentTextView: TextView? = null
-    var locationTextView: TextView? = null
-    var toCommentsButton: Button? = null
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+    private lateinit var binding: FragmentPostBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_post, container, false)
-        idTextView = view.findViewById(R.id.tvPostId)
-        titleTextView = view.findViewById(R.id.tvPostTitle)
-        contentTextView = view.findViewById(R.id.tvPostContent)
-        locationTextView = view.findViewById(R.id.tvPostLocation)
-        toCommentsButton = view.findViewById(R.id.btnToComments)
+        // Inflate the layout using data binding
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_post, container, false)
 
-        arguments?.let{
-            idTextView?.text = PostArgs.fromBundle(it).postWriter
-            val post = getTheCurrentPost(PostArgs.fromBundle(it).postWriter)
-            titleTextView?.text = post.title
-            contentTextView?.text = post.content
-            locationTextView?.text = post.address
+        // Retrieve postId from arguments
+        val postId = arguments?.let { PostArgs.fromBundle(it).postWriter } ?: ""
 
+        // Fetch post data
+        val post = getTheCurrentPost(postId)
 
+        // Set post data to the binding object
+        binding.post = post
+
+        // Set click listener for the "To Comments" button
+        binding.btnToComments.setOnClickListener {
+            val action = PostDirections.actionPostToComments()
+            Navigation.findNavController(it).navigate(action)
         }
 
-        val action = Navigation.createNavigateOnClickListener(R.id.action_post_to_comments)
-        toCommentsButton?.setOnClickListener(action)
-
-        return view
-
-
+        return binding.root
     }
 
-
-    fun getTheCurrentPost(postId: String): com.example.app.model.Post{
-        // TODO: Implement the get post by Id
-        return com.example.app.model.Post(postId, "writer","content", "" , "","test address")
+    private fun getTheCurrentPost(postId: String): com.example.app.model.Post {
+        // TODO: Implement the method to fetch the post by ID
+        val post = PostListModel.instance.getPostById(postId)
+        return post
     }
-
 }
