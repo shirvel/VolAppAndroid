@@ -19,7 +19,6 @@ data class Post(
     val writer: String,
     var content: String,
     var image: String,
-    var isLiked: Boolean,
     var address: String,
     var lastUpdated: Long? = null ) {
         companion object {
@@ -45,7 +44,7 @@ data class Post(
                 //val post = Post(title, "", content, "", false, address)
                 val image = json["image"] as? String?: ""
                 val postId = json["postId"] as? String?: ""
-                val post = Post(postId,title, "", content, image, false ,address)
+                val post = Post(postId,title, "", content, image ,address)
                 val timeStamp: Timestamp? = json[LAST_UPDATED] as? Timestamp
                 timeStamp?.let {
                     post.lastUpdated = it.seconds
@@ -61,7 +60,6 @@ data class Post(
                 "title" to title,
                 "content" to content,
                 "image" to image,
-                "isLiked" to isLiked,
                 "address" to address,
                 LAST_UPDATED to FieldValue.serverTimestamp()
             )

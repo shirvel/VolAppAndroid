@@ -73,7 +73,7 @@ class AddPost : Fragment() {
 
                 Log.i("TAG", "image $image")
 
-                val post = Post(postId, name, "", content, image, false,location)
+                val post = Post(postId, name, "", content, image,location)
                 post.image = image
                 PostListModel.instance.addPost(post) {
                 // Navigation.findNavController(view).navigate(R.id.allPost)

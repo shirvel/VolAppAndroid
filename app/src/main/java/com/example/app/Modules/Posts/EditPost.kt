@@ -101,7 +101,7 @@ class EditPost : Fragment() {
             val updatedContent = binding.etContent.text.toString()
             val updatedLocation = binding.etLocation.text.toString()
             //return Post(postId, updatedTitle, updatedContent, "", updatedLocation,false)
-            val updatedPost = Post(postId,updatedTitle,"",updatedContent,updatedImage,false,updatedLocation)
+            val updatedPost = Post(postId,updatedTitle,"",updatedContent,updatedImage,updatedLocation)
             updatedPost.image = updatedImage
             PostListModel.instance.addPost(updatedPost) {
                 val navController = Navigation.findNavController(requireView())
