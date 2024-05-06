@@ -22,32 +22,13 @@
         android:id="@+id/updateUserProfile"
         android:name="com.example.app.UpdateUserProfileFragment"
         android:label="fragment_update_user_profile"
-        tools:layout="@layout/fragment_update_user_profile">
-    <action
-        android:id="@+id/action_updateUserProfile_to_allPosts" app:destination="@id/allPost" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/logout"
-        android:name="com.example.app.LogoutFragment"
-        android:label="fragment_logout"
-        tools:layout="@layout/fragment_logout">
-        <action
-        android:id="@+id/action_logout_to_login" app:destination="@id/LoginFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_update_user_profile" />
 
     <fragment
         android:id="@+id/addPost"
         android:name="com.example.app.Modules.Posts.AddPost"
         android:label="Add Post"
-        tools:layout="@layout/fragment_add_post" >
-        <action
-            android:id="@+id/action_addPost_to_post"
-            app:destination="@id/post" />
-        <action
-            android:id="@+id/action_addPost_to_allPost"
-            app:destination="@id/allPost" />
-    </fragment>
+        tools:layout="@layout/fragment_add_post" />
     <action android:id="@+id/action_global_addPostFragment" app:destination="@id/addPost" />
 
     <fragment
@@ -100,7 +81,7 @@
         android:label="fragment_post"
         tools:layout="@layout/fragment_post" >
         <argument
-            android:name="postId"
+            android:name="postWriter"
             app:argType="string" />
         <action
             android:id="@+id/action_post_to_comments"

@@ -34,8 +34,8 @@ class Post : Fragment() {
         toCommentsButton = view.findViewById(R.id.btnToComments)
 
         arguments?.let{
-            idTextView?.text = PostArgs.fromBundle(it).postId
-            val post = getTheCurrentPost(PostArgs.fromBundle(it).postId)
+            idTextView?.text = PostArgs.fromBundle(it).postWriter
+            val post = getTheCurrentPost(PostArgs.fromBundle(it).postWriter)
             titleTextView?.text = post.title
             contentTextView?.text = post.content
             locationTextView?.text = post.address
@@ -54,7 +54,7 @@ class Post : Fragment() {
 
     fun getTheCurrentPost(postId: String): com.example.app.model.Post{
         // TODO: Implement the get post by Id
-        return com.example.app.model.Post(postId, "writer","content", "" , false, "test address")
+        return com.example.app.model.Post(postId, "writer","content", "" , "", false,"test address")
     }
 
 }

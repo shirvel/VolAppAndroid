@@ -21,7 +21,7 @@ class LogoutFragment : Fragment() {
         // Initialize Firebase Auth
         auth = Firebase.auth
         auth.signOut()
-        findNavController().navigate(R.id.action_logout_to_login)
+       // findNavController().navigate(R.id.action_logout_to_login)
         // Inflate the layout for this fragment
         return null
     }

@@ -102,7 +102,7 @@ class UpdateUserProfileFragment : Fragment() {
 
     private fun clickCancelButton() {
         cancelButton?.setOnClickListener {
-            findNavController().navigate(R.id.action_updateUserProfile_to_allPosts)
+            //findNavController().navigate(R.id.action_updateUserProfile_to_allPosts)
         }
     }
 
