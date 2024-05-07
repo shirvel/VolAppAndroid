@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
@@ -8,46 +7,59 @@
         android:layout_height="match_parent"
         tools:context=".Modules.Posts.Post">
 
+        <!-- Post Title -->
         <TextView
             android:id="@+id/tvPostTitle"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="TextView"
-            app:layout_constraintTop_toTopOf="parent"
+            android:text="Post Title"
+            android:textSize="20sp"
+            android:textColor="@color/black"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="16dp"/>
 
+        <!-- Post Content -->
         <TextView
             android:id="@+id/tvPostContent"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="TextView"
-            app:layout_constraintTop_toBottomOf="@+id/tvPostTitle"
+            android:text="Post Content"
+            android:textSize="16sp"
+            android:textColor="@color/black"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvPostTitle"
             android:layout_marginTop="8dp"/>
 
+        <!-- Post Location -->
         <TextView
             android:id="@+id/tvPostLocation"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="TextView"
-            app:layout_constraintTop_toBottomOf="@+id/tvPostContent"
+            android:text="Post Location"
+            android:textSize="14sp"
+            android:textColor="@color/black"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvPostContent"
             android:layout_marginTop="8dp"/>
 
+        <!-- Post ID -->
         <TextView
             android:id="@+id/tvPostId"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="id"
-            app:layout_constraintTop_toBottomOf="@+id/tvPostLocation"
+            android:text="Post ID"
+            android:textSize="12sp"
+            android:textColor="@color/black"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvPostLocation"
             android:layout_marginTop="8dp"/>
 
+        <!-- Post Image -->
         <ImageView
             android:id="@+id/postImageView"
             android:layout_width="105dp"
@@ -55,16 +67,24 @@
             app:layout_constraintTop_toBottomOf="@+id/tvPostId"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="16dp"/>
+            android:layout_marginTop="16dp"
 
-        <Button
+            android:scaleType="centerCrop"
+            android:contentDescription="Post Image"/>
+
+        <!-- Button to Comments -->
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnToComments"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="308dp"
-            android:text="To Comments"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="52dp"
+            android:layout_marginEnd="16dp"
+            android:backgroundTint="@android:color/holo_blue_light"
+            android:text="TO COMMENTS"
+            android:textColor="@android:color/white"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/postImageView" />
 
