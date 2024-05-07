@@ -29,7 +29,6 @@ import com.google.firebase.ktx.Firebase
 
 class SignUpFragment : Fragment() {
 
-   // private var nameTextField: EditText? = null
     private var emailTextField: EditText? = null
     private var passwordTextField: EditText? = null
 
@@ -60,7 +59,6 @@ class SignUpFragment : Fragment() {
 
 
     private fun setUpUI(view: View) {
-   //     nameTextField = view.findViewById(R.id.editTextUserName)
         emailTextField = view.findViewById(R.id.editTextEmailAddress)
         passwordTextField = view.findViewById(R.id.editTextPassword)
 
@@ -82,7 +80,6 @@ class SignUpFragment : Fragment() {
 
     private fun clickSaveButton(view: View) {
         saveButton?.setOnClickListener {
-         //   val name = nameTextField?.text.toString()
             val email = emailTextField?.text.toString()
             val password = passwordTextField?.text.toString()
 
@@ -91,8 +88,6 @@ class SignUpFragment : Fragment() {
             if (validateCreds(email, password))
                 createAccount(email, password)
 
-//            if (validateCreds(name, email, password))
-//                createAccount(email, password)
         }
     }
 
