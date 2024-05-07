@@ -24,7 +24,7 @@ import android.widget.Toast
 
 class UpdateUserProfileFragment : Fragment() {
 
-    private var nameTextField: EditText? = null
+ //   private var nameTextField: EditText? = null
     private var emailTextField: EditText? = null
     private var passwordTextField: EditText? = null
 
@@ -55,7 +55,6 @@ class UpdateUserProfileFragment : Fragment() {
 
 
     private fun setUpUI(view: View) {
-        nameTextField = view.findViewById(R.id.editTextUserName)
         emailTextField = view.findViewById(R.id.editTextEmailAddress)
         passwordTextField = view.findViewById(R.id.editTextPassword)
 

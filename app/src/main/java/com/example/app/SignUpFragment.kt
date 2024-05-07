@@ -29,7 +29,6 @@ import com.google.firebase.ktx.Firebase
 
 class SignUpFragment : Fragment() {
 
-    private var nameTextField: EditText? = null
     private var emailTextField: EditText? = null
     private var passwordTextField: EditText? = null
 
@@ -60,7 +59,6 @@ class SignUpFragment : Fragment() {
 
 
     private fun setUpUI(view: View) {
-        nameTextField = view.findViewById(R.id.editTextUserName)
         emailTextField = view.findViewById(R.id.editTextEmailAddress)
         passwordTextField = view.findViewById(R.id.editTextPassword)
 
@@ -82,19 +80,19 @@ class SignUpFragment : Fragment() {
 
     private fun clickSaveButton(view: View) {
         saveButton?.setOnClickListener {
-            val name = nameTextField?.text.toString()
             val email = emailTextField?.text.toString()
             val password = passwordTextField?.text.toString()
 
             val id = 18; // TODO: change userID
 
-            if (validateCreds(name, email, password))
+            if (validateCreds(email, password))
                 createAccount(email, password)
+
         }
     }
 
-    private fun validateCreds(name:String, email:String, password:String): Boolean {
-        if (name.isEmpty() || email.isEmpty() || password.isEmpty()) {
+    private fun validateCreds(email:String, password:String): Boolean {
+        if (email.isEmpty() || password.isEmpty()) {
             Toast.makeText(
                 requireContext(),
                 "All fields must be filled",
