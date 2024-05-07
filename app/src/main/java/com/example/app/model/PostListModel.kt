@@ -28,10 +28,11 @@ class PostListModel private constructor() {
 
     }
 
-    fun getAllConnectedUserPosts() :LiveData<MutableList<Post>> {
-        // TODO: Implement this the right way from the DB by new Query
-        refreshgetAllPosts()
-        return posts ?: database.postDao().getAllPosts()
+    fun getAllConnectedUserPosts(writer: String) :LiveData<MutableList<Post>> {
+        //refreshgetAllPosts()
+        val posts = database.postDao().getAllPostsByUser(writer)
+
+        return  database.postDao().getAllPostsByUser(writer)
     }
     fun getPostById(postId: String): LiveData<Post> {
         return database.postDao().getPostById(postId)

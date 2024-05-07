@@ -7,6 +7,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.example.app.model.Comment
 import com.example.app.model.Post
 
 @Dao
@@ -23,5 +24,7 @@ interface PostDao {
     fun delete(post: Post)
     @Query("SELECT * FROM posts WHERE postId = :postId")
     fun getPostById(postId: String): LiveData<Post>
+    @Query("SELECT * FROM posts WHERE writer = :writer")
+    fun getAllPostsByUser(writer: String):LiveData<MutableList<Post>>
 
 }

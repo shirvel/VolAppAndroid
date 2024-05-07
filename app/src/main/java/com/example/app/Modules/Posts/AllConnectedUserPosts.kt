@@ -16,6 +16,8 @@ import com.example.app.R
 import com.example.app.databinding.FragmentAllPostsBinding
 import com.example.app.model.Post
 import com.example.app.model.PostListModel
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 
 class AllConnectedUserPosts : Fragment() {
@@ -35,10 +37,12 @@ class AllConnectedUserPosts : Fragment() {
         //val view = inflater.inflate(R.layout.fragment_all_posts, container, false)
         _binding = FragmentAllPostsBinding.inflate(inflater, container, false)
         val view = binding.root
+        val writer = Firebase.auth.currentUser.toString()
+        Log.d("writer", "writer: ${writer}")
         postviewmodel = ViewModelProvider(this)[PostsViewModel::class.java]
         progressBar = binding.progressBar
         progressBar?.visibility = View.VISIBLE
-        postviewmodel.posts = PostListModel.instance.getAllConnectedUserPosts()
+        postviewmodel.posts = PostListModel.instance.getAllConnectedUserPosts(writer)
 
         postsRcyclerView = binding.rvAllPostsFragment
         postsRcyclerView?.setHasFixedSize(true)
