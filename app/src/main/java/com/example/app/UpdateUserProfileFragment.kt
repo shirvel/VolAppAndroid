@@ -15,14 +15,12 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import androidx.navigation.fragment.findNavController
-import com.example.app.Modules.Posts.AllPosts
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import android.os.Handler
 import android.os.Looper
 import android.widget.Toast
-import androidx.navigation.fragment.findNavController
 
 class UpdateUserProfileFragment : Fragment() {
 
@@ -95,15 +93,6 @@ class UpdateUserProfileFragment : Fragment() {
 
     private fun clickSaveButton() {
         saveButton?.setOnClickListener {
-
-//            val name = nameTextField?.text.toString()
-//            val email = emailTextField?.text.toString()
-//            val password = passwordTextField?.text.toString()
-//
-//            val intent = Intent(activity, MainActivity::class.java)
-//
-//            startActivity(intent)
-
             val user = Firebase.auth.currentUser
             user?.let {
                 val newPassword = passwordTextField?.text.toString()
@@ -196,7 +185,4 @@ class UpdateUserProfileFragment : Fragment() {
         val handler = Handler(Looper.getMainLooper())
         handler.postDelayed({ toast.cancel() }, 7000)
     }
-
 }
-
-
