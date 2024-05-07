@@ -164,6 +164,10 @@ class LoginFragment : Fragment() {
     }
 
     private fun newFun() {
+///
+    }
 
+    private fun newFun2() {
+///
     }
 }
