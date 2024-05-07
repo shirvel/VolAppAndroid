@@ -16,11 +16,12 @@ interface PostDao {
 
     @Query("SELECT * FROM posts")
     fun getAllPosts(): LiveData<MutableList<Post>>
+
     @Query("DELETE FROM posts WHERE postId = :postId")
     fun deletePost(postId: String)
-    @Query("SELECT * FROM posts WHERE postId = :postId")
-    fun getPostById(postId: String): LiveData<Post>
     @Delete
     fun delete(post: Post)
+    @Query("SELECT * FROM posts WHERE postId = :postId")
+    fun getPostById(postId: String): LiveData<Post>
 
 }
