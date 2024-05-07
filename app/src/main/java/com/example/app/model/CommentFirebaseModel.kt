@@ -36,10 +36,10 @@ class CommentFirebaseModel {
 
                     }
                     false -> {
-                        val comments: MutableList<Comment> = mutableListOf()
-                        val comment = Comment(0L, "shelly1", "test comment", "")
-                        comments.add(comment)
-                        callback(comments)
+                        //val comments: MutableList<Comment> = mutableListOf()
+                        //val comment = Comment(0L, "shelly1", "test comment", "")
+                        //comments.add(comment)
+                        callback( mutableListOf())
                     }
                 }
             }

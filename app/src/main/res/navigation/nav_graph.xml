@@ -90,13 +90,33 @@
             app:argType="string" />
         <action
             android:id="@+id/action_post_to_comments"
-            app:destination="@id/comments" />
+            app:destination="@id/comments" >
+            <argument
+                android:name="postId"
+                app:argType="string" />
+        </action>
+        <action
+            android:id="@+id/action_post_to_addComment"
+            app:destination="@id/addComment" >
+            <argument
+                android:name="postId"
+                app:argType="string" />
+        </action>
     </fragment>
+
+
+
     <fragment
         android:id="@+id/comments"
         android:name="com.example.app.Modules.Comments.Comments"
         android:label="fragment_comments"
         tools:layout="@layout/fragment_comments" />
+    <fragment
+        android:id="@+id/addComment"
+        android:name="com.example.app.Modules.Comments.AddComment"
+        android:label="fragment_add_comments"
+        tools:layout="@layout/fragment_add_comment" />
+
     <fragment
         android:id="@+id/vol_map"
         android:name="com.example.app.Modules.maps.vol_map"
@@ -111,8 +131,4 @@
         android:name="com.example.app.Modules.Posts.AllConnectedUserPosts"
         android:label="fragment_all_connected_user_posts"
         tools:layout="@layout/fragment_all_connected_user_posts" />
-    <fragment
-        android:id="@+id/addComment"
-        android:name="com.example.app.Modules.Comments.addComment"
-        android:label="addComment" />
 </navigation>

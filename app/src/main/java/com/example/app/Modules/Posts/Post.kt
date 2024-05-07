@@ -12,6 +12,7 @@ import android.widget.TextView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.app.R
 import com.example.app.model.PostListModel
@@ -22,6 +23,7 @@ class Post : Fragment() {
     private var contentTextView: TextView? = null
     private var locationTextView: TextView? = null
     private var toCommentsButton: Button? = null
+    private var btnToAddComments: Button? = null
     private var imageView: ImageView? = null
 
     override fun onCreateView(
@@ -35,6 +37,7 @@ class Post : Fragment() {
         locationTextView = view.findViewById(R.id.tvPostLocation)
         imageView = view.findViewById(R.id.postImageView)
         toCommentsButton = view.findViewById(R.id.btnToComments)
+        btnToAddComments = view.findViewById(R.id.btnToAddComments)
 
         arguments?.let {
             idTextView?.text = PostArgs.fromBundle(it).postId
@@ -51,8 +54,23 @@ class Post : Fragment() {
             })
         }
 
-        val action = Navigation.createNavigateOnClickListener(R.id.action_post_to_comments)
-        toCommentsButton?.setOnClickListener(action)
+        //val action = Navigation.createNavigateOnClickListener(R.id.action_post_to_comments)
+        toCommentsButton?.setOnClickListener{
+            arguments?.let {args ->
+                val postId = PostArgs.fromBundle(args).postId
+                val action = PostDirections.actionPostToComments(postId)
+                findNavController().navigate(action)
+            }
+        }
+
+        btnToAddComments?.setOnClickListener {
+            arguments?.let { args ->
+
+                val postId = PostArgs.fromBundle(args).postId
+                val action = PostDirections.actionPostToAddComment(postId)
+                findNavController().navigate(action)
+            }
+        }
 
         return view
     }

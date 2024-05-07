@@ -33,6 +33,9 @@ class CommentListModel  private constructor(){
         refreshgetAllComments()
         return comments ?: database.commentDao().getAllComments()
     }
+    fun getCommentsByPostId(postId: String): LiveData<MutableList<Comment>> {
+        return database.commentDao().getCommentsByPostId(postId)
+    }
     fun refreshgetAllComments() {
 
         val lastUpdated: Long = Comment.lastUpdated
@@ -49,7 +52,7 @@ class CommentListModel  private constructor(){
                     }
                 }
                 Comment.lastUpdated = time
-                commentsListLoadingState.postValue(CommentListModel.LoadingState.LOADED)
+                commentsListLoadingState.postValue(LoadingState.LOADED)
             }
         }
     }

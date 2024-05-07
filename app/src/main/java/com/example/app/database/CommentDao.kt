@@ -19,5 +19,7 @@ interface CommentDao {
 
     @Delete
     fun delete(comment: Comment)
+    @Query("SELECT * FROM comments WHERE postId = :postId")
+    fun getCommentsByPostId(postId: String): LiveData<MutableList<Comment>>
 
 }

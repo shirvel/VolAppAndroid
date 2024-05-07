@@ -24,6 +24,8 @@ import com.example.app.Modules.Posts.AllPosts
 import com.example.app.R
 import com.example.app.databinding.FragmentAddPostBinding
 import androidx.navigation.NavController
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import java.util.UUID
 
 
@@ -66,6 +68,7 @@ class AddPost : Fragment() {
                 val content = etAddPostContent.text.toString()
                 val image = selectedImageUri?.toString() ?: ""
                 val postId = UUID.randomUUID().toString()
+                val writer = Firebase.auth.currentUser.toString()
 
                 println("image: $image")
                 Log.i("TAG", "image $image")
@@ -73,10 +76,10 @@ class AddPost : Fragment() {
 
                 Log.i("TAG", "image $image")
 
-                val post = Post(postId, name, "", content, image,location)
+                val post = Post(postId, name, writer, content, image,location)
                 post.image = image
                 PostListModel.instance.addPost(post) {
-                    // Navigation.findNavController(view).navigate(R.id.allPost)
+                    Navigation.findNavController(view).navigate(R.id.allPost)
                     Toast.makeText(
                         requireContext(),
                         "The post added successfully",

@@ -43,7 +43,7 @@ class PostFirebaseModel {
     fun addPost(post: Post, callback: () -> Unit) {
         // Add the post to the "posts" collection
         firestoreDB.collection(POSTS_COLLECTION_PATH)
-            .document(post.title).set(post.json).addOnSuccessListener {
+            .document(post.postId).set(post.json).addOnSuccessListener {
                 callback()
             }
     }

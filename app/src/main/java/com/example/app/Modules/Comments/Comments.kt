@@ -34,28 +34,16 @@ class Comments : Fragment() {
             _binding = FragmentCommentsBinding.inflate(inflater, container, false)
             val view = binding.root
             commentviewmodel = ViewModelProvider(this)[CommentViewModel::class.java]
-            //progressBar = binding.progressBar
+            progressBar = binding.progressBar
             progressBar?.visibility = View.VISIBLE
-            commentviewmodel.comments = CommentListModel.instance.getAllCommants()
+            val postId = arguments?.getString("postId")
+            postId?.let { id ->
+                commentviewmodel.comments = CommentListModel.instance.getCommentsByPostId(id)
+            }
             commentsRcyclerView = binding.rvAllCommentsFragment
             commentsRcyclerView?.setHasFixedSize(true)
             commentsRcyclerView?.layoutManager = LinearLayoutManager(context)
             adapter = CommentsRecyclerAdapter(commentviewmodel.comments?.value)
-            adapter?.listener = object : OnItemClickListener {
-
-                override fun onItemClick(position: Int) {
-                    Log.i("TAG", "PostsRecyclerAdapter: Position clicked $position")
-                    val comment = commentviewmodel.comments?.value?.get(position)
-                    comment?.let {
-                        val action = AllPostsDirections.actionAllPostsToPost(it.writer)
-                        Navigation.findNavController(view).navigate(action)
-                    }
-                }
-
-                override fun onCommentClicked(comment: Comment?) {
-                    Log.i("TAG", "Comment $comment")
-                }
-            }
 
             commentsRcyclerView?.adapter = adapter
 

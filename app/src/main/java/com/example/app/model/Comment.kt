@@ -8,7 +8,8 @@ import com.google.firebase.firestore.FieldValue
 
 @Entity(tableName = "comments")
 data class Comment(
-    @PrimaryKey(autoGenerate = true) val commentId: Long = 0,
+    @PrimaryKey
+    val commentId: String, // Generating random UUID as postId
     val writer: String,
     val content: String,
     val postId: String,
@@ -33,7 +34,8 @@ data class Comment(
             val writer = json["writer"] as? String?: ""
             val content = json["content"] as? String?: ""
             val postId = json["postId"] as? String?: ""
-            val comment = Comment(0L,writer, content, postId)
+            val commentId = json["commentId"] as? String?: ""
+            val comment = Comment(commentId,writer, content, postId)
             val timeStamp: Timestamp? = json[LAST_UPDATED] as? Timestamp
             timeStamp?.let {
                 comment.lastUpdated = it.seconds
@@ -44,7 +46,7 @@ data class Comment(
     val json: Map<String, Any>
         get() {
             return  hashMapOf(
-                // "postId" to postId,
+                 "commentId" to commentId,
                 "writer" to writer,
                 "content" to content,
                 "postId" to postId,
