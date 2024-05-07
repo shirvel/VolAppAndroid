@@ -26,11 +26,5 @@ class LogoutFragment : Fragment() {
         return null
     }
 
-//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        super.onViewCreated(view, savedInstanceState)
-//
-//        // Initialize Firebase Auth
-//        auth = Firebase.auth
-//        auth.signOut()
-//    }
+    //
 }
