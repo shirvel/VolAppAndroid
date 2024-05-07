@@ -16,7 +16,7 @@ data class Post(
     @PrimaryKey
     val postId: String, // Generating random UUID as postId
     var title: String,
-    val writer: String,
+    var writer: String,
     var content: String,
     var image: String,
     var address: String,
@@ -44,7 +44,8 @@ data class Post(
             //val post = Post(title, "", content, "", false, address)
             val image = json["image"] as? String?: ""
             val postId = json["postId"] as? String?: ""
-            val post = Post(postId,title, "", content, image ,address)
+            val writer = json["writer"] as? String?: ""
+            val post = Post(postId,title, writer, content, image ,address)
             val timeStamp: Timestamp? = json[LAST_UPDATED] as? Timestamp
             timeStamp?.let {
                 post.lastUpdated = it.seconds
@@ -56,8 +57,8 @@ data class Post(
         get() {
             return  hashMapOf(
                 "postId" to postId,
-                "writer" to writer,
                 "title" to title,
+                "writer" to writer,
                 "content" to content,
                 "image" to image,
                 "address" to address,

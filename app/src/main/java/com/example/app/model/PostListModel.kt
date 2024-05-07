@@ -28,11 +28,17 @@ class PostListModel private constructor() {
 
     }
 
-    fun getAllConnectedUserPosts(writer: String) :LiveData<MutableList<Post>> {
-        //refreshgetAllPosts()
-        val posts = database.postDao().getAllPostsByUser(writer)
+    fun getAllConnectedUserPosts(writer: String): LiveData<MutableList<Post>> {
+        refreshgetAllPosts()
+        Log.i("TAG", "writer  from the postlist:${writer}")
+        val postsLiveData = database.postDao().getAllPostsByUser(writer)
 
-        return  database.postDao().getAllPostsByUser(writer)
+        postsLiveData.observeForever { posts ->
+            // Handle the posts here
+            Log.i("TAG", "Received ${posts.size} posts: $posts")
+            // Now you can update your UI or perform any other operation with the posts
+        }
+        return postsLiveData
     }
     fun getPostById(postId: String): LiveData<Post> {
         return database.postDao().getPostById(postId)
@@ -70,6 +76,9 @@ class PostListModel private constructor() {
             callback()
         }
 
+    }
+    fun getPostsByUser(userId: String): LiveData<MutableList<Post>> {
+        return firebaseModel.getPostsByUser(userId)
     }
     fun deletePost(postId: String, callback: () -> Unit)
     {
