@@ -162,4 +162,8 @@ class LoginFragment : Fragment() {
     companion object {
         private const val TAG = "Login"
     }
+
+    private fun newFun() {
+
+    }
 }
