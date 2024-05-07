@@ -111,4 +111,8 @@
         android:name="com.example.app.Modules.Posts.AllConnectedUserPosts"
         android:label="fragment_all_connected_user_posts"
         tools:layout="@layout/fragment_all_connected_user_posts" />
+    <fragment
+        android:id="@+id/addComment"
+        android:name="com.example.app.Modules.Comments.addComment"
+        android:label="addComment" />
 </navigation>
