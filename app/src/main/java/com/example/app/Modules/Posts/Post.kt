@@ -1,26 +1,28 @@
 package com.example.app.Modules.Posts
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
+import com.bumptech.glide.Glide
 import com.example.app.R
-
-
+import com.example.app.model.PostListModel
 
 class Post : Fragment() {
-    var idTextView: TextView? = null
-    var titleTextView: TextView? = null
-    var contentTextView: TextView? = null
-    var locationTextView: TextView? = null
-    var toCommentsButton: Button? = null
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+    private var idTextView: TextView? = null
+    private var titleTextView: TextView? = null
+    private var contentTextView: TextView? = null
+    private var locationTextView: TextView? = null
+    private var toCommentsButton: Button? = null
+    private var imageView: ImageView? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,30 +33,36 @@ class Post : Fragment() {
         titleTextView = view.findViewById(R.id.tvPostTitle)
         contentTextView = view.findViewById(R.id.tvPostContent)
         locationTextView = view.findViewById(R.id.tvPostLocation)
+        imageView = view.findViewById(R.id.postImageView)
         toCommentsButton = view.findViewById(R.id.btnToComments)
 
-        arguments?.let{
+        arguments?.let {
             idTextView?.text = PostArgs.fromBundle(it).postId
-            val post = getTheCurrentPost(PostArgs.fromBundle(it).postId)
-            titleTextView?.text = post.title
-            contentTextView?.text = post.content
-            locationTextView?.text = post.address
-
-
+            val postLiveData = getTheCurrentPost(PostArgs.fromBundle(it).postId)
+            postLiveData.observe(viewLifecycleOwner, Observer { post ->
+                // Update UI with the post data
+                titleTextView?.text = post.title
+                contentTextView?.text = post.content
+                locationTextView?.text = post.address
+                Log.d("PostFragment", "Image URL: ${post.image}")
+                Glide.with(requireContext())
+                    .load(post.image) // Replace "post.imageUrl" with the actual URL of the image
+                    .into(imageView!!)
+            })
         }
 
         val action = Navigation.createNavigateOnClickListener(R.id.action_post_to_comments)
         toCommentsButton?.setOnClickListener(action)
 
         return view
-
-
     }
 
+    private fun getTheCurrentPost(postId: String): LiveData<com.example.app.model.Post> {
+        // Fetch the post by ID using Room DAO or any other method
+        val postLiveData: LiveData<com.example.app.model.Post> =
+            PostListModel.instance.getPostById(postId)
 
-    fun getTheCurrentPost(postId: String): com.example.app.model.Post{
-        // TODO: Implement the get post by Id
-        return com.example.app.model.Post(postId, "writer","content", "" , false, "test address")
+        // Return the LiveData object
+        return postLiveData
     }
-
 }

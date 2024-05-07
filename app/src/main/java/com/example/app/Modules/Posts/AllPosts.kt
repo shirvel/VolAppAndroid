@@ -53,7 +53,7 @@ class AllPosts : Fragment() {
                 post?.let {
                     Log.i("TAG", "the post $post")
                     // TODO: change to the post Id
-                    val action = AllPostsDirections.actionAllPostsToPost(it.title)
+                    val action = AllPostsDirections.actionAllPostsToPost(it.postId)
                     Navigation.findNavController(view).navigate(action)
                 }
             }
