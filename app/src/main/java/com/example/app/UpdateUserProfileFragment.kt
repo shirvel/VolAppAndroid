@@ -19,6 +19,10 @@ import com.example.app.Modules.Posts.AllPosts
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import android.os.Handler
+import android.os.Looper
+import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 
 class UpdateUserProfileFragment : Fragment() {
 
@@ -65,37 +69,67 @@ class UpdateUserProfileFragment : Fragment() {
         val user = Firebase.auth.currentUser
         if (user != null) {
             emailTextField?.setText(user.email)
-            passwordTextField?.setText("******")
+            // A placeholder password
+            passwordTextField?.setText("123456")
+
+            // Disable editing for the email field
+            emailTextField?.isEnabled = false
+
 
         } else {
             emailTextField?.setText("<not logged in>")
-            passwordTextField?.setText("<not logged in>")
+
         }
 
         clickToAddPhoto();
         clickSaveButton();
         clickCancelButton();
-
-
     }
 
     private fun clickToAddPhoto() {
         imageView.setOnClickListener {
             chooseImage()
         }
-
     }
 
 
     private fun clickSaveButton() {
         saveButton?.setOnClickListener {
-            val name = nameTextField?.text.toString()
-            val email = emailTextField?.text.toString()
-            val password = passwordTextField?.text.toString()
 
-            val intent = Intent(activity, MainActivity::class.java)
+//            val name = nameTextField?.text.toString()
+//            val email = emailTextField?.text.toString()
+//            val password = passwordTextField?.text.toString()
+//
+//            val intent = Intent(activity, MainActivity::class.java)
+//
+//            startActivity(intent)
 
-            startActivity(intent)
+            val user = Firebase.auth.currentUser
+            user?.let {
+                val newPassword = passwordTextField?.text.toString()
+
+                if (newPassword.isEmpty()) {
+                    showToast("Password field can't be empty")
+                }
+                else {
+                    user.updatePassword(newPassword)
+                        .addOnCompleteListener { passwordUpdateTask ->
+                            if (passwordUpdateTask.isSuccessful) {
+                                // Password updated successfully
+                                findNavController().navigate(R.id.allPost)
+                                showToast("Your password was changed successfully")
+                            } else {
+                                // Password update failed
+                                showToast("Password update failed. Please make sure to enter 6 characters")
+                            }
+                        }
+
+                }
+            } ?: run {
+                // User is not logged in
+                showNotLoggedInToast()
+            }
+
         }
     }
 
@@ -144,4 +178,25 @@ class UpdateUserProfileFragment : Fragment() {
 
         return outputBitmap
     }
+
+    private fun showNotLoggedInToast() {
+        val toast = Toast.makeText(context, "You are not logged in", Toast.LENGTH_SHORT)
+        toast.show()
+
+        // Hide the toast after 5 seconds
+        val handler = Handler(Looper.getMainLooper())
+        handler.postDelayed({ toast.cancel() }, 5000)
+    }
+
+    private fun showToast(message: String) {
+        val toast = Toast.makeText(context, message, Toast.LENGTH_SHORT)
+        toast.show()
+
+        // Hide the toast after 5 seconds
+        val handler = Handler(Looper.getMainLooper())
+        handler.postDelayed({ toast.cancel() }, 7000)
+    }
+
 }
+
+
