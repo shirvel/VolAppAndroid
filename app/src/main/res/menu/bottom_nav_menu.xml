@@ -5,23 +5,23 @@
     <item
         android:id="@+id/addPost"
         android:icon="@android:drawable/ic_input_add"
-        android:title="add" />
+        android:title="Add Post" />
     <item
         android:id="@+id/allPost"
         android:icon="@android:drawable/ic_dialog_dialer"
-        android:title="all posts" />
+        android:title="All Posts" />
 
     <item
         android:id="@+id/updateUserProfile"
-        android:icon="@android:drawable/ic_dialog_dialer"
-        android:title="Update details" />
+        android:icon="@android:drawable/ic_menu_myplaces"
+        android:title="Update Details" />
     <item
         android:id="@+id/allConnectedUserPosts"
-        android:icon="@android:drawable/ic_dialog_dialer"
+        android:icon="@android:drawable/ic_menu_search"
         android:title="My Posts" />
 
     <item
         android:id="@+id/logout"
-        android:icon="@android:drawable/ic_dialog_dialer"
+        android:icon="@drawable/logout_logo"
         android:title="Logout" />
 </menu>
