@@ -46,7 +46,7 @@ data class Comment(
     val json: Map<String, Any>
         get() {
             return  hashMapOf(
-                 "commentId" to commentId,
+                "commentId" to commentId,
                 "writer" to writer,
                 "content" to content,
                 "postId" to postId,

@@ -47,7 +47,7 @@ class CommentFirebaseModel {
 
     fun addComment(comment: Comment, callback: () -> Unit) {
         firestoreDB.collection(COMMENTS_COLLECTION_PATH)
-            .document(comment.writer).set(comment.json).addOnSuccessListener {
+            .document(comment.commentId).set(comment.json).addOnSuccessListener {
                 callback()
             }
     }
