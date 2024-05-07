@@ -57,4 +57,5 @@ class MainActivity : AppCompatActivity() {
     fun showBottomNavigationView() {
         bottomNavigationView?.setVisibility(View.VISIBLE)
     }
+    //////
 }
