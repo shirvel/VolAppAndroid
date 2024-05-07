@@ -1,137 +1,140 @@
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/addPost"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="Modules.Posts.AddPost">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- All the text inputs -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/editPost"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="Modules.Posts.EditPost">
 
-    <!-- Add Image View and Buttons -->
+        <!-- All the text inputs -->
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:hint="Title"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        <!-- Add Image View and Buttons -->
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etEditPostTitle"
-            android:layout_width="match_parent"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint=""
-            android:inputType="text"
-            android:maxLines="1" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:hint="Title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:hint="Content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etEditPostTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint=""
+                android:inputType="text"
+                android:maxLines="1" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etAddPostContent"
-            android:layout_width="match_parent"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout2"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint=""
-            android:inputType="textMultiLine"
-            android:maxLines="5" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:hint="Content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout3"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:hint="Location"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout2">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etAddPostContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint=""
+                android:inputType="textMultiLine"
+                android:maxLines="5" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etEditPostLocation"
-            android:layout_width="match_parent"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout3"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint=""
-            android:inputType="text"
-            android:maxLines="1" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:hint="Location"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout2">
 
-    <ImageView
-        android:id="@+id/ivSelectedImage"
-        android:layout_width="411dp"
-        android:layout_height="50dp"
-        android:src="@drawable/defualtimage"
-        app:layout_constraintBottom_toTopOf="@+id/textViewContent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnSelectImage" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etEditPostLocation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint=""
+                android:inputType="text"
+                android:maxLines="1" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <TextView
-        android:id="@+id/textViewContent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="Content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivSelectedImage" />
+        <ImageView
+            android:id="@+id/ivSelectedImage"
+            android:layout_width="411dp"
+            android:layout_height="50dp"
+            android:src="@drawable/defualtimage"
+            app:layout_constraintBottom_toTopOf="@+id/textViewContent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnSelectImage" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnSelectImage"
-        android:layout_width="411dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="35dp"
-        android:backgroundTint="@android:color/holo_blue_light"
-        android:text="Select Image"
-        android:textColor="@android:color/white"
-        app:layout_constraintBottom_toTopOf="@+id/ivSelectedImage"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout3" />
+        <TextView
+            android:id="@+id/textViewContent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="Content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ivSelectedImage" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnAddPostSave"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="8dp"
-        android:backgroundTint="@android:color/holo_blue_light"
-        android:text="SAVE"
-        android:textColor="@android:color/white"
-        app:layout_constraintEnd_toStartOf="@+id/btnAddPostCancel"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewContent" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnSelectImage"
+            android:layout_width="411dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="35dp"
+            android:backgroundTint="@android:color/holo_blue_light"
+            android:text="Select Image"
+            android:textColor="@android:color/white"
+            app:layout_constraintBottom_toTopOf="@+id/ivSelectedImage"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout3" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnAddPostCancel"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="16dp"
-        android:backgroundTint="@android:color/holo_blue_light"
-        android:text="CANCEL"
-        android:textColor="@android:color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btnAddPostSave"
-        app:layout_constraintTop_toBottomOf="@+id/textViewContent" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnAddPostSave"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="8dp"
+            android:backgroundTint="@android:color/holo_blue_light"
+            android:text="SAVE"
+            android:textColor="@android:color/white"
+            app:layout_constraintEnd_toStartOf="@+id/btnAddPostCancel"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewContent" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnAddPostCancel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="16dp"
+            android:backgroundTint="@android:color/holo_blue_light"
+            android:text="CANCEL"
+            android:textColor="@android:color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/btnAddPostSave"
+            app:layout_constraintTop_toBottomOf="@+id/textViewContent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

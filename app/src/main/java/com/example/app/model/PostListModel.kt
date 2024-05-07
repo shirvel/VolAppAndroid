@@ -82,7 +82,30 @@ class PostListModel private constructor() {
     }
     fun deletePost(postId: String, callback: () -> Unit)
     {
+        firebaseModel.deletePost(postId){
+            // Set up an observer for changes in the local posts
+            val localPostsObserver = Observer<List<Post>> { localPosts ->
+                localPosts?.let {
+                    // Get all post IDs from the local Room database
+                    val localPostIds = localPosts.map { it.postId }
 
+                    // Check if the deleted post ID exists in the local database
+                    if (localPostIds.contains(postId)) {
+                        // Delete the post from the local database
+                        executor.execute {
+                            val deletedPost = localPosts.find { it.postId == postId }
+                            deletedPost?.let {
+                                database.postDao().delete(deletedPost)
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Observe changes in the local posts
+            database.postDao().getAllPosts().observeForever(localPostsObserver)
+            callback()
+        }
     }
 }
 

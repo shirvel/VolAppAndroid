@@ -54,12 +54,13 @@ class PostFirebaseModel {
             }
     }
 
-    fun deletePost(postId: String, callback: () -> Unit) {
+    fun deletePost(postId: String, callback: () -> Unit){
         firestoreDB.collection(POSTS_COLLECTION_PATH)
             .document(postId).delete().addOnSuccessListener {
                 callback()
             }
     }
+
 
     fun getPostsByUser(userId: String): LiveData<MutableList<Post>> {
         val resultLiveData = MutableLiveData<MutableList<Post>>()

@@ -16,6 +16,8 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.app.R
 import com.example.app.model.PostListModel
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 class Post : Fragment() {
     private var idTextView: TextView? = null
@@ -25,6 +27,9 @@ class Post : Fragment() {
     private var toCommentsButton: Button? = null
     private var btnToAddComments: Button? = null
     private var imageView: ImageView? = null
+    private var writerTextView: TextView? = null
+    private var btnDelete: Button? = null
+    private var btnEdit: Button? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,8 +41,11 @@ class Post : Fragment() {
         contentTextView = view.findViewById(R.id.tvPostContent)
         locationTextView = view.findViewById(R.id.tvPostLocation)
         imageView = view.findViewById(R.id.postImageView)
+        writerTextView = view.findViewById(R.id.tvPostWriter)
         toCommentsButton = view.findViewById(R.id.btnToComments)
         btnToAddComments = view.findViewById(R.id.btnToAddComments)
+        btnDelete = view.findViewById<Button>(R.id.btnToDeletePost)
+        btnEdit = view.findViewById<Button>(R.id.btnToEditPost)
 
         arguments?.let {
             idTextView?.text = PostArgs.fromBundle(it).postId
@@ -47,10 +55,23 @@ class Post : Fragment() {
                 titleTextView?.text = post.title
                 contentTextView?.text = post.content
                 locationTextView?.text = post.address
+                writerTextView?.text = post.writer
                 Log.d("PostFragment", "Image URL: ${post.image}")
                 Glide.with(requireContext())
                     .load(post.image) // Replace "post.imageUrl" with the actual URL of the image
                     .into(imageView!!)
+
+                val writer = Firebase.auth.currentUser?.uid.toString()
+                Log.d("PostFragment", "writer from posts: ${writer}")
+                Log.d("PostFragment", "post.writer from posts: ${post.writer}")
+
+                if (post.writer == writer){
+                    btnDelete?.visibility = View.VISIBLE
+                    btnEdit?.visibility = View.VISIBLE
+                }else {
+                    btnDelete?.visibility = View.GONE
+                    btnEdit?.visibility = View.GONE
+                }
             })
         }
 
@@ -68,6 +89,20 @@ class Post : Fragment() {
 
                 val postId = PostArgs.fromBundle(args).postId
                 val action = PostDirections.actionPostToAddComment(postId)
+                findNavController().navigate(action)
+            }
+        }
+        btnEdit?.setOnClickListener {
+            arguments?.let { args ->
+                val postId = PostArgs.fromBundle(args).postId
+                val action = PostDirections.actionPostToEdit(postId)
+                findNavController().navigate(action)
+            }
+        }
+        btnDelete?.setOnClickListener {
+            arguments?.let { args ->
+                val postId = PostArgs.fromBundle(args).postId
+                val action = PostDirections.actionPostToDelete(postId)
                 findNavController().navigate(action)
             }
         }
