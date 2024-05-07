@@ -29,7 +29,7 @@ class DeletePost : Fragment() {
         val view = binding.root
         binding.btnDeletePostConfirm.setOnClickListener {
             arguments?.let { args ->
-                val postId = PostArgs.fromBundle(args).postWriter
+                val postId = PostArgs.fromBundle(args).postId
                 PostListModel.instance.deletePost(postId) {
                     val navController = Navigation.findNavController(view)
                     navController.navigate(R.id.allPost)

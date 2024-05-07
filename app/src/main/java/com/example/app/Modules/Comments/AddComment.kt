@@ -43,17 +43,27 @@ class AddComment : Fragment() {
             }
 
             btnAddCommentSave.setOnClickListener {
-                val postId = arguments?.let { args ->
-                    PostArgs.fromBundle(args).postWriter
-                } ?: ""
+                val postId = arguments?.let { PostArgs.fromBundle(it).postId } ?: ""
+                Log.i("TAG", "Postid from comment $postId")
 
                 val content = etAddCommentContent.text.toString()
                 val commentId = UUID.randomUUID().toString()
+                Log.i("TAG", "PostId $postId")
                 val comment = Comment(commentId, "", content, postId)
-                CommentListModel.instance.addComment(comment) {
+                try {
+                    CommentListModel.instance.addComment(comment) {
+                        Toast.makeText(
+                            requireContext(),
+                            "The comment added successfully",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                } catch (e: Exception) {
+                    println("Error adding comment: ${e.message}")
+                    Log.e("TAG", "Error adding comment: ${e.message}", e)
                     Toast.makeText(
                         requireContext(),
-                        "The comment added successfully",
+                        "Error adding comment: ${e.message}",
                         Toast.LENGTH_SHORT
                     ).show()
                 }

@@ -3,83 +3,90 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-        <variable
-            name="post"
-            type="com.example.app.model.Post" />
-        <variable
-            name="clickListener"
-            type="android.view.View.OnClickListener" />
-    </data>
-
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".Modules.Posts.Post">
+        android:id="@+id/addPost"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:context=".Modules.Posts.post">
 
-        <TextView
-            android:id="@+id/tvPostTitle"
-            android:layout_width="124dp"
-            android:layout_height="41dp"
-            android:layout_marginTop="56dp"
-            android:text="@{post.title}"
+        <!-- all the text fields-->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:hint="Title"
+            app:layout_constraintBottom_toTopOf="@+id/textInputLayout2"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.146"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0">
 
-        <TextView
-            android:id="@+id/tvPostContent"
-            android:layout_width="121dp"
-            android:layout_height="49dp"
-            android:text="@{post.content}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.144"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvPostTitle" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <TextView
-            android:id="@+id/tvPostLocation"
-            android:layout_width="122dp"
-            android:layout_height="59dp"
-            android:layout_marginTop="4dp"
-            android:text="@{post.address}"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout2"
+            android:layout_width="403dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="4dp"
+            android:hint="Content"
+            app:layout_constraintBottom_toTopOf="@+id/textInputLayout3"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.141"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvPostContent" />
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout4">
 
-        <TextView
-            android:id="@+id/tvPostId"
-            android:layout_width="126dp"
-            android:layout_height="67dp"
-            android:text="@{post.postId}"
-            app:layout_constraintBottom_toBottomOf="parent"
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout3"
+            android:layout_width="403dp"
+            android:layout_height="wrap_content"
+            android:hint="Location"
+            app:layout_constraintBottom_toTopOf="@+id/ivSelectedImage"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.129"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvPostLocation"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout2"/>
+
+
+        <!-- Add Image View and Buttons -->
+
+        <ImageView
+            android:id="@+id/ivSelectedImage"
+            android:layout_width="393dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="80dp"
+            android:src="@drawable/defualtimage"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout3" />
+
 
         <Button
-            android:id="@+id/btnToAddComments"
+            android:id="@+id/btnToCommants"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="132dp"
-            android:onClick="@{clickListener}"
-            android:text="Add Comments"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvPostId" />
-
-        <Button
-            android:id="@+id/btnToComments"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="140dp"
-            android:onClick="@{clickListener}"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="16dp"
             android:text="To Comments"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnToAddComments" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/btnAddComment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:text="Add comment"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

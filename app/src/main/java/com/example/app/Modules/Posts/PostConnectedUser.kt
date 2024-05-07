@@ -39,7 +39,7 @@ class PostConnectedUser: Fragment() {
 
         btnToDelete?.setOnClickListener {
             arguments?.let { args ->
-                val postWriter = PostArgs.fromBundle(args).postWriter
+                val postWriter = PostArgs.fromBundle(args).postId
                 val action = PostConnectedUserDirections.actionPostToDelete(postWriter)
                 findNavController().navigate(action)
             }
@@ -47,7 +47,7 @@ class PostConnectedUser: Fragment() {
         btnToEdit?.setOnClickListener {
             arguments?.let { args ->
 
-                val postWriter = PostArgs.fromBundle(args).postWriter
+                val postWriter = PostArgs.fromBundle(args).postId
                 val action = PostConnectedUserDirections.actionPostToEdit(postWriter)
                 findNavController().navigate(action)
             }

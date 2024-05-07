@@ -47,7 +47,7 @@ class EditPost : Fragment() {
         // Observe current post details
 
         val postId = arguments?.let { args ->
-            PostArgs.fromBundle(args).postWriter
+            PostArgs.fromBundle(args).postId
         }
 
         // Fetch post details using post ID

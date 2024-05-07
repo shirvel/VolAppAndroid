@@ -101,25 +101,31 @@
                 app:argType="string" />
         </action>
     </fragment>
+
     <fragment
         android:id="@+id/post"
         android:name="com.example.app.Modules.Posts.Post"
         android:label="fragment_pos"
         tools:layout="@layout/fragment_post" >
         <argument
-            android:name="postWriter"
+            android:name="postId"
             app:argType="string" />
         <action
-            android:id="@+id/action_post_to_comments"
-            app:destination="@id/comments" />
+            android:id="@+id/action_post1_to_comments"
+            app:destination="@id/comments" >
+            <argument
+                android:name="postId"
+                app:argType="string" />
+        </action>
         <action
             android:id="@+id/action_post_to_add_comment"
             app:destination="@id/addComment" >
             <argument
-                android:name="postWriter"
+                android:name="postId"
                 app:argType="string" />
         </action>
     </fragment>
+
     <fragment
         android:id="@+id/comments"
         android:name="com.example.app.Modules.Comments.Comments"
