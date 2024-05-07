@@ -37,7 +37,7 @@ class AllConnectedUserPosts : Fragment() {
         //val view = inflater.inflate(R.layout.fragment_all_posts, container, false)
         _binding = FragmentAllPostsBinding.inflate(inflater, container, false)
         val view = binding.root
-        val writer = Firebase.auth.currentUser.toString()
+        val writer = Firebase.auth.currentUser?.uid.toString()
         Log.d("writer", "writer: ${writer}")
         postviewmodel = ViewModelProvider(this)[PostsViewModel::class.java]
         progressBar = binding.progressBar

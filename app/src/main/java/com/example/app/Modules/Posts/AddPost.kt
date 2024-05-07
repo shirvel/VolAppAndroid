@@ -68,7 +68,8 @@ class AddPost : Fragment() {
                 val content = etAddPostContent.text.toString()
                 val image = selectedImageUri?.toString() ?: ""
                 val postId = UUID.randomUUID().toString()
-                val writer = Firebase.auth.currentUser.toString()
+                val writer = Firebase.auth.currentUser?.uid.toString()
+                Log.i("TAG", "writer from add post $writer")
 
                 println("image: $image")
                 Log.i("TAG", "image $image")
