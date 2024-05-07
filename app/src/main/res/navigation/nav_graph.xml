@@ -102,6 +102,20 @@
                 android:name="postId"
                 app:argType="string" />
         </action>
+        <action
+            android:id="@+id/action_post_to_delete"
+            app:destination="@id/delete" >
+            <argument
+                android:name="postId"
+                app:argType="string" />
+        </action>
+        <action
+            android:id="@+id/action_post_to_edit"
+            app:destination="@id/editPostFragment" >
+            <argument
+                android:name="postId"
+                app:argType="string" />
+        </action>
     </fragment>
 
 
@@ -126,9 +140,29 @@
             android:id="@+id/action_vol_map_to_post"
             app:destination="@id/post" />
     </fragment>
+
+    <fragment
+        android:id="@+id/delete"
+        android:name="com.example.app.Modules.Posts.DeletePost"
+        android:label="fragment_delete_post"
+        tools:layout="@layout/fragment_delete_post">
+    </fragment>
+    <fragment
+        android:id="@+id/editPostFragment"
+        android:name="com.example.app.Modules.Posts.EditPost"
+        android:label="fragment_edit_post"
+        tools:layout="@layout/fragment_edit_post">
+    </fragment>
     <fragment
         android:id="@+id/allConnectedUserPosts"
         android:name="com.example.app.Modules.Posts.AllConnectedUserPosts"
         android:label="fragment_all_connected_user_posts"
         tools:layout="@layout/fragment_all_connected_user_posts" />
+        <argument
+            android:name="postId"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_allPostsConnectedUsers_to_post"
+            app:destination="@id/post" />
+
 </navigation>
