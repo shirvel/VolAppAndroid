@@ -21,6 +21,9 @@ import com.google.firebase.ktx.Firebase
 import android.os.Handler
 import android.os.Looper
 import android.widget.Toast
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.FirebaseFirestoreSettings
+import com.google.firebase.firestore.ktx.firestore
 
 class UpdateUserProfileFragment : Fragment() {
 
@@ -79,7 +82,7 @@ class UpdateUserProfileFragment : Fragment() {
         }
 
         clickToAddPhoto();
-        clickSaveButton();
+        clickSaveButton("!!!!imageUrlPlacholder!!!!");
         clickCancelButton();
     }
 
@@ -90,36 +93,55 @@ class UpdateUserProfileFragment : Fragment() {
     }
 
 
-    private fun clickSaveButton() {
+    private fun clickSaveButton(imageUrl: String) {
         saveButton?.setOnClickListener {
             val user = Firebase.auth.currentUser
             user?.let {
                 val newPassword = passwordTextField?.text.toString()
+                val newImageUrl = imageUrl  // Assuming imageUrl is the updated image URL
 
                 if (newPassword.isEmpty()) {
                     showToast("Password field can't be empty")
-                }
-                else {
+                } else {
+                    // Update password
                     user.updatePassword(newPassword)
                         .addOnCompleteListener { passwordUpdateTask ->
                             if (passwordUpdateTask.isSuccessful) {
                                 // Password updated successfully
-                                findNavController().navigate(R.id.allPost)
-                                showToast("Your password was changed successfully")
+                                // Update imageUrl in Firestore
+                                val db = Firebase.firestore
+                                val userRef = user.email?.let { it1 ->
+                                    db.collection("users").document(
+                                        it1
+                                    )
+                                }
+
+                                if (userRef != null) {
+                                    userRef.update("imageUrl", newImageUrl)
+                                        .addOnSuccessListener {
+                                            showToast("Your details were updated successfully")
+                                            findNavController().navigate(R.id.allPost)
+                                        }
+                                        .addOnFailureListener { e ->
+                                            showToast("Failed to update imageUrl: ${e.message}")
+                                        }
+                                }
+                                else {
+                                    showToast("User is null")
+                                }
                             } else {
                                 // Password update failed
                                 showToast("Password update failed. Please make sure to enter 6 characters")
                             }
                         }
-
                 }
             } ?: run {
                 // User is not logged in
                 showNotLoggedInToast()
             }
-
         }
     }
+
 
 
     private fun clickCancelButton() {
