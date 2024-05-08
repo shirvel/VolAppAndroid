@@ -44,6 +44,7 @@ class PostViewHolder(val itemView: View,
             // Load the image from URI using Glide or any other image loading library
             Glide.with(itemView)
                 .load(Uri.parse(post?.image))
+                .override(300, 300)
                 //.placeholder(R.drawable.viewpic) // Placeholder in case the image loading fails
                 //.error(R.drawable.viewpic) // Placeholder for the case of error in loading
                 .into(imageTextView!!)
