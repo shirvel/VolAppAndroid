@@ -135,21 +135,22 @@ class EditPost : Fragment() {
         binding.etEditPostTitle.setText(post.title)
         binding.etAddPostContent.setText(post.content)
         binding.etEditPostLocation.setText(post.address)
-        //binding.ivSelectedImage.setImageURI(imageUri)
+        binding.ivSelectedImage.setImageURI(Uri.parse(post.image))
         // Check if selectedImageUri is null
         Log.i("TAG", "post image uri ${Uri.parse(post.image)}")
         Log.i("TAG", "post image  ${selectedImageUri}")
-        if (selectedImageUri != null && selectedImageUri == Uri.parse(post.image)) {
-            // If the user didn't choose to replace the image, load the current image
+            // If the user chose to replace the image, load the selected image
+        selectedImageUri?.let {
+            Glide.with(this)
+                .load(it)
+                .into(binding.ivSelectedImage)
+        } ?: run {
+            // If no new image is selected, load the current image from the post
             Glide.with(this)
                 .load(post.image)
                 .into(binding.ivSelectedImage)
-        } else {
-            // If the user chose to replace the image, load the selected image
-            Glide.with(this)
-                .load(selectedImageUri)
-                .into(binding.ivSelectedImage)
         }
+
         Log.i("TAG", "omage url ${post.image}")
 
         //Picasso.get().load(post.image).into(binding.ivSelectedImage)

@@ -45,8 +45,8 @@
 
     <ImageView
         android:id="@+id/ivPostListRowImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="78dp"
+        android:layout_height="64dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/viewpic"
         app:layout_constraintEnd_toEndOf="parent"
