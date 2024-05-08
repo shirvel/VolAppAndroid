@@ -60,7 +60,7 @@ class AddPost : Fragment() {
         binding.apply {
             btnAddPostCancel.setOnClickListener {
                 val navController = Navigation.findNavController(view)
-                navController.navigate(R.id.allPost)
+                navController.navigate(R.id.action_addPost_to_allPost)
             }
 
             btnAddPostSave.setOnClickListener {
@@ -80,7 +80,7 @@ class AddPost : Fragment() {
                 val post = Post(postId, name, writer, content, image,location)
                 post.image = image
                 PostListModel.instance.addPost(post) {
-                    Navigation.findNavController(view).navigate(R.id.allPost)
+                    Navigation.findNavController(view).navigate(R.id.action_addPost_to_allPost)
                     Toast.makeText(
                         requireContext(),
                         "The post added successfully",

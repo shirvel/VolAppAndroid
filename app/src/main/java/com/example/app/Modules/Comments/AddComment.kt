@@ -59,7 +59,7 @@ class AddComment : Fragment() {
                             view?.findNavController()?.popBackStack(R.id.post, false)
                             Toast.makeText(
                                 requireContext(),
-                                "The post added successfully",
+                                "The comment added successfully",
                                 Toast.LENGTH_SHORT
                             ).show()
                         }

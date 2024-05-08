@@ -46,7 +46,9 @@
             app:destination="@id/post" />
         <action
             android:id="@+id/action_addPost_to_allPost"
-            app:destination="@id/allPost" />
+            app:destination="@id/allPost"
+            app:popUpTo="@id/addPost"
+            app:popUpToInclusive="true"/>
     </fragment>
     <action android:id="@+id/action_global_addPostFragment" app:destination="@id/addPost" />
 
@@ -64,10 +66,15 @@
         tools:layout="@layout/fragment_all_posts">
         <action
             android:id="@+id/action_allPosts_to_addPost" app:destination="@id/addPost"
+            app:popUpTo="@id/allPost"
+            app:popUpToInclusive="true"
             />
         <action
             android:id="@+id/action_allPosts_to_post"
             app:destination="@id/post" />
+        <action
+            android:id="@+id/action_allPost_to_addComment"
+            app:destination="@id/addComment" />
 
     </fragment>
 
