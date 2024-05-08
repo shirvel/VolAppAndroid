@@ -31,6 +31,8 @@ import com.bumptech.glide.Glide
 import android.content.ContentResolver
 import android.content.Context
 import android.net.Uri
+import com.google.firebase.firestore.ktx.firestore
+
 
 import com.google.firebase.firestore.ktx.firestore
 import com.squareup.picasso.Picasso
@@ -44,7 +46,7 @@ class UpdateUserProfileFragment : Fragment() {
 
     private var saveButton: Button? = null
     private var cancelButton: Button? = null
-    private lateinit var selectedImageUri: Uri
+    private  var selectedImageUri: Uri = Uri.EMPTY
     private lateinit var imageView: ImageView
     private val PICK_IMAGE_REQUEST = 1
 
@@ -102,30 +104,40 @@ class UpdateUserProfileFragment : Fragment() {
             // Disable editing for the email field
             emailTextField?.isEnabled = false
             // Load current profile photo using Glide
-            val userEmail: String = user.email ?: ""
-            UserListModel.instance.getUserImageByEmail(
-                userEmail, // Replace with the actual email
-                onSuccess = { imageUrl ->
-                    // This block will be executed if the operation is successful
-                    if (imageUrl != null) {
-                        // Use the imageUrl to load the user's image
-                        // For example, you can use Glide to load the image into an ImageView
-
-                        Picasso.get().load(imageUrl).into(imageView)
-                    } else {
-                        // Handle case where imageUrl is null (user has no image)
-                    }
-                },
-                onFailure = { errorMessage ->
-                    // This block will be executed if the operation encounters an error
-                    Log.e("TAG", "Failed to get user image: $errorMessage")
-                }
-            )
 
         } else {
             emailTextField?.setText("<not logged in>")
 
         }
+
+        user?.email?.let { currentUser ->
+            Firebase.firestore.collection("users")
+                .document(currentUser)
+                .get()
+                .addOnSuccessListener { document ->
+                    if (document != null) {
+                        val imageUrl = document.getString("imageUrl")
+                            imageUrl?.let { url ->
+                                Glide.with(requireContext())
+                                    .load(url)
+                                    .into(imageView) // Assuming imageView is your ImageView
+                            }
+                        // Now you have the imageUrl from Firestore
+                        // Use it as needed
+                        Log.d("FirebaseImageUrl", "Image URL: $imageUrl")
+                    } else {
+                        Log.d("FirebaseImageUrl", "No such document")
+                    }
+                }
+                .addOnFailureListener { exception ->
+                    Log.d("FirebaseImageUrl", "get failed with ", exception)
+                }
+        } ?: run {
+            // User is not logged in
+            Log.d("FirebaseImageUrl", "User is not logged in")
+        }
+
+
 
         clickToAddPhoto();
         clickSaveButton();
