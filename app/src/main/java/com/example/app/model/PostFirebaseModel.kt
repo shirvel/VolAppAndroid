@@ -16,14 +16,6 @@ class PostFirebaseModel {
         const val POSTS_COLLECTION_PATH = "posts"
     }
 
-    init {
-        val settings = firestoreSettings {
-            setLocalCacheSettings(memoryCacheSettings { })
-
-        }
-        firestoreDB.firestoreSettings = settings
-    }
-
 
     fun getAllPosts(since: Long, callback: (List<Post>) -> Unit) {
 

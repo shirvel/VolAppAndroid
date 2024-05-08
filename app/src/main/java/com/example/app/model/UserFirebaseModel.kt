@@ -4,7 +4,9 @@ import android.os.Handler
 import android.os.Looper
 import android.view.View
 import android.widget.Toast
+import com.google.firebase.firestore.firestoreSettings
 import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.memoryCacheSettings
 import com.google.firebase.ktx.Firebase
 
 class UserFirebaseModel {
