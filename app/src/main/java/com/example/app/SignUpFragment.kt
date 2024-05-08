@@ -85,9 +85,9 @@ class SignUpFragment : Fragment() {
 
             val id = 18; // TODO: change userID
 
-            if (validateCreds(email, password))
-                createAccount(email, password)
-
+            if (validateCreds(email, password)) {
+                createAccount(email, password, view)
+            }
         }
     }
 
@@ -150,7 +150,7 @@ class SignUpFragment : Fragment() {
         return outputBitmap
     }
 
-    fun createAccount(email: String, password: String) {
+    fun createAccount(email: String, password: String, view: View) {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(requireActivity()) { task ->
                 if (task.isSuccessful) {
@@ -158,7 +158,7 @@ class SignUpFragment : Fragment() {
                     //   Log.i(TAG, "createUserWithEmail:success")
                     Log.d(TAG, "createUserWithEmail:success")
                     val user = auth.currentUser
-                    onSuccess(user)
+                    onSuccess(email, password, view)
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w(TAG, "createUserWithEmail:failure", task.exception)
@@ -172,8 +172,11 @@ class SignUpFragment : Fragment() {
             }
     }
 
-    fun onSuccess(user: FirebaseUser?) {
+    fun onSuccess(email: String, password: String, view: View) {
         // TODO maybe pass user as argument
+        val user = User(0, email, password, "myname")
+        UserListModel.instance.addUser(view, user) {
+        }
         findNavController().navigate(R.id.LoginFragment)
     }
 
