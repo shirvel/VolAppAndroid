@@ -158,7 +158,17 @@ class SignUpFragment : Fragment() {
                     //   Log.i(TAG, "createUserWithEmail:success")
                     Log.d(TAG, "createUserWithEmail:success")
                     val user = auth.currentUser
-                    onSuccess(email, password, view)
+                    if (user != null) {
+                        onSuccess(email, view, user)
+                    }
+                    else {
+                        Toast.makeText(
+                            requireContext(),
+                            task.exception?.message ?: "User is null.",
+                            Toast.LENGTH_LONG,
+                        ).show()
+
+                    }
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w(TAG, "createUserWithEmail:failure", task.exception)
@@ -172,9 +182,9 @@ class SignUpFragment : Fragment() {
             }
     }
 
-    fun onSuccess(email: String, password: String, view: View) {
+    fun onSuccess(email: String, view: View, currentUser: FirebaseUser) {
         // TODO maybe pass user as argument
-        val user = User(0, email, password, "myname")
+        val user = User(currentUser.uid, email,  "placeHolderForImageUrl")
         UserListModel.instance.addUser(view, user) {
         }
         findNavController().navigate(R.id.LoginFragment)
