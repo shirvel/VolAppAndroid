@@ -10,7 +10,7 @@ import com.example.app.model.User
 import com.example.app.model.Post
 import com.example.app.model.Comment
 import com.example.app.base.MyApplication
-    @Database(entities = [Post::class, Comment::class, User::class], version = 5)
+    @Database(entities = [Post::class, Comment::class, User::class], version = 6)
     abstract  class AppLocalDbRepository : RoomDatabase() {
         abstract fun userDao() : UserDao
         abstract fun postDao() : PostDao
