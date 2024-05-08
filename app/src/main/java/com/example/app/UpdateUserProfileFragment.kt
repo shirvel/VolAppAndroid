@@ -82,7 +82,7 @@ class UpdateUserProfileFragment : Fragment() {
         }
 
         clickToAddPhoto();
-        clickSaveButton("imageUrlPlacholder");
+        clickSaveButton("!!!!imageUrlPlacholder!!!!");
         clickCancelButton();
     }
 
@@ -108,24 +108,8 @@ class UpdateUserProfileFragment : Fragment() {
                         .addOnCompleteListener { passwordUpdateTask ->
                             if (passwordUpdateTask.isSuccessful) {
                                 // Password updated successfully
-
-
-                                val settings = FirebaseFirestoreSettings.Builder()
-                                    .setPersistenceEnabled(true) // Enables offline data persistence
-                                    .setCacheSizeBytes(FirebaseFirestoreSettings.CACHE_SIZE_UNLIMITED) // Sets cache size to unlimited
-                                    .build()
-
-                                val db = FirebaseFirestore.getInstance()
-                                db.firestoreSettings = settings
-
-
-
-
-
-
                                 // Update imageUrl in Firestore
-                             //   val db = FirebaseFirestore.getInstance()
-                             //   val db = Firebase.firestore
+                                val db = Firebase.firestore
                                 val userRef = user.email?.let { it1 ->
                                     db.collection("users").document(
                                         it1
