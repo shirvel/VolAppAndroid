@@ -20,8 +20,7 @@ class UserFirebaseModel {
                     val newUser = hashMapOf(
                         "userId" to user.userId,
                         "email" to user.email,
-                        "password" to user.password,
-                        "name" to user.name
+                        "imageUrl" to user.imageUrl
                     )
 
                     db.collection("users").document(user.email).set(newUser)
