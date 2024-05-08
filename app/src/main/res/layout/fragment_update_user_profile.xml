@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".UpdateUserProfileFragment">
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/imageViewAvatar"
         android:layout_width="150dp"
         android:layout_height="150dp"
@@ -15,7 +15,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/avatar" />
+        app:srcCompat="@drawable/avatar"
+        android:background="@drawable/circular_background" />
 
     <EditText
         android:id="@+id/editTextEmailAddress"
@@ -27,7 +28,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageViewAvatar"
-        android:layout_marginTop="30dp" />
+        android:layout_marginTop="40dp" />
 
     <EditText
         android:id="@+id/editTextPassword"
@@ -39,33 +40,41 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextEmailAddress"
-        android:layout_marginTop="30dp" />
+        android:layout_marginTop="20dp" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnSave"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="48dp"
         android:text="Save"
+        android:textStyle="bold"
+        android:backgroundTint="@android:color/holo_blue_light"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextPassword"
+        app:layout_constraintWidth_percent="0.4"/>
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnCancel"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="48dp"
         android:text="Cancel"
+        android:textStyle="bold"
+        android:backgroundTint="@android:color/holo_blue_light"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.016"
         app:layout_constraintStart_toEndOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/editTextPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextPassword"
+        app:layout_constraintWidth_percent="0.4" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.5" />
+        app:layout_constraintGuide_percent="0.45" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
