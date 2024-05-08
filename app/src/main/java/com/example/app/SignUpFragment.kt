@@ -16,6 +16,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.example.app.Modules.Posts.AllPosts
@@ -36,6 +37,8 @@ class SignUpFragment : Fragment() {
     private var cancelButton: Button? = null
 
     private lateinit var imageView: ImageView
+    private var selectedImageUri: Uri? = null
+    private lateinit var imagePickerLauncher: ActivityResultLauncher<Intent>
     private val PICK_IMAGE_REQUEST = 1
 
     //private late init var authFragment: AuthFragment
@@ -183,6 +186,7 @@ class SignUpFragment : Fragment() {
     }
 
     fun onSuccess(email: String, view: View, currentUser: FirebaseUser) {
+        val image = imageView?.toString() ?: ""
         // TODO maybe pass user as argument
         val user = User(currentUser.uid, email,  "placeHolderForImageUrl")
         UserListModel.instance.addUser(view, user) {
