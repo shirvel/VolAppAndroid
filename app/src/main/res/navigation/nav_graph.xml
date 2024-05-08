@@ -24,7 +24,9 @@
         android:label="fragment_update_user_profile"
         tools:layout="@layout/fragment_update_user_profile">
     <action
-        android:id="@+id/action_updateUserProfile_to_allPosts" app:destination="@id/allPost" />
+        android:id="@+id/action_updateUserProfile_to_allPosts" app:destination="@id/allPost"
+        app:popUpTo="@id/updateUserProfile"
+        app:popUpToInclusive="true"/>
     </fragment>
 
     <fragment

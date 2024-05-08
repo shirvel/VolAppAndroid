@@ -10,6 +10,8 @@ import android.provider.MediaStore
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
@@ -40,6 +42,12 @@ class SignUpFragment : Fragment() {
 
     //private late init var authFragment: AuthFragment
     private lateinit var auth: FirebaseAuth
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        // Indicate that this fragment has its own options menu
+        setHasOptionsMenu(true)
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -188,6 +196,11 @@ class SignUpFragment : Fragment() {
         UserListModel.instance.addUser(view, user) {
         }
         findNavController().navigate(R.id.LoginFragment)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        menu.clear()
+        super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onResume() {

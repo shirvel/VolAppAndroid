@@ -120,7 +120,7 @@ class UpdateUserProfileFragment : Fragment() {
                                     userRef.update("imageUrl", newImageUrl)
                                         .addOnSuccessListener {
                                             showToast("Your details were updated successfully")
-                                            findNavController().navigate(R.id.allPost)
+                                            findNavController().navigate(R.id.action_updateUserProfile_to_allPosts)
                                         }
                                         .addOnFailureListener { e ->
                                             showToast("Failed to update imageUrl: ${e.message}")
