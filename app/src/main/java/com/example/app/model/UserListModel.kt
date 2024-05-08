@@ -3,6 +3,7 @@ package com.example.app.model
 import android.os.Looper
 import android.view.View
 import androidx.core.os.HandlerCompat
+import androidx.lifecycle.LiveData
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
 
@@ -18,7 +19,9 @@ public class UserListModel private constructor() {
         val instance: UserListModel = UserListModel()
     }
 
-
+    fun getUserImageByEmail(email: String, onSuccess: (String?) -> Unit, onFailure: (String) -> Unit) {
+        return userFirebaseModel.getUserImageByEmail(email,onSuccess, onFailure)
+    }
 
     fun addUser(view: View, user: User, callback: () -> Unit) {
         userFirebaseModel.addUser(view, user, callback)

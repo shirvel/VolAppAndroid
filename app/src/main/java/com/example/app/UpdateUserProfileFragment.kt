@@ -4,7 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.net.Uri
+
 import android.os.Bundle
 import android.provider.MediaStore
 import androidx.fragment.app.Fragment
@@ -20,17 +20,31 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.navigation.Navigation
+import com.example.app.model.User
+import com.example.app.model.UserListModel
+import com.bumptech.glide.Glide
+import android.content.ContentResolver
+import android.content.Context
+import android.net.Uri
+
+import com.google.firebase.firestore.ktx.firestore
+import com.squareup.picasso.Picasso
+
+private lateinit var imagePickerLauncher: ActivityResultLauncher<Intent>
 
 class UpdateUserProfileFragment : Fragment() {
 
- //   private var nameTextField: EditText? = null
     private var emailTextField: EditText? = null
     private var passwordTextField: EditText? = null
 
     private var saveButton: Button? = null
     private var cancelButton: Button? = null
-
+    private lateinit var selectedImageUri: Uri
     private lateinit var imageView: ImageView
     private val PICK_IMAGE_REQUEST = 1
 
@@ -41,7 +55,7 @@ class UpdateUserProfileFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view =  inflater.inflate(R.layout.fragment_update_user_profile, container, false)
+        val view = inflater.inflate(R.layout.fragment_update_user_profile, container, false)
         setUpUI(view)
         return view
     }
@@ -51,6 +65,22 @@ class UpdateUserProfileFragment : Fragment() {
 
         // Initialize Firebase Auth
         auth = Firebase.auth
+
+        // Initialize image picker launcher
+        imagePickerLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                if (result.resultCode == Activity.RESULT_OK) {
+                    val selectedImageUri = result.data?.data
+                    Log.d("PostFragment", "Image User 1 $selectedImageUri")
+                    selectedImageUri?.let {
+                        // Update UI with selected image
+                        imageView.setImageURI(it)
+                        // Save selected image URI
+                        this.selectedImageUri = it
+                        Log.d("PostFragment", "Image User $selectedImageUri")
+                    }
+                }
+            }
     }
 
 
@@ -71,7 +101,26 @@ class UpdateUserProfileFragment : Fragment() {
 
             // Disable editing for the email field
             emailTextField?.isEnabled = false
+            // Load current profile photo using Glide
+            val userEmail: String = user.email ?: ""
+            UserListModel.instance.getUserImageByEmail(
+                userEmail, // Replace with the actual email
+                onSuccess = { imageUrl ->
+                    // This block will be executed if the operation is successful
+                    if (imageUrl != null) {
+                        // Use the imageUrl to load the user's image
+                        // For example, you can use Glide to load the image into an ImageView
 
+                        Picasso.get().load(imageUrl).into(imageView)
+                    } else {
+                        // Handle case where imageUrl is null (user has no image)
+                    }
+                },
+                onFailure = { errorMessage ->
+                    // This block will be executed if the operation encounters an error
+                    Log.e("TAG", "Failed to get user image: $errorMessage")
+                }
+            )
 
         } else {
             emailTextField?.setText("<not logged in>")
@@ -83,9 +132,12 @@ class UpdateUserProfileFragment : Fragment() {
         clickCancelButton();
     }
 
+
     private fun clickToAddPhoto() {
         imageView.setOnClickListener {
-            chooseImage()
+            // Launch image picker
+            val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+            imagePickerLauncher.launch(Intent.createChooser(intent, "Select Picture"))
         }
     }
 
@@ -98,8 +150,21 @@ class UpdateUserProfileFragment : Fragment() {
 
                 if (newPassword.isEmpty()) {
                     showToast("Password field can't be empty")
-                }
-                else {
+                } else if (selectedImageUri != Uri.EMPTY) {
+                    val imageUrl = selectedImageUri?.toString() ?: ""
+                    var userId = user.toString()
+                    var email = emailTextField?.text.toString()
+                    val user = User(userId, email, imageUrl)
+                    Log.d("ImageFragment", "Image: $user")
+                    UserListModel.instance.addUser(requireView(), user) {
+                        Navigation.findNavController(requireView()).navigate(R.id.allPost)
+                        Toast.makeText(
+                            requireContext(),
+                            "The user image changed successfully",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                } else {
                     user.updatePassword(newPassword)
                         .addOnCompleteListener { passwordUpdateTask ->
                             if (passwordUpdateTask.isSuccessful) {
@@ -128,43 +193,13 @@ class UpdateUserProfileFragment : Fragment() {
         }
     }
 
-    private fun chooseImage() {
-        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST)
-    }
+    private fun showToast(message: String) {
+        val toast = Toast.makeText(context, message, Toast.LENGTH_SHORT)
+        toast.show()
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null && data.data != null) {
-            val uri: Uri = data.data!!
-
-            // Obtain the contentResolver from the Fragment's Context
-            val contentResolver = requireContext().contentResolver
-
-            val bitmap = BitmapFactory.decodeStream(contentResolver.openInputStream(uri))
-            val circularBitmap = getCircularBitmap(bitmap)
-            imageView.setImageBitmap(circularBitmap)
-        }
-    }
-
-
-    private fun getCircularBitmap(bitmap: Bitmap): Bitmap {
-        val outputBitmap = Bitmap.createBitmap(bitmap.width, bitmap.height, Bitmap.Config.ARGB_8888)
-        val canvas = android.graphics.Canvas(outputBitmap)
-
-        val color = -0xbdbdbe
-        val paint = android.graphics.Paint()
-        val rect = android.graphics.Rect(0, 0, bitmap.width, bitmap.height)
-
-        paint.isAntiAlias = true
-        canvas.drawARGB(0, 0, 0, 0)
-        paint.color = color
-        canvas.drawCircle(bitmap.width / 2.toFloat(), bitmap.height / 2.toFloat(), bitmap.width / 2.toFloat(), paint)
-        paint.xfermode = android.graphics.PorterDuffXfermode(android.graphics.PorterDuff.Mode.SRC_IN)
-        canvas.drawBitmap(bitmap, rect, rect, paint)
-
-        return outputBitmap
+        // Hide the toast after 5 seconds
+        val handler = Handler(Looper.getMainLooper())
+        handler.postDelayed({ toast.cancel() }, 7000)
     }
 
     private fun showNotLoggedInToast() {
@@ -176,12 +211,15 @@ class UpdateUserProfileFragment : Fragment() {
         handler.postDelayed({ toast.cancel() }, 5000)
     }
 
-    private fun showToast(message: String) {
-        val toast = Toast.makeText(context, message, Toast.LENGTH_SHORT)
-        toast.show()
-
-        // Hide the toast after 5 seconds
-        val handler = Handler(Looper.getMainLooper())
-        handler.postDelayed({ toast.cancel() }, 7000)
+    fun getContentResolverForStringUri(context: Context?, uriString: String): ContentResolver? {
+        return context?.let {
+            try {
+                val uri = Uri.parse(uriString)
+                it.contentResolver
+            } catch (e: Exception) {
+                e.printStackTrace()
+                null
+            }
+        }
     }
 }

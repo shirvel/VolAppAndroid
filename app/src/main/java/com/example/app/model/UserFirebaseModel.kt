@@ -2,8 +2,11 @@ package com.example.app.model
 
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -76,6 +79,26 @@ class UserFirebaseModel {
                 toast.cancel()
             }, 5000)
         })
+    }
+    fun getUserImageByEmail(email: String, onSuccess: (String?) -> Unit, onFailure: (String) -> Unit) {
+        db.collection("users")
+            .whereEqualTo("email", email)
+            .get()
+            .addOnSuccessListener { querySnapshot ->
+                if (!querySnapshot.isEmpty) {
+                    // Retrieve the first document (assuming email is unique)
+                    val document = querySnapshot.documents[0]
+                    // Extract the image URL from the document data
+                    val imageUrl = document.getString("imageUrl")
+                    onSuccess.invoke(imageUrl)
+                } else {
+                    // No user found with the specified email
+                    onFailure.invoke("User not found")
+                }
+            }
+            .addOnFailureListener { e ->
+                onFailure.invoke("Error: ${e.message ?: "Unknown error"}")
+            }
     }
 
     private fun displayErrorMessage(view: View, message: String) {
