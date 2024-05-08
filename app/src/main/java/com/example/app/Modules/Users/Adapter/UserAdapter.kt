@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.app.databinding.UserRowBinding
 import com.example.app.model.User
 
-class UserAdapter(var usersList: MutableList<User>?): RecyclerView.Adapter<UserViewHolder>(){
+class UserAdapter(private var usersList: MutableList<User>?): RecyclerView.Adapter<UserViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
         val inflater = LayoutInflater.from(parent.context)
