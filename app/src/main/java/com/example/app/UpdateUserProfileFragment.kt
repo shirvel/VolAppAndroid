@@ -7,24 +7,25 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.example.app.R
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import android.os.Handler
-import android.os.Looper
-import android.widget.Toast
+import com.squareup.picasso.Picasso
+import java.util.logging.Handler
 
 class UpdateUserProfileFragment : Fragment() {
 
- //   private var nameTextField: EditText? = null
     private var emailTextField: EditText? = null
     private var passwordTextField: EditText? = null
 
@@ -41,7 +42,7 @@ class UpdateUserProfileFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view =  inflater.inflate(R.layout.fragment_update_user_profile, container, false)
+        val view = inflater.inflate(R.layout.fragment_update_user_profile, container, false)
         setUpUI(view)
         return view
     }
@@ -51,8 +52,9 @@ class UpdateUserProfileFragment : Fragment() {
 
         // Initialize Firebase Auth
         auth = Firebase.auth
+        // Load user profile photo
+        loadProfilePhoto()
     }
-
 
     private fun setUpUI(view: View) {
         emailTextField = view.findViewById(R.id.editTextEmailAddress)
@@ -69,18 +71,17 @@ class UpdateUserProfileFragment : Fragment() {
             // A placeholder password
             passwordTextField?.setText("123456")
 
+           // user.photoUrl.se
+
             // Disable editing for the email field
             emailTextField?.isEnabled = false
-
-
         } else {
             emailTextField?.setText("<not logged in>")
-
         }
 
-        clickToAddPhoto();
-        clickSaveButton();
-        clickCancelButton();
+        clickToAddPhoto()
+        clickSaveButton()
+        clickCancelButton()
     }
 
     private fun clickToAddPhoto() {
@@ -88,7 +89,6 @@ class UpdateUserProfileFragment : Fragment() {
             chooseImage()
         }
     }
-
 
     private fun clickSaveButton() {
         saveButton?.setOnClickListener {
@@ -98,8 +98,7 @@ class UpdateUserProfileFragment : Fragment() {
 
                 if (newPassword.isEmpty()) {
                     showToast("Password field can't be empty")
-                }
-                else {
+                } else {
                     user.updatePassword(newPassword)
                         .addOnCompleteListener { passwordUpdateTask ->
                             if (passwordUpdateTask.isSuccessful) {
@@ -111,16 +110,13 @@ class UpdateUserProfileFragment : Fragment() {
                                 showToast("Password update failed. Please make sure to enter 6 characters")
                             }
                         }
-
                 }
             } ?: run {
                 // User is not logged in
                 showNotLoggedInToast()
             }
-
         }
     }
-
 
     private fun clickCancelButton() {
         cancelButton?.setOnClickListener {
@@ -148,7 +144,6 @@ class UpdateUserProfileFragment : Fragment() {
         }
     }
 
-
     private fun getCircularBitmap(bitmap: Bitmap): Bitmap {
         val outputBitmap = Bitmap.createBitmap(bitmap.width, bitmap.height, Bitmap.Config.ARGB_8888)
         val canvas = android.graphics.Canvas(outputBitmap)
@@ -167,13 +162,23 @@ class UpdateUserProfileFragment : Fragment() {
         return outputBitmap
     }
 
+    private fun loadProfilePhoto() {
+        val user = Firebase.auth.currentUser
+        user?.photoUrl?.let { photoUrl ->
+            Picasso.get()
+                .load(photoUrl)
+                .placeholder(R.drawable.circular_background) // Placeholder image while loading or if URL is null
+                .error(R.drawable.circular_background) // Image to display if loading fails
+                .into(imageView)
+        }
+    }
+
     private fun showNotLoggedInToast() {
         val toast = Toast.makeText(context, "You are not logged in", Toast.LENGTH_SHORT)
         toast.show()
 
         // Hide the toast after 5 seconds
-        val handler = Handler(Looper.getMainLooper())
-        handler.postDelayed({ toast.cancel() }, 5000)
+    //    toast.cancelAfterDelay(5000)
     }
 
     private fun showToast(message: String) {
@@ -181,7 +186,11 @@ class UpdateUserProfileFragment : Fragment() {
         toast.show()
 
         // Hide the toast after 5 seconds
-        val handler = Handler(Looper.getMainLooper())
-        handler.postDelayed({ toast.cancel() }, 7000)
+  //      toast.cancelAfterDelay(7000)
     }
+
+//    private fun Toast.cancelAfterDelay(delay: Long) {
+//        val handler = Handler()
+//        handler.postDelayed({ this.cancel() }, delay)
+//    }
 }
