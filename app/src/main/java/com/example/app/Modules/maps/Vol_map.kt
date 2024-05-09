@@ -161,7 +161,7 @@ class vol_map : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener 
             if (allPosts != null) {
                 for (post in allPosts){
                     if (post.address.isNotEmpty()){
-                        addMarkerForAddress(post.address, post.title)
+                        addMarkerForAddress(post.address, post.postId)
                         Log.i("TAG", "add post with address: ${post.address}")
                     }
                 }
