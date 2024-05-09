@@ -9,7 +9,7 @@
     <fragment
         android:id="@+id/LoginFragment"
         android:name="com.example.app.LoginFragment"
-        android:label="LoginFragment">
+        android:label="Login">
         <action
             android:id="@+id/action_loginFragment_to_allPostFragment"
             app:destination="@id/allPost" />
@@ -21,7 +21,7 @@
     <fragment
         android:id="@+id/updateUserProfile"
         android:name="com.example.app.UpdateUserProfileFragment"
-        android:label="fragment_update_user_profile"
+        android:label="Update User Profile"
         tools:layout="@layout/fragment_update_user_profile">
     <action
         android:id="@+id/action_updateUserProfile_to_allPosts" app:destination="@id/allPost"
@@ -32,7 +32,7 @@
     <fragment
         android:id="@+id/logout"
         android:name="com.example.app.LogoutFragment"
-        android:label="fragment_logout"
+        android:label="Logout"
         tools:layout="@layout/fragment_logout">
         <action
         android:id="@+id/action_logout_to_login" app:destination="@id/LoginFragment" />
@@ -64,7 +64,7 @@
     <fragment
         android:id="@+id/allPost"
         android:name="com.example.app.Modules.Posts.AllPosts"
-        android:label="fragment_all_posts"
+        android:label="All Posts"
         tools:layout="@layout/fragment_all_posts">
         <action
             android:id="@+id/action_allPosts_to_addPost" app:destination="@id/addPost"
@@ -84,7 +84,7 @@
     <fragment
         android:id="@+id/signup"
         android:name="com.example.app.SignUpFragment"
-        android:label="fragment_sign_up"
+        android:label="Sign up"
         tools:layout="@layout/fragment_sign_up">
     </fragment>
 
@@ -92,7 +92,7 @@
     <fragment
         android:id="@+id/post"
         android:name="com.example.app.Modules.Posts.Post"
-        android:label="fragment_post"
+        android:label="Post"
         tools:layout="@layout/fragment_post" >
         <argument
             android:name="postId"
@@ -132,18 +132,18 @@
     <fragment
         android:id="@+id/comments"
         android:name="com.example.app.Modules.Comments.Comments"
-        android:label="fragment_comments"
+        android:label="Comments"
         tools:layout="@layout/fragment_comments" />
     <fragment
         android:id="@+id/addComment"
         android:name="com.example.app.Modules.Comments.AddComment"
-        android:label="fragment_add_comments"
+        android:label="Add Comments"
         tools:layout="@layout/fragment_add_comment" />
 
     <fragment
         android:id="@+id/vol_map"
         android:name="com.example.app.Modules.maps.vol_map"
-        android:label="fragment_vol_map"
+        android:label="Vol Map"
         tools:layout="@layout/fragment_vol_map" >
         <action
             android:id="@+id/action_vol_map_to_post"
@@ -153,19 +153,19 @@
     <fragment
         android:id="@+id/delete"
         android:name="com.example.app.Modules.Posts.DeletePost"
-        android:label="fragment_delete_post"
+        android:label="Delete Post"
         tools:layout="@layout/fragment_delete_post">
     </fragment>
     <fragment
         android:id="@+id/editPostFragment"
         android:name="com.example.app.Modules.Posts.EditPost"
-        android:label="fragment_edit_post"
+        android:label="Edit Post"
         tools:layout="@layout/fragment_edit_post">
     </fragment>
     <fragment
         android:id="@+id/allConnectedUserPosts"
         android:name="com.example.app.Modules.Posts.AllConnectedUserPosts"
-        android:label="fragment_all_connected_user_posts"
+        android:label="All Connected User Posts"
         tools:layout="@layout/fragment_all_connected_user_posts" />
         <argument
             android:name="postId"
